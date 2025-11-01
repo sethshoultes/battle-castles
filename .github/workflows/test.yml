@@ -1,0 +1,243 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.2.1
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        test-category: [unit, integration, performance]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Godot
+      uses: chickensoft-games/setup-godot@v1
+      with:
+        version: ${{ env.GODOT_VERSION }}
+
+    - name: Cache Godot files
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.local/share/godot
+          ~/.config/godot
+          .godot
+        key: ${{ runner.os }}-godot-${{ env.GODOT_VERSION }}-${{ hashFiles('**/project.godot') }}
+        restore-keys: |
+          ${{ runner.os }}-godot-${{ env.GODOT_VERSION }}-
+          ${{ runner.os }}-godot-
+
+    - name: Import Godot project
+      run: |
+        cd client
+        godot --headless --import
+        timeout 30 godot --headless --quit || true
+
+    - name: Run ${{ matrix.test-category }} tests
+      run: |
+        cd client
+        godot --headless -s tests/test_runner.gd --filter ${{ matrix.test-category }} --output xml
+      continue-on-error: ${{ matrix.test-category == 'performance' }}
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-${{ matrix.test-category }}
+        path: client/test_results.xml
+
+    - name: Test Report
+      if: always()
+      uses: dorny/test-reporter@v1
+      with:
+        name: Test Results - ${{ matrix.test-category }}
+        path: client/test_results.xml
+        reporter: jest-junit
+
+  test-summary:
+    name: Test Summary
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+    - name: Download all test results
+      uses: actions/download-artifact@v3
+      with:
+        path: test-results
+
+    - name: Merge test results
+      run: |
+        echo "## Test Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        for category in unit integration performance; do
+          if [ -f "test-results/test-results-${category}/test_results.xml" ]; then
+            echo "### ${category^} Tests" >> $GITHUB_STEP_SUMMARY
+            # Parse XML and extract summary (simplified)
+            echo "✅ Tests completed for ${category}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+        done
+
+  code-coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Godot
+      uses: chickensoft-games/setup-godot@v1
+      with:
+        version: ${{ env.GODOT_VERSION }}
+
+    - name: Run tests with coverage
+      run: |
+        cd client
+        # Note: Godot doesn't have built-in coverage, this is a placeholder
+        # You would need to integrate a coverage tool or use GDScript analyzer
+        godot --headless -s tests/test_runner.gd --output json
+
+    - name: Generate coverage badge
+      run: |
+        echo "Coverage analysis would go here"
+        # This would typically use a tool to generate coverage reports
+
+  performance-benchmark:
+    name: Performance Benchmark
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Godot
+      uses: chickensoft-games/setup-godot@v1
+      with:
+        version: ${{ env.GODOT_VERSION }}
+
+    - name: Run performance benchmarks
+      run: |
+        cd client
+        godot --headless -s tests/test_runner.gd --filter performance --output json
+
+    - name: Store benchmark results
+      uses: benchmark-action/github-action-benchmark@v1
+      if: github.event_name != 'pull_request'
+      with:
+        tool: 'customBiggerIsBetter'
+        output-file-path: client/test_results.json
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        auto-push: true
+
+    - name: Comment PR with performance results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const results = JSON.parse(fs.readFileSync('client/test_results.json', 'utf8'));
+
+          let comment = '## Performance Test Results\n\n';
+          comment += '| Metric | Value |\n';
+          comment += '|--------|-------|\n';
+
+          // Extract key metrics from results
+          if (results.performance) {
+            comment += `| FPS (baseline) | ${results.performance.baseline_fps || 'N/A'} |\n`;
+            comment += `| Max Units | ${results.performance.max_units || 'N/A'} |\n`;
+            comment += `| Memory/Unit | ${results.performance.memory_per_unit || 'N/A'} KB |\n`;
+            comment += `| Bandwidth | ${results.performance.avg_bandwidth || 'N/A'} kbps |\n`;
+          }
+
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  lint:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python for GDScript linting
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install gdtoolkit
+      run: pip install gdtoolkit
+
+    - name: Run gdformat check
+      run: |
+        cd client
+        gdformat --check scripts/ tests/ || true
+
+    - name: Run gdlint
+      run: |
+        cd client
+        gdlint scripts/ tests/ || true
+
+  notify-slack:
+    name: Notify Results
+    needs: [test, code-coverage, performance-benchmark]
+    runs-on: ubuntu-latest
+    if: always() && github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Send Slack notification
+      if: env.SLACK_WEBHOOK_URL != ''
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        if [ "${{ needs.test.result }}" = "success" ]; then
+          STATUS="✅ Passed"
+          COLOR="good"
+        else
+          STATUS="❌ Failed"
+          COLOR="danger"
+        fi
+
+        curl -X POST $SLACK_WEBHOOK_URL \
+          -H 'Content-Type: application/json' \
+          -d '{
+            "attachments": [{
+              "color": "'$COLOR'",
+              "title": "Battle Castles Test Results",
+              "text": "Test suite '$STATUS' for commit ${{ github.sha }}",
+              "fields": [
+                {
+                  "title": "Branch",
+                  "value": "${{ github.ref_name }}",
+                  "short": true
+                },
+                {
+                  "title": "Commit",
+                  "value": "${{ github.event.head_commit.message }}",
+                  "short": false
+                }
+              ],
+              "footer": "GitHub Actions",
+              "footer_icon": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+            }]
+          }' || true

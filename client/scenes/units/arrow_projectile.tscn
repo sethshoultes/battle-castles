@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://arrow001"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1"]
+size = Vector2(16, 4)
+
+[node name="ArrowProjectile" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_1")
+modulate = Color(0.6, 0.4, 0.2, 1.0)
+
+[node name="Trail" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(1, 1, 0.5, 0.5)
+max_points = 10

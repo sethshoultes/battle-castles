@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: battlecastles-config
+  namespace: battlecastles
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  MAX_ROOMS: "100"
+  MAX_PLAYERS_PER_ROOM: "2"
+  TICK_RATE: "20"
+  GAME_DURATION: "180"
+  STARTING_ELIXIR: "5"
+  MAX_ELIXIR: "10"
+  ELIXIR_REGEN_RATE: "1.4"
+  METRICS_ENABLED: "true"
+  METRICS_PORT: "9100"
+  FEATURE_MATCHMAKING: "true"
+  FEATURE_RANKED_MODE: "true"
+  FEATURE_TOURNAMENTS: "false"
+  FEATURE_CLAN_SYSTEM: "false"

@@ -1,0 +1,106 @@
+# Prometheus ServiceMonitor for monitoring game servers
+# Requires Prometheus Operator to be installed
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: game-server-metrics
+  namespace: battlecastles
+  labels:
+    app: game-server
+spec:
+  selector:
+    matchLabels:
+      app: game-server
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+    scheme: http
+---
+# PrometheusRule for alerting
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: game-server-alerts
+  namespace: battlecastles
+spec:
+  groups:
+  - name: game-server
+    interval: 30s
+    rules:
+    # High CPU usage alert
+    - alert: GameServerHighCPU
+      expr: |
+        rate(container_cpu_usage_seconds_total{namespace="battlecastles",pod=~"game-server-.*"}[5m]) > 0.8
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High CPU usage on {{ $labels.pod }}"
+        description: "CPU usage is above 80% for 5 minutes"
+
+    # High memory usage alert
+    - alert: GameServerHighMemory
+      expr: |
+        container_memory_usage_bytes{namespace="battlecastles",pod=~"game-server-.*"} / container_spec_memory_limit_bytes{namespace="battlecastles",pod=~"game-server-.*"} > 0.9
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High memory usage on {{ $labels.pod }}"
+        description: "Memory usage is above 90% for 5 minutes"
+
+    # Pod not ready
+    - alert: GameServerPodNotReady
+      expr: |
+        kube_pod_status_ready{namespace="battlecastles",pod=~"game-server-.*",condition="true"} == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Game server pod not ready"
+        description: "{{ $labels.pod }} has been not ready for 5 minutes"
+
+    # High error rate
+    - alert: GameServerHighErrorRate
+      expr: |
+        rate(http_requests_total{namespace="battlecastles",status=~"5.."}[5m]) > 0.05
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "High error rate detected"
+        description: "Error rate is above 5% for 5 minutes"
+
+    # Database connection issues
+    - alert: DatabaseConnectionFailed
+      expr: |
+        pg_up{namespace="battlecastles"} == 0
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "PostgreSQL connection failed"
+        description: "Unable to connect to PostgreSQL for 2 minutes"
+
+    # Redis connection issues
+    - alert: RedisConnectionFailed
+      expr: |
+        redis_up{namespace="battlecastles"} == 0
+      for: 2m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Redis connection failed"
+        description: "Unable to connect to Redis for 2 minutes"
+
+    # Low replica count
+    - alert: GameServerLowReplicas
+      expr: |
+        kube_deployment_status_replicas_available{namespace="battlecastles",deployment="game-server"} < 2
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Low number of game server replicas"
+        description: "Less than 2 game server replicas available for 5 minutes"

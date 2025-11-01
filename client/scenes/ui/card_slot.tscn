@@ -1,0 +1,98 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/card_ui.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.25, 1.0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.3, 0.35, 1.0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_left = 5
+corner_radius_bottom_right = 5
+
+[node name="CardSlot" type="Control"]
+custom_minimum_size = Vector2(70, 90)
+script = ExtResource("1")
+
+[node name="CardBackground" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="CardIcon" type="TextureRect" parent="CardBackground"]
+anchor_right = 1.0
+anchor_bottom = 0.75
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="CardBackground/CardIcon"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.4, 0.4, 0.4, 1.0)
+
+[node name="ElixirBadge" type="Panel" parent="CardBackground"]
+anchor_left = 0.05
+anchor_top = 0.7
+anchor_right = 0.35
+anchor_bottom = 0.95
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="ColorRect" type="ColorRect" parent="CardBackground/ElixirBadge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.5, 0.2, 0.8, 1.0)
+
+[node name="CostLabel" type="Label" parent="CardBackground/ElixirBadge"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "3"
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UnitPreview" type="Control" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+mouse_filter = 2
+
+[node name="PreviewSprite" type="ColorRect" parent="UnitPreview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0, 1.0, 0.0, 0.3)
+
+[node name="RangeIndicator" type="Control" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+mouse_filter = 2
+
+[node name="RangeCircle" type="ColorRect" parent="RangeIndicator"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+color = Color(1.0, 1.0, 0.0, 0.2)

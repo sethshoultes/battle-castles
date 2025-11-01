@@ -1,0 +1,172 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8audio8test8"]
+
+[ext_resource type="Script" path="res://scripts/ui/audio_test_ui.gd" id="1_audio_test"]
+
+[node name="AudioTest" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_audio_test")
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = 400.0
+offset_bottom = 300.0
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Audio System Test"
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VolumeControls" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MasterVolume" type="HBoxContainer" parent="VBoxContainer/VolumeControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VolumeControls/MasterVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Master Volume:"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/VolumeControls/MasterVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 80.0
+
+[node name="Value" type="Label" parent="VBoxContainer/VolumeControls/MasterVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(50, 0)
+text = "80%"
+
+[node name="MusicVolume" type="HBoxContainer" parent="VBoxContainer/VolumeControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VolumeControls/MusicVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Music Volume:"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/VolumeControls/MusicVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 80.0
+
+[node name="Value" type="Label" parent="VBoxContainer/VolumeControls/MusicVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(50, 0)
+text = "80%"
+
+[node name="SFXVolume" type="HBoxContainer" parent="VBoxContainer/VolumeControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VolumeControls/SFXVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "SFX Volume:"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/VolumeControls/SFXVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 80.0
+
+[node name="Value" type="Label" parent="VBoxContainer/VolumeControls/SFXVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(50, 0)
+text = "80%"
+
+[node name="UIVolume" type="HBoxContainer" parent="VBoxContainer/VolumeControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/VolumeControls/UIVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "UI Volume:"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/VolumeControls/UIVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 80.0
+
+[node name="Value" type="Label" parent="VBoxContainer/VolumeControls/UIVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(50, 0)
+text = "80%"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="MusicControls" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayMenuMusic" type="Button" parent="VBoxContainer/MusicControls"]
+layout_mode = 2
+text = "Play Menu Music"
+
+[node name="PlayBattleMusic" type="Button" parent="VBoxContainer/MusicControls"]
+layout_mode = 2
+text = "Play Battle Music"
+
+[node name="PlayVictoryMusic" type="Button" parent="VBoxContainer/MusicControls"]
+layout_mode = 2
+text = "Play Victory Music"
+
+[node name="StopMusic" type="Button" parent="VBoxContainer/MusicControls"]
+layout_mode = 2
+text = "Stop Music"
+
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="SFXControls" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlaySwordHit" type="Button" parent="VBoxContainer/SFXControls"]
+layout_mode = 2
+text = "Sword Hit"
+
+[node name="PlayArrowFly" type="Button" parent="VBoxContainer/SFXControls"]
+layout_mode = 2
+text = "Arrow Fly"
+
+[node name="PlayExplosion" type="Button" parent="VBoxContainer/SFXControls"]
+layout_mode = 2
+text = "Explosion"
+
+[node name="PlayUIClick" type="Button" parent="VBoxContainer/SFXControls"]
+layout_mode = 2
+text = "UI Click"
+
+[node name="HSeparator4" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="StatusLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 100)
+text = "[center]Audio System Status[/center]"
+bbcode_enabled = true
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back to Main Menu"

@@ -1,0 +1,221 @@
+[gd_scene load_steps=2 format=3]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.1, 0.1, 0.15, 0.95)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+
+[node name="SettingsMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.0, 0.0, 0.0, 0.7)
+
+[node name="SettingsPanel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="Title" type="Label" parent="SettingsPanel"]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 60.0
+text = "SETTINGS"
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = -20.0
+offset_bottom = -60.0
+
+[node name="SettingsContainer" type="VBoxContainer" parent="SettingsPanel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="AudioSection" type="VBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="AudioTitle" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+text = "Audio"
+theme_override_font_sizes/font_size = 20
+
+[node name="MasterVolume" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/MasterVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Master Volume"
+
+[node name="Slider" type="HSlider" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/MasterVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 75.0
+
+[node name="Value" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/MasterVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(40, 0)
+text = "75"
+horizontal_alignment = 2
+
+[node name="SFXVolume" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/SFXVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "SFX Volume"
+
+[node name="Slider" type="HSlider" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/SFXVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 75.0
+
+[node name="Value" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/SFXVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(40, 0)
+text = "75"
+horizontal_alignment = 2
+
+[node name="MusicVolume" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/MusicVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Music Volume"
+
+[node name="Slider" type="HSlider" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/MusicVolume"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+value = 50.0
+
+[node name="Value" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/AudioSection/MusicVolume"]
+layout_mode = 2
+custom_minimum_size = Vector2(40, 0)
+text = "50"
+horizontal_alignment = 2
+
+[node name="Separator" type="HSeparator" parent="SettingsPanel/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="GraphicsSection" type="VBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="GraphicsTitle" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/GraphicsSection"]
+layout_mode = 2
+text = "Graphics"
+theme_override_font_sizes/font_size = 20
+
+[node name="Quality" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/GraphicsSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/GraphicsSection/Quality"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Quality"
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/ScrollContainer/SettingsContainer/GraphicsSection/Quality"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 1
+
+[node name="VSync" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/GraphicsSection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/GraphicsSection/VSync"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "VSync"
+
+[node name="CheckBox" type="CheckBox" parent="SettingsPanel/ScrollContainer/SettingsContainer/GraphicsSection/VSync"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Separator2" type="HSeparator" parent="SettingsPanel/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="GameplaySection" type="VBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer"]
+layout_mode = 2
+
+[node name="GameplayTitle" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+text = "Gameplay"
+theme_override_font_sizes/font_size = 20
+
+[node name="ConfirmPlacement" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/ConfirmPlacement"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Confirm Placement"
+
+[node name="CheckBox" type="CheckBox" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/ConfirmPlacement"]
+layout_mode = 2
+
+[node name="Vibration" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/Vibration"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "Vibration"
+
+[node name="CheckBox" type="CheckBox" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/Vibration"]
+layout_mode = 2
+button_pressed = true
+
+[node name="ButtonContainer" type="HBoxContainer" parent="SettingsPanel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = -10.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="SettingsPanel/ButtonContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 35)
+text = "Cancel"
+
+[node name="ApplyButton" type="Button" parent="SettingsPanel/ButtonContainer"]
+layout_mode = 2
+custom_minimum_size = Vector2(100, 35)
+text = "Apply"
+
+[node name="CloseButton" type="Button" parent="SettingsPanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 40.0
+text = "X"
