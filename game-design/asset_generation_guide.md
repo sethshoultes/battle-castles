@@ -55,10 +55,37 @@ client/
 ### Card Icons → `/assets/sprites/icons/`
 
 Referenced in CardData resources (card_data.gd:9)
+
+**Basic Troop Icons:**
 - `knight_icon.png` (64x64px or 128x128px)
 - `goblin_icon.png`
 - `archer_icon.png`
 - `giant_icon.png`
+
+**Additional Troop Icons:**
+- `barbarians_icon.png`
+- `musketeer_icon.png`
+- `mini_pekka_icon.png`
+- `wizard_icon.png`
+- `baby_dragon_icon.png`
+- `skeleton_army_icon.png`
+- `minions_icon.png`
+- `valkyrie_icon.png`
+
+**Spell Icons:**
+- `fireball_icon.png`
+- `arrows_icon.png`
+- `lightning_icon.png`
+- `freeze_icon.png`
+- `rage_icon.png`
+- `heal_icon.png`
+
+**Building Icons:**
+- `cannon_icon.png`
+- `tesla_icon.png`
+- `bomb_tower_icon.png`
+- `inferno_tower_icon.png`
+- `elixir_collector_icon.png`
 
 ### Buildings/Towers → `/assets/sprites/buildings/`
 
