@@ -135,42 +135,42 @@ Referenced in CardData resources (card_data.gd:9)
 
 ### 1. Unit Sprites
 
-#### Knight (Player - Blue)
+#### Knight (Player - Blue) [x]
 ```
 A cartoon-style fantasy knight character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, wearing blue armor and cape, holding a sword and shield, standing in an idle pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 36x52 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 
-#### Knight (Enemy - Red)
+#### Knight (Enemy - Red) [x]
 ```
 A cartoon-style fantasy knight character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, wearing red armor and cape, holding a sword and shield, standing in an idle pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 36x52 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 
-#### Goblin (Player - Green)
+#### Goblin (Player - Green) [x]
 ```
 A cartoon-style goblin character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, bright green skin, wearing simple leather armor, holding a dagger or short sword, mischievous expression, smaller character, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 
-#### Goblin (Enemy - Orange)
+#### Goblin (Enemy - Orange) [x]
 ```
 A cartoon-style goblin character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, orange-brown skin, wearing simple leather armor, holding a dagger or short sword, mischievous expression, smaller character, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 
-#### Archer (Player - Purple)
+#### Archer (Player - Purple) [x]
 ```
 A cartoon-style archer character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, wearing purple hood and archer outfit, holding a bow, quiver of arrows on back, standing in ready pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 
-#### Archer (Enemy - Pink)
+#### Archer (Enemy - Pink) [x]
 ```
 A cartoon-style archer character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, wearing pink hood and archer outfit, holding a bow, quiver of arrows on back, standing in ready pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 
-#### Giant (Player - Gray)
+#### Giant (Player - Gray) [x]
 ```
 A cartoon-style giant character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, large muscular character wearing gray stone armor, holding a massive club or hammer, powerful stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, full body visible, much larger than other units, PNG with alpha channel
 ```
 
-#### Giant (Enemy - Dark Red)
+#### Giant (Enemy - Dark Red) [x]
 ```
 A cartoon-style giant character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, large muscular character wearing dark red armor, holding a massive club or hammer, powerful stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, full body visible, much larger than other units, PNG with alpha channel
 ```
@@ -179,22 +179,22 @@ A cartoon-style giant character sprite for a mobile game, viewed from a 45-degre
 
 ### 2. Card Icons
 
-#### Knight Card Icon
+#### Knight Card Icon [x]
 ```
 A square portrait icon of a cartoon fantasy knight character for a mobile game card, facing forward, blue armor with gold trim, sword and shield crossed, heroic expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Goblin Card Icon
+#### Goblin Card Icon [x]
 ```
 A square portrait icon of a cartoon goblin character for a mobile game card, facing forward, bright green skin, mischievous grin showing teeth, leather cap, holding dagger, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Archer Card Icon
+#### Archer Card Icon [x]
 ```
 A square portrait icon of a cartoon archer character for a mobile game card, facing forward, purple hooded cloak, bow visible, focused expression, arrow fletching visible over shoulder, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Giant Card Icon
+#### Giant Card Icon [x]
 ```
 A square portrait icon of a cartoon giant character for a mobile game card, facing forward, massive muscular build, gray stone armor, fierce but friendly expression, club or hammer visible, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
@@ -203,22 +203,22 @@ A square portrait icon of a cartoon giant character for a mobile game card, faci
 
 ### 3. Towers & Buildings
 
-#### Player Tower (Blue)
+#### Player Tower (Blue) [x]
 ```
 A cartoon-style defensive tower for a mobile game, isometric top-down view, blue stone construction with gold trim, medieval fantasy style, crenellations at top, small windows, flag with blue banner, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale style architecture, compact design, PNG with alpha channel
 ```
 
-#### Enemy Tower (Red)
+#### Enemy Tower (Red) [x]
 ```
 A cartoon-style defensive tower for a mobile game, isometric top-down view, red stone construction with dark trim, medieval fantasy style, crenellations at top, small windows, flag with red banner, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale style architecture, compact design, PNG with alpha channel
 ```
 
-#### Player Castle (Blue)
+#### Player Castle (Blue) [x]
 ```
 A cartoon-style castle keep for a mobile game, isometric top-down view, large blue stone fortress with multiple towers, gold trim and banners, medieval fantasy style, grand entrance, flags flying, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale style architecture, larger than regular towers, impressive main building, PNG with alpha channel
 ```
 
-#### Enemy Castle (Red)
+#### Enemy Castle (Red) [x]
 ```
 A cartoon-style castle keep for a mobile game, isometric top-down view, large red stone fortress with multiple towers, dark trim and banners, medieval fantasy style, grand entrance, flags flying, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale style architecture, larger than regular towers, impressive main building, PNG with alpha channel
 ```
@@ -227,22 +227,22 @@ A cartoon-style castle keep for a mobile game, isometric top-down view, large re
 
 ### 4. UI Elements
 
-#### Card Frame/Background
+#### Card Frame/Background []
 ```
 A decorative card frame border for a mobile game interface, ornate medieval fantasy style with gold trim, gemstone corners, inner space left empty for content, simple bold outlines, Clash Royale UI style, gradient background from dark to light, portrait orientation, elegant design, PNG format
 ```
 
-#### Elixir Drop Icon
+#### Elixir Drop Icon []
 ```
 A glowing purple elixir drop icon for a mobile game, shiny liquid droplet with magical sparkles, gradient from light purple to deep violet, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style, icon format, 32x32 pixel scale, PNG with alpha channel
 ```
 
-#### Crown Icon
+#### Crown Icon []
 ```
 A golden crown icon for a mobile game score display, simple royal crown with three points, jewels embedded, shiny metallic gold texture, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style, icon format, small and readable, PNG with alpha channel
 ```
 
-#### Health Bar Fill
+#### Health Bar Fill []
 ```
 A health bar fill texture for a mobile game UI, horizontal gradient from bright green on left to yellow-green on right, shiny glossy effect, simple design, seamless tileable texture, Clash Royale UI style, PNG format
 ```
@@ -251,17 +251,17 @@ A health bar fill texture for a mobile game UI, horizontal gradient from bright 
 
 ### 5. Visual Effects
 
-#### Attack Impact Effect
+#### Attack Impact Effect []
 ```
 A cartoon-style impact explosion effect for a mobile game, yellow and orange starburst with white highlights, action lines radiating outward, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style combat effect, small compact design, PNG with alpha channel
 ```
 
-#### Unit Deploy Effect
+#### Unit Deploy Effect []
 ```
 A magical summoning circle effect for a mobile game, glowing blue runes in a circular pattern, sparkles and light particles, mystical energy swirls, TRANSPARENT BACKGROUND, Clash Royale style spawn effect, top-down view, PNG with alpha channel
 ```
 
-#### Tower Destruction Effect
+#### Tower Destruction Effect []
 ```
 A cartoon-style explosion effect for a mobile game, large rubble and stone debris, dust clouds, orange and gray colors, dramatic impact, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style destruction effect, PNG with alpha channel
 ```
@@ -270,22 +270,22 @@ A cartoon-style explosion effect for a mobile game, large rubble and stone debri
 
 ### 6. Battlefield Elements
 
-#### River Texture
+#### River Texture []
 ```
 A top-down view of a flowing river texture for a mobile game battlefield, cartoon-style water with gentle waves, blue-green colors, white foam highlights, simple repeating pattern, tileable seamless texture, Clash Royale art style, clean and vibrant, PNG format
 ```
 
-#### Grass Battlefield Ground
+#### Grass Battlefield Ground []
 ```
 A top-down view of grass terrain texture for a mobile game battlefield, cartoon-style green grass with subtle variation, simple blades of grass detail, vibrant green colors, tileable seamless texture, Clash Royale art style, clean background pattern, PNG format
 ```
 
-#### Deployment Zone Highlight (Player)
+#### Deployment Zone Highlight (Player) []
 ```
 A semi-transparent glowing area indicator for a mobile game, circular or rectangular boundary with pulsing blue light edges, magical energy effect, very transparent center, top-down view, Clash Royale UI style overlay, PNG with alpha channel
 ```
 
-#### Deployment Zone Highlight (Enemy)
+#### Deployment Zone Highlight (Enemy) []
 ```
 A semi-transparent glowing area indicator for a mobile game, circular or rectangular boundary with pulsing red light edges, magical energy effect, very transparent center, top-down view, Clash Royale UI style overlay, PNG with alpha channel
 ```
@@ -294,7 +294,7 @@ A semi-transparent glowing area indicator for a mobile game, circular or rectang
 
 ### 7. Projectiles
 
-#### Arrow Projectile
+#### Arrow Projectile []
 ```
 A simple cartoon-style arrow projectile for a mobile game, wooden shaft with gray metal tip, colored fletching, viewed from a 45-degree angle, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style, small weapon sprite, in-flight pose, PNG with alpha channel
 ```

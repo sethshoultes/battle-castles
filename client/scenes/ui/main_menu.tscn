@@ -1,25 +1,29 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://bc3hjgw6raa2j"]
 
-[ext_resource type="Script" path="res://scripts/ui/main_menu_ui.gd" id="1"]
+[ext_resource type="Script" uid="uid://bgha0788bk1s6" path="res://scripts/ui/main_menu_ui.gd" id="1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
-bg_color = Color(0.1, 0.1, 0.15, 1.0)
+bg_color = Color(0.1, 0.1, 0.15, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
-corner_radius_bottom_left = 10
 corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1")
 
 [node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.05, 0.05, 0.08, 1.0)
+color = Color(0.05, 0.05, 0.08, 1)
 
 [node name="TitleContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.3
@@ -30,11 +34,12 @@ alignment = 1
 
 [node name="GameTitle" type="Label" parent="TitleContainer"]
 layout_mode = 2
-text = "BATTLE CASTLES"
 theme_override_font_sizes/font_size = 48
+text = "BATTLE CASTLES"
 horizontal_alignment = 1
 
 [node name="MenuContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -52,36 +57,37 @@ theme_override_constants/separation = 15
 alignment = 1
 
 [node name="PlayButton" type="Button" parent="MenuContainer/ButtonContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(200, 60)
-text = "BATTLE"
+layout_mode = 2
 theme_override_font_sizes/font_size = 24
+text = "BATTLE"
 
 [node name="DeckBuilderButton" type="Button" parent="MenuContainer/ButtonContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(200, 50)
-text = "DECK"
+layout_mode = 2
 theme_override_font_sizes/font_size = 18
+text = "DECK"
 
 [node name="SettingsButton" type="Button" parent="MenuContainer/ButtonContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(200, 50)
-text = "SETTINGS"
+layout_mode = 2
 theme_override_font_sizes/font_size = 18
+text = "SETTINGS"
 
 [node name="ShopButton" type="Button" parent="MenuContainer/ButtonContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(200, 50)
-text = "SHOP"
+layout_mode = 2
 theme_override_font_sizes/font_size = 18
+text = "SHOP"
 
 [node name="QuitButton" type="Button" parent="MenuContainer/ButtonContainer"]
-layout_mode = 2
 custom_minimum_size = Vector2(200, 50)
-text = "QUIT"
+layout_mode = 2
 theme_override_font_sizes/font_size = 18
+text = "QUIT"
 
 [node name="ProfilePanel" type="Panel" parent="."]
+layout_mode = 0
 anchor_left = 0.02
 anchor_top = 0.02
 anchor_right = 0.35
@@ -89,6 +95,7 @@ anchor_bottom = 0.25
 theme_override_styles/panel = SubResource("StyleBoxFlat_1")
 
 [node name="PlayerInfo" type="HBoxContainer" parent="ProfilePanel"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = 10.0
@@ -96,15 +103,16 @@ offset_top = 10.0
 offset_right = -10.0
 
 [node name="Avatar" type="TextureRect" parent="ProfilePanel/PlayerInfo"]
-layout_mode = 2
 custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
 [node name="ColorRect" type="ColorRect" parent="ProfilePanel/PlayerInfo/Avatar"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.3, 0.3, 0.4, 1.0)
+color = Color(0.3, 0.3, 0.4, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ProfilePanel/PlayerInfo"]
 layout_mode = 2
@@ -112,13 +120,13 @@ size_flags_horizontal = 3
 
 [node name="NameLabel" type="Label" parent="ProfilePanel/PlayerInfo/VBoxContainer"]
 layout_mode = 2
-text = "Player"
 theme_override_font_sizes/font_size = 18
+text = "Player"
 
 [node name="LevelLabel" type="Label" parent="ProfilePanel/PlayerInfo/VBoxContainer"]
 layout_mode = 2
-text = "Level 1"
 theme_override_font_sizes/font_size = 14
+text = "Level 1"
 
 [node name="TrophyContainer" type="HBoxContainer" parent="ProfilePanel/PlayerInfo"]
 layout_mode = 2
@@ -129,10 +137,11 @@ text = "🏆"
 
 [node name="TrophyCount" type="Label" parent="ProfilePanel/PlayerInfo/TrophyContainer"]
 layout_mode = 2
-text = "0"
 theme_override_font_sizes/font_size = 16
+text = "0"
 
 [node name="Resources" type="HBoxContainer" parent="ProfilePanel"]
+layout_mode = 0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.75
@@ -163,6 +172,7 @@ layout_mode = 2
 text = "10"
 
 [node name="ArenaInfo" type="HBoxContainer" parent="ProfilePanel"]
+layout_mode = 0
 anchor_top = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -171,23 +181,25 @@ offset_right = -10.0
 offset_bottom = -10.0
 
 [node name="ArenaIcon" type="TextureRect" parent="ProfilePanel/ArenaInfo"]
-layout_mode = 2
 custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
 
 [node name="ColorRect" type="ColorRect" parent="ProfilePanel/ArenaInfo/ArenaIcon"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.5, 0.3, 0.2, 1.0)
+color = Color(0.5, 0.3, 0.2, 1)
 
 [node name="ArenaName" type="Label" parent="ProfilePanel/ArenaInfo"]
 layout_mode = 2
-text = "Training Camp"
 theme_override_font_sizes/font_size = 14
+text = "Training Camp"
 
 [node name="ChestSlots" type="HBoxContainer" parent="ProfilePanel"]
 visible = false
+layout_mode = 0
 anchor_left = 0.65
 anchor_top = 0.02
 anchor_right = 0.98
@@ -195,6 +207,7 @@ anchor_bottom = 0.25
 theme_override_constants/separation = 5
 
 [node name="VersionLabel" type="Label" parent="."]
+layout_mode = 0
 anchor_left = 0.98
 anchor_top = 0.98
 anchor_right = 1.0
@@ -206,22 +219,15 @@ horizontal_alignment = 2
 vertical_alignment = 2
 
 [node name="MatchmakingPopup" type="PopupPanel" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -75.0
-offset_right = 150.0
-offset_bottom = 75.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MatchmakingPopup"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 96.0
+offset_bottom = 96.0
 alignment = 1
 
 [node name="StatusLabel" type="Label" parent="MatchmakingPopup/VBoxContainer"]
