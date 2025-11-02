@@ -1,6 +1,5 @@
 ## Singleton GameManager that coordinates all game systems and entities
 ## Add this to Project Settings -> Autoload as "GameManager"
-class_name GameManager
 extends Node
 
 ## Signal emitted when an entity is spawned
@@ -104,8 +103,8 @@ func _initialize_pools() -> void:
 		# Pre-create entities for the pool
 		for i in range(pool_size):
 			var entity: Entity = _create_pooled_entity(pool_name)
-			entity.visible = false
 			entity.is_active = false
+			entity.visible = false
 			entity_pools[pool_name].append(entity)
 
 	print("Object pools initialized")

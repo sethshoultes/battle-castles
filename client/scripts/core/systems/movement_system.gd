@@ -81,7 +81,7 @@ func move_to_position(entity: Entity, target_position: Vector2, use_pathfinding:
 	if use_pathfinding and movement_comp.use_pathfinding:
 		var path: PackedVector2Array = find_path(entity.global_position, target_position)
 		if path.size() > 0:
-			movement_comp.set_path(path)
+			movement_comp.set_movement_path(path)
 			entity_movement_started.emit(entity)
 			return true
 		else:

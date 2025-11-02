@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+card_name = "Giant"
+description = "Slow but durable, only attacks buildings. A real one-man wrecking crew!"
+rarity = "Rare"
+elixir_cost = 5
+unit_type = "giant"
+deploy_count = 1
+deploy_time = 1.0
+hitpoints = 3400
+damage = 120
+attack_speed = 2.4
+movement_speed = 30.0
+attack_range = 1.0
+target_type = "Ground"
+targets_buildings_only = true
+flies = false
+splash_damage = false
+hp_growth = 1.1
+damage_growth = 1.1
+color_modulate = Color(0.9, 0.7, 0.4, 1)

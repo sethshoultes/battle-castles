@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+card_name = "Archer Pair"
+description = "A pair of ranged attackers. Shoots from a distance and can hit air units."
+rarity = "Common"
+elixir_cost = 3
+unit_type = "archer"
+deploy_count = 2
+deploy_time = 1.0
+hitpoints = 252
+damage = 60
+attack_speed = 1.1
+movement_speed = 60.0
+attack_range = 5.5
+target_type = "Both"
+targets_buildings_only = false
+flies = false
+splash_damage = false
+hp_growth = 1.1
+damage_growth = 1.1
+color_modulate = Color(0.8, 0.5, 0.8, 1)

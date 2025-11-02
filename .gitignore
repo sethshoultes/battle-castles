@@ -1,0 +1,28 @@
+# Build outputs
+builds/
+*.zip
+*.dmg
+*.exe
+*.apk
+*.ipa
+
+# Godot-specific ignores
+.import/
+*.import
+export_presets.cfg
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*~

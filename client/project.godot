@@ -12,8 +12,8 @@ config_version=5
 
 config/name="Battle Castles"
 config/version="0.1.0"
-run/main_scene="res://scenes/main_menu.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+run/main_scene="res://scenes/ui/main_menu.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -26,27 +26,20 @@ SceneManager="*res://scripts/core/scene_manager.gd"
 DataValidator="*res://scripts/core/data_validator.gd"
 JuiceManager="*res://scripts/core/juice_manager.gd"
 
+[debug]
+
+settings/stdout/print_fps=true
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/unsafe_property_access=1
+gdscript/warnings/unsafe_method_access=1
+gdscript/warnings/unsafe_cast=1
+
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=2
-window/size/resizable=true
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
-textures/vram_compression/import_etc2_astc=true
-anti_aliasing/quality/msaa_2d=2
-anti_aliasing/quality/screen_space_aa=1
-
-[physics]
-
-2d/default_gravity=0.0
-2d/physics_ticks_per_second=60
+window/size/viewport_height=2048
+window/size/window_width_override=1152
+window/size/window_height_override=2048
+window/stretch/mode="viewport"
 
 [input]
 
@@ -62,10 +55,14 @@ ui_accept={
 limits/debugger_stdout/max_messages_per_frame=100
 limits/debugger_stdout/max_errors_per_second=100
 
-[debug]
+[physics]
 
-settings/stdout/print_fps=true
-gdscript/warnings/untyped_declaration=1
-gdscript/warnings/unsafe_property_access=1
-gdscript/warnings/unsafe_method_access=1
-gdscript/warnings/unsafe_cast=1
+2d/default_gravity=0.0
+2d/physics_ticks_per_second=60
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/msaa_2d=2

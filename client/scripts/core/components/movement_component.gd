@@ -56,7 +56,7 @@ var can_move: bool = true
 
 
 ## Returns the component class name for identification
-func get_class() -> String:
+func get_component_class() -> String:
 	return "MovementComponent"
 
 
@@ -94,7 +94,7 @@ func set_target_position(position: Vector2) -> void:
 
 
 ## Sets a path to follow
-func set_path(new_path: PackedVector2Array) -> void:
+func set_movement_path(new_path: PackedVector2Array) -> void:
 	path = new_path
 	path_index = 0
 

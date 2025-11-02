@@ -230,28 +230,31 @@ func _load_resource(path: String) -> Resource:
 		return ResourceLoader.load(path)
 
 	# Use threaded loading for large scenes
-	var status := ResourceLoader.load_threaded_request(path)
-	if status != OK:
+	var request_status: Error = ResourceLoader.load_threaded_request(path)
+	if request_status != OK:
 		push_error("Failed to start loading: " + path)
 		return null
 
 	# Poll loading progress
 	while true:
 		var progress_array: Array = []
-		status = ResourceLoader.load_threaded_get_status(path, progress_array)
+		var load_status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(path, progress_array)
 
-		if status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		if load_status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 			if progress_array.size() > 0:
 				loading_progress = progress_array[0]
 				scene_load_progress.emit(loading_progress)
 			await get_tree().process_frame
-		elif status == ResourceLoader.THREAD_LOAD_LOADED:
+		elif load_status == ResourceLoader.THREAD_LOAD_LOADED:
 			loading_progress = 1.0
 			scene_load_progress.emit(1.0)
 			return ResourceLoader.load_threaded_get(path)
 		else:
 			push_error("Failed to load resource: " + path)
 			return null
+
+	# Unreachable, but satisfies static analysis
+	return null
 
 
 ## Caches a scene for faster loading

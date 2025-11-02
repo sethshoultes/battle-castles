@@ -26,13 +26,20 @@ var next_card: Resource = null
 var match_time: float = 180.0 # 3 minutes
 var is_overtime: bool = false
 
+# Card selection state
+var selected_card: Resource = null
+var selected_slot_index: int = -1
+
 # Signals
+signal card_selected(card: Resource, slot_index: int)
+signal card_deselected()
 signal card_played(card: Resource, position: Vector2)
 signal pause_requested()
 
 func _ready() -> void:
 	_setup_ui()
 	_connect_signals()
+	_load_initial_cards()
 
 func _setup_ui() -> void:
 	# Set up elixir bar
@@ -47,8 +54,9 @@ func _setup_ui() -> void:
 	for i in range(4):
 		var card_slot = preload("res://scenes/ui/card_slot.tscn").instantiate()
 		card_slot.name = "CardSlot" + str(i)
+		card_slot.slot_index = i  # Set the slot index
 		card_hand_container.add_child(card_slot)
-		card_slot.card_dropped.connect(_on_card_dropped)
+		card_slot.card_clicked.connect(_on_card_clicked)
 
 func _connect_signals() -> void:
 	# Connect to game manager signals when implemented
@@ -132,18 +140,30 @@ func set_next_card(card: Resource) -> void:
 		pass
 
 func cycle_card(index: int) -> void:
-	if index < 0 or index >= card_hand.size():
+	if index < 0 or index >= 4:
 		return
 
-	# Move next card to played card position
-	if next_card:
-		card_hand[index] = next_card
-		var card_slot = card_hand_container.get_child(index)
-		if card_slot:
-			card_slot.set_card(next_card)
+	print("Cycling card at slot ", index)
 
-		# Request new next card from game manager
-		# This will be connected to the game manager later
+	# Get a random new card
+	var available_cards: Array = [
+		load("res://resources/cards/knight.tres"),
+		load("res://resources/cards/goblin.tres"),
+		load("res://resources/cards/archer.tres"),
+		load("res://resources/cards/giant.tres")
+	]
+
+	var new_card: CardData = available_cards[randi() % available_cards.size()]
+
+	# Update card hand
+	if index < card_hand.size():
+		card_hand[index] = new_card
+
+	# Update visual card slot
+	var card_slot = card_hand_container.get_child(index)
+	if card_slot:
+		card_slot.set_card(new_card)
+		print("  New card: ", new_card.card_name)
 
 func use_elixir(amount: float) -> bool:
 	if current_elixir >= amount:
@@ -156,13 +176,59 @@ func refund_elixir(amount: float) -> void:
 	current_elixir = min(current_elixir + amount, max_elixir)
 	_update_elixir_display()
 
-func _on_card_dropped(card: Resource, position: Vector2, slot_index: int) -> void:
-	if use_elixir(card.elixir_cost):
-		card_played.emit(card, position)
-		cycle_card(slot_index)
-	else:
-		# Show not enough elixir feedback
+func _on_card_clicked(card: Resource, slot_index: int) -> void:
+	print("Card clicked at slot ", slot_index, " - Card: ", card.card_name if card else "null")
+
+	if not card:
+		return
+
+	# Check if we have enough elixir
+	if current_elixir < card.elixir_cost:
+		print("  Not enough elixir!")
 		_show_elixir_warning()
+		return
+
+	# Deselect previous card if different
+	if selected_card and selected_slot_index != slot_index:
+		var prev_slot = card_hand_container.get_child(selected_slot_index)
+		if prev_slot:
+			prev_slot.set_selected(false)
+
+	# Toggle selection
+	if selected_slot_index == slot_index:
+		# Clicking same card deselects it
+		selected_card = null
+		selected_slot_index = -1
+		card_deselected.emit()
+		print("  Card deselected")
+	else:
+		# Select new card
+		selected_card = card
+		selected_slot_index = slot_index
+		card_selected.emit(card, slot_index)
+		print("  Card selected - waiting for battlefield click")
+
+func play_selected_card(position: Vector2) -> void:
+	if not selected_card or selected_slot_index < 0:
+		return
+
+	if use_elixir(selected_card.elixir_cost):
+		print("  Elixir spent: ", selected_card.elixir_cost)
+
+		# Emit signal to notify battlefield to spawn unit
+		card_played.emit(selected_card, position)
+
+		# Deselect and cycle card
+		var card_slot = card_hand_container.get_child(selected_slot_index)
+		if card_slot:
+			card_slot.set_selected(false)
+
+		await get_tree().create_timer(0.1).timeout
+		cycle_card(selected_slot_index)
+
+		selected_card = null
+		selected_slot_index = -1
+		card_deselected.emit()
 
 func _show_elixir_warning() -> void:
 	elixir_label.modulate = Color.RED
@@ -179,3 +245,24 @@ func pause_game() -> void:
 func resume_game() -> void:
 	# Resume timer and elixir generation
 	pass
+
+func _load_initial_cards() -> void:
+	# Load the 4 basic cards from resources
+	var knight: CardData = load("res://resources/cards/knight.tres")
+	var goblin: CardData = load("res://resources/cards/goblin.tres")
+	var archer: CardData = load("res://resources/cards/archer.tres")
+	var giant: CardData = load("res://resources/cards/giant.tres")
+
+	# Create starting hand (all 4 basic cards for now)
+	var starting_hand: Array = [knight, goblin, archer, giant]
+
+	# Create a deck with multiple copies of each card
+	card_hand = starting_hand.duplicate()
+
+	# Set up next card (for cycling)
+	next_card = knight  # Will be randomized
+
+	# Set the card hand
+	set_card_hand(starting_hand)
+
+	print("Cards loaded and initialized in battle UI")

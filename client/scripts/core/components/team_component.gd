@@ -40,7 +40,7 @@ const TEAM_NAMES: Dictionary = {
 
 
 ## Returns the component class name for identification
-func get_class() -> String:
+func get_component_class() -> String:
 	return "TeamComponent"
 
 
@@ -214,7 +214,7 @@ func deserialize(data: Dictionary) -> void:
 	if data.has("team_id"):
 		team_id = data["team_id"]
 	if data.has("team_color"):
-		team_color = Color.from_html(data["team_color"])
+		team_color = Color.html(data["team_color"])
 	if data.has("team_name"):
 		team_name = data["team_name"]
 	if data.has("hostile_to_all"):

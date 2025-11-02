@@ -166,7 +166,7 @@ run_tests() {
     log_info "Running tests..."
     cd "$PROJECT_ROOT/client"
 
-    if godot --no-window --script res://tests/run_tests.gd; then
+    if godot --headless --script res://tests/test_runner.gd; then
         log_success "All tests passed"
     else
         log_error "Tests failed. Use --skip-tests to bypass."
@@ -178,7 +178,7 @@ build_windows() {
     log_info "Building for Windows (x64)..."
 
     cd "$PROJECT_ROOT/client"
-    godot --export "Windows Desktop" "$BUILDS_DIR/windows/BattleCastles.exe" --no-window
+    godot --headless --export-release "Windows Desktop" "$BUILDS_DIR/windows/BattleCastles.exe"
 
     if [ $? -eq 0 ]; then
         log_success "Windows build completed: $BUILDS_DIR/windows/BattleCastles.exe"
@@ -202,7 +202,7 @@ build_mac() {
     log_info "Building for macOS (Universal Binary)..."
 
     cd "$PROJECT_ROOT/client"
-    godot --export "Mac OSX" "$BUILDS_DIR/mac/BattleCastles.zip" --no-window
+    godot --headless --export-release "Mac OSX" "$BUILDS_DIR/mac/BattleCastles.zip"
 
     if [ $? -eq 0 ]; then
         log_success "macOS build completed: $BUILDS_DIR/mac/BattleCastles.zip"
@@ -235,7 +235,7 @@ build_linux() {
     log_info "Building for Linux (x64)..."
 
     cd "$PROJECT_ROOT/client"
-    godot --export "Linux/X11" "$BUILDS_DIR/linux/BattleCastles.x86_64" --no-window
+    godot --headless --export-release "Linux/X11" "$BUILDS_DIR/linux/BattleCastles.x86_64"
 
     if [ $? -eq 0 ]; then
         chmod +x "$BUILDS_DIR/linux/BattleCastles.x86_64"
@@ -268,7 +268,7 @@ build_raspberry_pi() {
     log_info "Building for Raspberry Pi 5 (ARM64)..."
 
     cd "$PROJECT_ROOT/client"
-    godot --export "Linux ARM64 (Raspberry Pi 5)" "$BUILDS_DIR/linux-arm64/BattleCastles.arm64" --no-window
+    godot --headless --export-release "Linux ARM64 (Raspberry Pi 5)" "$BUILDS_DIR/linux-arm64/BattleCastles.arm64"
 
     if [ $? -eq 0 ]; then
         chmod +x "$BUILDS_DIR/linux-arm64/BattleCastles.arm64"

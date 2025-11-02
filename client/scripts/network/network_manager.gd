@@ -1,7 +1,6 @@
 extends Node
 
 # Singleton for managing WebSocket connection to game server
-class_name NetworkManager
 
 signal connected()
 signal disconnected()
@@ -271,7 +270,7 @@ func _handle_connection_error(error: String) -> void:
 func get_connection_state() -> ConnectionState:
 	return _connection_state
 
-func is_connected() -> bool:
+func is_server_connected() -> bool:
 	return _connection_state == ConnectionState.CONNECTED
 
 func get_player_id() -> String:

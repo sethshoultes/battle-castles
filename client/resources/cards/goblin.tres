@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+card_name = "Goblin Squad"
+description = "Three fast, unarmored melee attackers. Small, fast, and weak. Surround your enemies!"
+rarity = "Common"
+elixir_cost = 2
+unit_type = "goblin"
+deploy_count = 3
+deploy_time = 1.0
+hitpoints = 160
+damage = 50
+attack_speed = 0.8
+movement_speed = 90.0
+attack_range = 0.5
+target_type = "Ground"
+targets_buildings_only = false
+flies = false
+splash_damage = false
+hp_growth = 1.1
+damage_growth = 1.1
+color_modulate = Color(0.3, 0.8, 0.3, 1)

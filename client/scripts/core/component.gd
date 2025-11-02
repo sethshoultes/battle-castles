@@ -21,8 +21,8 @@ func on_detached() -> void:
 
 
 ## Virtual method to get the component class name for identification
-func get_class() -> String:
-	push_error("Component subclass must override get_class() method")
+func get_component_class() -> String:
+	push_error("Component subclass must override get_component_class() method")
 	return "Component"
 
 
@@ -67,7 +67,7 @@ func on_disabled() -> void:
 ## Returns a dictionary representation of the component's data for serialization
 func serialize() -> Dictionary:
 	return {
-		"class": get_class(),
+		"class": get_component_class(),
 		"enabled": enabled
 	}
 

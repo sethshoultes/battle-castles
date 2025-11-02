@@ -1,7 +1,7 @@
 ## Base Entity class for the Entity-Component-System architecture
 ## Entities are containers that hold components and represent game objects
 class_name Entity
-extends Node
+extends Node2D
 
 ## Dictionary storing all components attached to this entity
 var _components: Dictionary = {}
@@ -24,7 +24,7 @@ func add_component(component: Component) -> bool:
 		push_error("Cannot add null component to entity")
 		return false
 
-	var component_class: String = component.get_class()
+	var component_class: String = component.get_component_class()
 
 	if has_component(component_class):
 		push_warning("Entity already has component of type: " + component_class)
@@ -33,9 +33,8 @@ func add_component(component: Component) -> bool:
 	_components[component_class] = component
 	component.entity = self
 
-	# Add component as child if it extends Node
-	if component is Node and not component.is_inside_tree():
-		add_child(component)
+	# Components are Resources, not Nodes, so they don't need to be added to scene tree
+	# If you need Node-based components, consider a different architecture
 
 	component.on_attached()
 	return true
@@ -65,9 +64,8 @@ func remove_component(component_class: String) -> bool:
 	var component: Component = _components[component_class]
 	component.on_detached()
 
-	# Remove from scene tree if it's a Node
-	if component is Node and component.is_inside_tree():
-		component.queue_free()
+	# Components are Resources, not Nodes, so no need to remove from scene tree
+	# Resource cleanup is handled by Godot's reference counting
 
 	_components.erase(component_class)
 	return true
@@ -95,7 +93,7 @@ func destroy() -> void:
 
 
 ## Returns a string representation of this entity for debugging
-func to_string() -> String:
+func _to_string() -> String:
 	var component_names: Array = []
 	for key in _components.keys():
 		component_names.append(key)

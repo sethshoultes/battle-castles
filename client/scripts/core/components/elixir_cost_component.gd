@@ -25,7 +25,7 @@ var cost_reduction: int = 0
 
 
 ## Returns the component class name for identification
-func get_class() -> String:
+func get_component_class() -> String:
 	return "ElixirCostComponent"
 
 

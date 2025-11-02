@@ -37,7 +37,7 @@ extends Component
 var has_taken_first_hit: bool = false
 
 
-func get_class() -> String:
+func get_component_class() -> String:
 	return "StatsComponent"
 
 

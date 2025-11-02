@@ -201,7 +201,7 @@ func validate_file(file_path: String, schema_name: String) -> bool:
 	# Check required fields
 	for field in schema["required"]:
 		if not data.has(field):
-			var error := "Missing required field '" + field + "' in " + file_path
+			var error: String = "Missing required field '" + field + "' in " + file_path
 			last_validation_errors.append(error)
 			return false
 
@@ -212,7 +212,7 @@ func validate_file(file_path: String, schema_name: String) -> bool:
 				var expected_type: int = schema["types"][field]
 				var actual_type: int = typeof(data[field])
 				if actual_type != expected_type:
-					var error := "Type mismatch for field '" + field + "' in " + file_path
+					var error: String = "Type mismatch for field '" + field + "' in " + file_path
 					last_validation_errors.append(error)
 					return false
 
@@ -257,7 +257,7 @@ func _check_for_corruption() -> bool:
 				file.close()
 
 				if size < 10:  # Suspiciously small
-					var error := "Potentially corrupted file (too small): " + file_path
+					var error: String = "Potentially corrupted file (too small): " + file_path
 					last_validation_errors.append(error)
 					corrupted_data_detected.emit(file_path, error)
 					all_clean = false
@@ -332,7 +332,7 @@ func _clean_old_backups() -> void:
 		return
 
 	# Get all backup folders
-	var backups: Array = []
+	var backups: Array[String] = []
 	dir.list_dir_begin()
 	var file_name := dir.get_next()
 	while file_name != "":
@@ -346,7 +346,7 @@ func _clean_old_backups() -> void:
 
 	# Remove oldest if exceeding max
 	while backups.size() > max_backups:
-		var oldest := backups.pop_front()
+		var oldest: String = backups.pop_front()
 		_delete_directory_recursive(backup_directory + oldest)
 		print("Deleted old backup: ", oldest)
 

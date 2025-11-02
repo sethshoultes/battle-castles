@@ -43,9 +43,7 @@ var battle_manager: BattleManager
 var elixir_manager: ElixirManager
 
 # State
-var selected_card_cost: int = 0
-var is_placing_unit: bool = false
-var placement_preview: Sprite2D = null
+var battle_ui: Control = null
 
 # Deployment zone highlighting
 var player_deploy_area: Rect2
@@ -57,6 +55,8 @@ func _ready() -> void:
 	setup_camera()
 	setup_towers()
 	draw_grid_visual()
+	connect_battle_ui()
+	start_ai_timer()
 
 func setup_battlefield() -> void:
 	# Set up deployment zone rectangles
@@ -91,15 +91,15 @@ func setup_camera() -> void:
 func setup_towers() -> void:
 	# Position player towers (bottom of field)
 	if player_left_tower:
-		player_left_tower.position = grid_to_world(Vector2i(3, 27))
+		player_left_tower.position = grid_to_world(Vector2i(3, 23))
 		player_left_tower.team = TEAM_PLAYER
 
 	if player_right_tower:
-		player_right_tower.position = grid_to_world(Vector2i(14, 27))
+		player_right_tower.position = grid_to_world(Vector2i(14, 23))
 		player_right_tower.team = TEAM_PLAYER
 
 	if player_castle:
-		player_castle.position = grid_to_world(Vector2i(8, 30))
+		player_castle.position = grid_to_world(Vector2i(8, 26))
 		player_castle.team = TEAM_PLAYER
 		player_castle.linked_towers = [
 			player_left_tower.get_path(),
@@ -224,12 +224,123 @@ func can_deploy_at_position(world_pos: Vector2, team: int) -> bool:
 
 func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 	if not can_deploy_at_position(position, team):
+		print("Cannot deploy unit at position: ", position)
 		return null
 
-	# Unit spawning logic will be implemented here
-	# For now, return null as placeholder
+	print("Spawning ", unit_type, " at ", position, " for team ", team)
 
-	return null
+	# Load the SimpleUnit script
+	var SimpleUnitScript = load("res://scripts/battle/simple_unit.gd")
+	var unit = CharacterBody2D.new()
+	unit.set_script(SimpleUnitScript)
+	unit.position = position
+
+	print("Creating unit at position: ", position, " for team: ", team)
+
+	# Load card data FIRST
+	var card_path = "res://resources/cards/" + unit_type + ".tres"
+	var card_data: CardData = load(card_path)
+
+	print("  Loaded card data: ", card_data.card_name if card_data else "NULL")
+
+	# Set data directly on unit BEFORE adding children
+	unit.unit_type = unit_type
+	unit.team = team
+	unit.card_data = card_data
+
+	# Get unit-specific visuals
+	var unit_visuals = _get_unit_visuals(unit_type)
+
+	# Add visual representation
+	var sprite = ColorRect.new()
+	sprite.size = unit_visuals.size
+	sprite.position = Vector2(-unit_visuals.size.x / 2, -unit_visuals.size.y)
+	sprite.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	# Color based on team and unit type
+	if team == TEAM_PLAYER:
+		sprite.color = unit_visuals.player_color
+	else:
+		sprite.color = unit_visuals.enemy_color
+
+	unit.add_child(sprite)
+
+	# Add unit name label - ABOVE the unit
+	var label = Label.new()
+	label.text = unit_visuals.display_name
+	label.position = Vector2(-25, -unit_visuals.size.y - 20)
+	label.add_theme_font_size_override("font_size", 12)
+	label.add_theme_color_override("font_color", Color.WHITE)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 2)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	unit.add_child(label)
+
+	# Add health bar
+	var health_bar = ProgressBar.new()
+	health_bar.position = Vector2(-20, -55)
+	health_bar.size = Vector2(40, 5)
+	health_bar.show_percentage = false
+	health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	unit.add_child(health_bar)
+
+	# Add collision shape
+	var collision_shape = CollisionShape2D.new()
+	var shape = RectangleShape2D.new()
+	shape.size = Vector2(30, 40)
+	collision_shape.shape = shape
+	collision_shape.position = Vector2(0, -24)
+	unit.add_child(collision_shape)
+
+	# Set collision layers
+	unit.collision_layer = 1
+	unit.collision_mask = 1
+
+	# Add unit to scene
+	units_container.add_child(unit)
+
+	print("  Unit added to scene with team: ", team, " and type: ", unit_type)
+	return unit
+
+func _get_unit_visuals(unit_type: String) -> Dictionary:
+	# Returns visual properties for each unit type
+	match unit_type:
+		"knight":
+			return {
+				"display_name": "KNIGHT",
+				"size": Vector2(36, 52),
+				"player_color": Color(0.2, 0.4, 0.9),  # Bright Blue
+				"enemy_color": Color(0.9, 0.2, 0.2)    # Bright Red
+			}
+		"goblin":
+			return {
+				"display_name": "GOBLIN",
+				"size": Vector2(28, 40),
+				"player_color": Color(0.3, 0.8, 0.3),  # Bright Green
+				"enemy_color": Color(0.9, 0.5, 0.1)    # Orange
+			}
+		"archer":
+			return {
+				"display_name": "ARCHER",
+				"size": Vector2(32, 48),
+				"player_color": Color(0.6, 0.3, 0.9),  # Purple
+				"enemy_color": Color(0.9, 0.3, 0.5)    # Pink
+			}
+		"giant":
+			return {
+				"display_name": "GIANT",
+				"size": Vector2(50, 70),
+				"player_color": Color(0.5, 0.5, 0.5),  # Gray
+				"enemy_color": Color(0.7, 0.1, 0.1)    # Dark Red
+			}
+		_:
+			# Default fallback
+			return {
+				"display_name": unit_type.to_upper(),
+				"size": Vector2(32, 48),
+				"player_color": Color(0.5, 0.5, 0.8),
+				"enemy_color": Color(0.8, 0.3, 0.3)
+			}
 
 func highlight_deployment_zone(team: int, highlight: bool) -> void:
 	# Visual feedback for deployment zones
@@ -237,63 +348,18 @@ func highlight_deployment_zone(team: int, highlight: bool) -> void:
 	queue_redraw()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion and is_placing_unit:
-		# Update placement preview position
-		if placement_preview:
-			placement_preview.position = get_global_mouse_position()
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		# Check if we have a selected card
+		if battle_ui and battle_ui.selected_card:
+			# Get mouse position in battlefield coordinates
+			var mouse_pos = get_global_mouse_position()
 
-			# Snap to grid
-			var grid_pos := world_to_grid(placement_preview.position)
-			placement_preview.position = grid_to_world(grid_pos)
-
-			# Update preview validity visual
-			var valid := can_deploy_at_position(placement_preview.position, TEAM_PLAYER)
-			placement_preview.modulate = Color.GREEN if valid else Color.RED
-
-	elif event is InputEventMouseButton and event.pressed and is_placing_unit:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			# Try to place unit
-			attempt_unit_placement(get_global_mouse_position())
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			# Cancel placement
-			cancel_unit_placement()
-
-func start_unit_placement(unit_type: String, cost: int) -> void:
-	is_placing_unit = true
-	selected_card_cost = cost
-
-	# Create placement preview
-	# This will be expanded when we have unit sprites
-	create_placement_preview(unit_type)
-
-func create_placement_preview(unit_type: String) -> void:
-	# Placeholder for preview creation
-	# Will be implemented with actual unit sprites
-	pass
-
-func attempt_unit_placement(position: Vector2) -> void:
-	if not elixir_manager or not elixir_manager.can_afford(selected_card_cost):
-		# Not enough elixir
-		cancel_unit_placement()
-		return
-
-	if can_deploy_at_position(position, TEAM_PLAYER):
-		# Spend elixir and spawn unit
-		if elixir_manager.spend(selected_card_cost):
-			spawn_unit("placeholder", position, TEAM_PLAYER)
-			cancel_unit_placement()
-	else:
-		# Invalid position
-		# Could show error feedback here
-		pass
-
-func cancel_unit_placement() -> void:
-	is_placing_unit = false
-	selected_card_cost = 0
-
-	if placement_preview:
-		placement_preview.queue_free()
-		placement_preview = null
+			# Check if click is in valid deployment zone
+			if can_deploy_at_position(mouse_pos, TEAM_PLAYER):
+				# Tell BattleUI to play the selected card at this position
+				battle_ui.play_selected_card(mouse_pos)
+			else:
+				print("Invalid deployment position")
 
 func set_managers(battle: BattleManager, elixir: ElixirManager) -> void:
 	battle_manager = battle
@@ -312,3 +378,80 @@ func set_managers(battle: BattleManager, elixir: ElixirManager) -> void:
 		opponent_right_tower.tower_destroyed.connect(battle_manager.tower_destroyed)
 	if opponent_castle:
 		opponent_castle.tower_destroyed.connect(battle_manager.tower_destroyed)
+
+func connect_battle_ui() -> void:
+	# Find and connect to BattleUI
+	battle_ui = get_node_or_null("UI/BattleUI")
+	if battle_ui:
+		print("✅ SUCCESS: BattleUI FOUND AND CONNECTED!")
+		battle_ui.card_selected.connect(_on_card_selected)
+		battle_ui.card_deselected.connect(_on_card_deselected)
+		battle_ui.card_played.connect(_on_card_played)
+	else:
+		print("❌ ERROR: BattleUI not found - trying alternate paths...")
+		# Try different paths
+		battle_ui = get_node_or_null("/root/Battlefield/UI/BattleUI")
+		if battle_ui:
+			print("✅ Found BattleUI at absolute path!")
+			battle_ui.card_selected.connect(_on_card_selected)
+			battle_ui.card_deselected.connect(_on_card_deselected)
+			battle_ui.card_played.connect(_on_card_played)
+		else:
+			print("❌ FAILED: Could not find BattleUI anywhere!")
+
+func _on_card_selected(card: Resource, slot_index: int) -> void:
+	print("Card selected: ", card.card_name if card else "null", " at slot ", slot_index)
+	# Card is now selected - waiting for battlefield click
+
+func _on_card_deselected() -> void:
+	print("Card deselected")
+
+func _on_card_played(card: Resource, position: Vector2) -> void:
+	print("Card played! Type: ", card.unit_type if card else "null", " Position: ", position)
+
+	if not card:
+		return
+
+	# Spawn the unit
+	var unit = spawn_unit(card.unit_type, position, TEAM_PLAYER)
+
+	if unit:
+		print("Player deployed: ", card.card_name)
+
+# AI Enemy System
+var ai_timer: Timer
+var ai_cards: Array = []
+
+func start_ai_timer() -> void:
+	# Load AI cards
+	ai_cards = [
+		load("res://resources/cards/knight.tres"),
+		load("res://resources/cards/goblin.tres"),
+		load("res://resources/cards/archer.tres"),
+		load("res://resources/cards/giant.tres")
+	]
+
+	# Create AI timer
+	ai_timer = Timer.new()
+	ai_timer.wait_time = 5.0  # Deploy every 5 seconds (balanced)
+	ai_timer.autostart = true
+	ai_timer.timeout.connect(_on_ai_timer_timeout)
+	add_child(ai_timer)
+	print("AI system started - deploying every 5 seconds")
+
+func _on_ai_timer_timeout() -> void:
+	# Randomly deploy an AI unit
+	if ai_cards.is_empty():
+		return
+
+	var random_card: CardData = ai_cards[randi() % ai_cards.size()]
+
+	# Random position in opponent deployment zone
+	var random_x = randf_range(opponent_deploy_area.position.x + 100, opponent_deploy_area.position.x + opponent_deploy_area.size.x - 100)
+	var random_y = randf_range(opponent_deploy_area.position.y + 100, opponent_deploy_area.position.y + opponent_deploy_area.size.y - 100)
+	var spawn_pos = Vector2(random_x, random_y)
+
+	var unit = spawn_unit(random_card.unit_type, spawn_pos, TEAM_OPPONENT)
+
+	if unit:
+		print("AI deployed: ", random_card.card_name, " at ", spawn_pos)

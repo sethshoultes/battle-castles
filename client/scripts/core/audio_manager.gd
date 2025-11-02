@@ -409,7 +409,7 @@ func _on_sound_finished(player: AudioStreamPlayer2D) -> void:
 func _find_audio_file(base_path: String) -> String:
 	"""Find an audio file with any supported extension"""
 	for ext in AUDIO_EXTENSIONS:
-		var full_path := base_path + "." + ext
+		var full_path: String = base_path + "." + ext
 		if ResourceLoader.exists(full_path):
 			return full_path
 	return ""

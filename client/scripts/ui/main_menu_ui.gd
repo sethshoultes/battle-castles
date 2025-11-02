@@ -55,56 +55,74 @@ func _ready() -> void:
 
 func _setup_ui() -> void:
 	# Set up button styles and text
-	play_button.text = "BATTLE"
-	play_button.custom_minimum_size = Vector2(200, 60)
+	if play_button:
+		play_button.text = "BATTLE"
+		play_button.custom_minimum_size = Vector2(200, 60)
 
-	deck_builder_button.text = "DECK"
-	settings_button.text = "SETTINGS"
-	shop_button.text = "SHOP"
-	quit_button.text = "QUIT"
+	if deck_builder_button:
+		deck_builder_button.text = "DECK"
+	if settings_button:
+		settings_button.text = "SETTINGS"
+	if shop_button:
+		shop_button.text = "SHOP"
+	if quit_button:
+		quit_button.text = "QUIT"
 
 	# Set version
-	version_label.text = "v0.1.0-alpha"
+	if version_label:
+		version_label.text = "v0.1.0-alpha"
 
 	# Initialize chest slots
-	_setup_chest_slots()
+	if chest_container:
+		_setup_chest_slots()
 
 	# Hide matchmaking popup initially
-	matchmaking_popup.visible = false
+	if matchmaking_popup:
+		matchmaking_popup.visible = false
 
 func _connect_signals() -> void:
-	play_button.pressed.connect(_on_play_pressed)
-	deck_builder_button.pressed.connect(_on_deck_builder_pressed)
-	settings_button.pressed.connect(_on_settings_pressed)
-	shop_button.pressed.connect(_on_shop_pressed)
-	quit_button.pressed.connect(_on_quit_pressed)
-	cancel_matchmaking_button.pressed.connect(_cancel_matchmaking)
+	if play_button:
+		play_button.pressed.connect(_on_play_pressed)
+	if deck_builder_button:
+		deck_builder_button.pressed.connect(_on_deck_builder_pressed)
+	if settings_button:
+		settings_button.pressed.connect(_on_settings_pressed)
+	if shop_button:
+		shop_button.pressed.connect(_on_shop_pressed)
+	if quit_button:
+		quit_button.pressed.connect(_on_quit_pressed)
+	if cancel_matchmaking_button:
+		cancel_matchmaking_button.pressed.connect(_cancel_matchmaking)
 
 	# Profile interaction
-	profile_panel.gui_input.connect(_on_profile_input)
+	if profile_panel:
+		profile_panel.gui_input.connect(_on_profile_input)
 
 func _animate_entrance() -> void:
 	# Animate title
-	title_label.modulate.a = 0.0
-	var title_tween = create_tween()
-	title_tween.tween_property(title_label, "modulate:a", 1.0, 1.0)
-	title_tween.tween_property(title_label, "position:y", title_label.position.y, 0.5)\
-		.from(title_label.position.y - 50)
+	if title_label:
+		title_label.modulate.a = 0.0
+		var title_tween = create_tween()
+		title_tween.tween_property(title_label, "modulate:a", 1.0, 1.0)
+		title_tween.tween_property(title_label, "position:y", title_label.position.y, 0.5)\
+			.from(title_label.position.y - 50)
 
 	# Animate buttons
 	var delay = 0.1
 	for button in [play_button, deck_builder_button, settings_button, shop_button, quit_button]:
-		button.modulate.a = 0.0
-		var tween = create_tween()
-		tween.tween_interval(delay)
-		tween.tween_property(button, "modulate:a", 1.0, 0.3)
-		delay += 0.1
+		if button:
+			button.modulate.a = 0.0
+			var tween = create_tween()
+			tween.tween_interval(delay)
+			tween.tween_property(button, "modulate:a", 1.0, 0.3)
+			delay += 0.1
 
 	# Animate profile panel
-	profile_panel.modulate.a = 0.0
-	var profile_tween = create_tween()
-	profile_tween.tween_interval(0.5)
-	profile_tween.tween_property(profile_panel, "modulate:a", 1.0, 0.5)
+	if profile_panel:
+		profile_panel.modulate.a = 0.0
+		var profile_tween = create_tween()
+		profile_tween.tween_interval(0.5)
+		profile_tween.tween_property(profile_panel, "modulate:a", 1.0, 0.5)
 
 func _load_player_data() -> void:
 	# Load from save or server
@@ -122,12 +140,18 @@ func _load_player_data() -> void:
 
 func _update_profile_display() -> void:
 	if not player_data.is_empty():
-		player_name_label.text = player_data.get("name", "Player")
-		player_level_label.text = "Level " + str(player_data.get("level", 1))
-		trophy_count_label.text = str(player_data.get("trophies", 0))
-		gold_count_label.text = str(player_data.get("gold", 0))
-		gem_count_label.text = str(player_data.get("gems", 0))
-		arena_name_label.text = player_data.get("arena", "Training Camp")
+		if player_name_label:
+			player_name_label.text = player_data.get("name", "Player")
+		if player_level_label:
+			player_level_label.text = "Level " + str(player_data.get("level", 1))
+		if trophy_count_label:
+			trophy_count_label.text = str(player_data.get("trophies", 0))
+		if gold_count_label:
+			gold_count_label.text = str(player_data.get("gold", 0))
+		if gem_count_label:
+			gem_count_label.text = str(player_data.get("gems", 0))
+		if arena_name_label:
+			arena_name_label.text = player_data.get("arena", "Training Camp")
 
 func _setup_chest_slots() -> void:
 	# Create 4 chest slots
@@ -148,23 +172,54 @@ func _setup_chest_slots() -> void:
 		chest_container.add_child(chest_slot)
 
 func _on_play_pressed() -> void:
-	_start_matchmaking()
+	print("BATTLE button pressed - Loading battle scene...")
+	if play_button:
+		_animate_button_press(play_button)
+	if title_label:
+		title_label.text = "STARTING BATTLE..."
 	play_pressed.emit()
 
+	# Load battle scene
+	await get_tree().create_timer(0.5).timeout  # Brief delay for visual feedback
+	get_tree().change_scene_to_file("res://scenes/battle/battlefield.tscn")
+
 func _on_deck_builder_pressed() -> void:
-	_animate_button_press(deck_builder_button)
+	print("DECK button pressed - Loading deck builder...")
+	if deck_builder_button:
+		_animate_button_press(deck_builder_button)
+	if title_label:
+		title_label.text = "DECK BUILDER"
 	deck_builder_pressed.emit()
 
+	# Load deck builder scene
+	await get_tree().create_timer(0.3).timeout
+	get_tree().change_scene_to_file("res://scenes/ui/deck_builder.tscn")
+
 func _on_settings_pressed() -> void:
-	_animate_button_press(settings_button)
+	print("SETTINGS button pressed - Loading settings...")
+	if settings_button:
+		_animate_button_press(settings_button)
+	if title_label:
+		title_label.text = "SETTINGS"
 	settings_pressed.emit()
 
+	# Load settings scene
+	await get_tree().create_timer(0.3).timeout
+	get_tree().change_scene_to_file("res://scenes/ui/settings_menu.tscn")
+
 func _on_shop_pressed() -> void:
-	_animate_button_press(shop_button)
+	print("SHOP button pressed!")
+	if shop_button:
+		_animate_button_press(shop_button)
+	if title_label:
+		title_label.text = "SHOP - Coming Soon"
 	shop_pressed.emit()
+	# Shop scene not implemented yet
 
 func _on_quit_pressed() -> void:
-	_animate_button_press(quit_button)
+	print("QUIT button pressed!")
+	if quit_button:
+		_animate_button_press(quit_button)
 	quit_pressed.emit()
 	get_tree().quit()
 
@@ -180,29 +235,33 @@ func _animate_button_press(button: Button) -> void:
 func _start_matchmaking() -> void:
 	is_searching_match = true
 	matchmaking_timer = 0.0
-	matchmaking_popup.visible = true
-	matchmaking_label.text = "Searching for opponent..."
-	play_button.disabled = true
-
-	# Animate popup appearance
-	matchmaking_popup.scale = Vector2(0.8, 0.8)
-	matchmaking_popup.modulate.a = 0.0
-	var tween = create_tween()
-	tween.set_parallel()
-	tween.tween_property(matchmaking_popup, "scale", Vector2.ONE, 0.3)\
-		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	tween.tween_property(matchmaking_popup, "modulate:a", 1.0, 0.2)
+	if matchmaking_popup:
+		matchmaking_popup.visible = true
+		# Animate popup appearance
+		matchmaking_popup.scale = Vector2(0.8, 0.8)
+		matchmaking_popup.modulate.a = 0.0
+		var tween = create_tween()
+		tween.set_parallel()
+		tween.tween_property(matchmaking_popup, "scale", Vector2.ONE, 0.3)\
+			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tween.tween_property(matchmaking_popup, "modulate:a", 1.0, 0.2)
+	if matchmaking_label:
+		matchmaking_label.text = "Searching for opponent..."
+	if play_button:
+		play_button.disabled = true
 
 func _cancel_matchmaking() -> void:
 	is_searching_match = false
-	play_button.disabled = false
+	if play_button:
+		play_button.disabled = false
 
 	# Animate popup disappearance
-	var tween = create_tween()
-	tween.set_parallel()
-	tween.tween_property(matchmaking_popup, "scale", Vector2(0.8, 0.8), 0.2)
-	tween.tween_property(matchmaking_popup, "modulate:a", 0.0, 0.2)
-	tween.finished.connect(func(): matchmaking_popup.visible = false)
+	if matchmaking_popup:
+		var tween = create_tween()
+		tween.set_parallel()
+		tween.tween_property(matchmaking_popup, "scale", Vector2(0.8, 0.8), 0.2)
+		tween.tween_property(matchmaking_popup, "modulate:a", 0.0, 0.2)
+		tween.finished.connect(func(): matchmaking_popup.visible = false)
 
 func _process(delta: float) -> void:
 	if is_searching_match:

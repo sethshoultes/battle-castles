@@ -35,7 +35,7 @@ func _init() -> void:
 
 
 ## Returns the component class name for identification
-func get_class() -> String:
+func get_component_class() -> String:
 	return "HealthComponent"
 
 

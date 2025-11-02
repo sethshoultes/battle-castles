@@ -152,11 +152,11 @@ func healing_popup(position: Vector2, amount: int) -> void:
 
 
 ## Squash and stretch animation
-func squash_stretch(node: Node2D, intensity: float = 1.2, duration: float = 0.2) -> void:
+func squash_stretch(node: CanvasItem, intensity: float = 1.2, duration: float = 0.2) -> void:
 	if not node:
 		return
 
-	var original_scale := node.scale
+	var original_scale: Vector2 = node.scale
 
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT)
@@ -173,11 +173,11 @@ func squash_stretch(node: Node2D, intensity: float = 1.2, duration: float = 0.2)
 
 
 ## Bounce animation
-func bounce(node: Node2D, height: float = 20.0, bounces: int = 2, duration: float = 0.5) -> void:
+func bounce(node: CanvasItem, height: float = 20.0, bounces: int = 2, duration: float = 0.5) -> void:
 	if not node:
 		return
 
-	var original_y := node.position.y
+	var original_y: float = node.position.y
 
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT)
@@ -192,12 +192,12 @@ func bounce(node: Node2D, height: float = 20.0, bounces: int = 2, duration: floa
 
 
 ## Pulse animation (for emphasis)
-func pulse(node: Node2D, scale_multiplier: float = 1.2, duration: float = 0.3, loops: int = 1) -> void:
+func pulse(node: CanvasItem, scale_multiplier: float = 1.2, duration: float = 0.3, loops: int = 1) -> void:
 	if not node:
 		return
 
-	var original_scale := node.scale
-	var target_scale := original_scale * scale_multiplier
+	var original_scale: Vector2 = node.scale
+	var target_scale: Vector2 = original_scale * scale_multiplier
 
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
@@ -211,11 +211,11 @@ func pulse(node: Node2D, scale_multiplier: float = 1.2, duration: float = 0.3, l
 
 
 ## Shake a specific node
-func shake_node(node: Node2D, intensity: float = 10.0, duration: float = 0.3) -> void:
+func shake_node(node: CanvasItem, intensity: float = 10.0, duration: float = 0.3) -> void:
 	if not node:
 		return
 
-	var original_pos := node.position
+	var original_pos: Vector2 = node.position
 	var shake_count := int(duration * 60)  # Shake at 60fps
 
 	var tween := create_tween()
@@ -234,11 +234,11 @@ func shake_node(node: Node2D, intensity: float = 10.0, duration: float = 0.3) ->
 
 
 ## Pop-in animation (for spawning)
-func pop_in(node: Node2D, duration: float = 0.3) -> void:
+func pop_in(node: CanvasItem, duration: float = 0.3) -> void:
 	if not node:
 		return
 
-	var original_scale := node.scale
+	var original_scale: Vector2 = node.scale
 	node.scale = Vector2.ZERO
 
 	var tween := create_tween()
@@ -251,7 +251,7 @@ func pop_in(node: Node2D, duration: float = 0.3) -> void:
 
 
 ## Pop-out animation (for destruction)
-func pop_out(node: Node2D, duration: float = 0.2) -> void:
+func pop_out(node: CanvasItem, duration: float = 0.2) -> void:
 	if not node:
 		return
 
@@ -300,7 +300,7 @@ func slide_in(node: Control, from: Vector2, duration: float = 0.3) -> void:
 	if not node:
 		return
 
-	var original_pos := node.position
+	var original_pos: Vector2 = node.position
 	node.position = from
 
 	var tween := create_tween()
@@ -313,7 +313,7 @@ func slide_in(node: Control, from: Vector2, duration: float = 0.3) -> void:
 
 
 ## Impact effect (combines shake, flash, and hitstop)
-func impact(node: Node2D, intensity: float = 1.0) -> void:
+func impact(node: CanvasItem, intensity: float = 1.0) -> void:
 	if not node:
 		return
 
