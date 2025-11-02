@@ -38,6 +38,7 @@ script = ExtResource("1_battlefield")
 z_index = -10
 
 [node name="GrassSprite" type="Sprite2D" parent="Background"]
+texture_repeat = 2
 position = Vector2(576, 896)
 texture = ExtResource("10_grass")
 region_enabled = true
@@ -53,6 +54,7 @@ z_index = -4
 z_index = -3
 
 [node name="RiverSprite" type="Sprite2D" parent="River"]
+texture_repeat = 2
 position = Vector2(576, 896)
 texture = ExtResource("11_river")
 region_enabled = true
