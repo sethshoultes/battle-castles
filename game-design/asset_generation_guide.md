@@ -132,6 +132,8 @@ Referenced in CardData resources (card_data.gd:9)
 
 - `river_texture.png` (tileable, 256x256px or larger)
 - `grass_texture.png` (tileable, 256x256px or larger)
+- `bridge_left.png` (wooden bridge, 256x128px or larger)
+- `bridge_right.png` (wooden bridge, 256x128px or larger)
 - `deployment_zone_player.png` (overlay, semi-transparent)
 - `deployment_zone_enemy.png` (overlay, semi-transparent)
 - `grid_overlay.png` (optional decorative grid)
@@ -230,17 +232,17 @@ A square portrait icon of a cartoon giant character for a mobile game card, faci
 
 ### 2b. Additional Troop Card Icons
 
-#### Barbarians Card Icon []
+#### Barbarians Card Icon [x]
 ```
 A square portrait icon of a cartoon barbarian warrior for a mobile game card, facing forward, fierce bearded warrior with horned helmet, muscular build, holding large sword or axe, orange-brown fur and leather armor, fierce battle cry expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Musketeer Card Icon []
+#### Musketeer Card Icon [x]
 ```
 A square portrait icon of a cartoon musketeer character for a mobile game card, facing forward, elegant female musketeer with feathered hat, holding long rifle/musket, blue uniform with gold trim, confident expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Mini PEKKA Card Icon []
+#### Mini PEKKA Card Icon [x]
 ```
 A square portrait icon of a cartoon robot knight character for a mobile game card, facing forward, compact armored robot with glowing eyes, metallic dark blue armor, holding large sword, menacing but cartoonish appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
@@ -432,6 +434,16 @@ A top-down view of a flowing river texture for a mobile game battlefield, cartoo
 #### Grass Battlefield Ground [x]
 ```
 A top-down view of grass terrain texture for a mobile game battlefield, cartoon-style green grass with subtle variation, simple blades of grass detail, vibrant green colors, tileable seamless texture, Clash Royale art style, clean background pattern, PNG format
+```
+
+#### Bridge Left []
+```
+A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks with rope railings, brown wood texture, medieval fantasy style, spans across water, positioned at left side of river, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, horizontal orientation, PNG with alpha channel
+```
+
+#### Bridge Right []
+```
+A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks with rope railings, brown wood texture, medieval fantasy style, spans across water, positioned at right side of river, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, horizontal orientation, PNG with alpha channel
 ```
 
 #### Deployment Zone Highlight (Player) [x]
