@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/deck_builder_ui.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/card_frame_common.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/card_frame_rare.png" id="3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/card_frame_epic.png" id="4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/card_frame_legendary.png" id="5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/card_frame.png" id="6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.1, 0.1, 0.15, 0.95)

@@ -397,22 +397,22 @@ A cartoon-style explosion effect for a mobile game, large rubble and stone debri
 
 ### 6. Battlefield Elements
 
-#### River Texture []
+#### River Texture [x]
 ```
 A top-down view of a flowing river texture for a mobile game battlefield, cartoon-style water with gentle waves, blue-green colors, white foam highlights, simple repeating pattern, tileable seamless texture, Clash Royale art style, clean and vibrant, PNG format
 ```
 
-#### Grass Battlefield Ground []
+#### Grass Battlefield Ground [x]
 ```
 A top-down view of grass terrain texture for a mobile game battlefield, cartoon-style green grass with subtle variation, simple blades of grass detail, vibrant green colors, tileable seamless texture, Clash Royale art style, clean background pattern, PNG format
 ```
 
-#### Deployment Zone Highlight (Player) []
+#### Deployment Zone Highlight (Player) [x]
 ```
 A semi-transparent glowing area indicator for a mobile game, circular or rectangular boundary with pulsing blue light edges, magical energy effect, very transparent center, top-down view, Clash Royale UI style overlay, PNG with alpha channel
 ```
 
-#### Deployment Zone Highlight (Enemy) []
+#### Deployment Zone Highlight (Enemy) [x]
 ```
 A semi-transparent glowing area indicator for a mobile game, circular or rectangular boundary with pulsing red light edges, magical energy effect, very transparent center, top-down view, Clash Royale UI style overlay, PNG with alpha channel
 ```
@@ -421,7 +421,7 @@ A semi-transparent glowing area indicator for a mobile game, circular or rectang
 
 ### 7. Projectiles
 
-#### Arrow Projectile []
+#### Arrow Projectile [x]
 ```
 A simple cartoon-style arrow projectile for a mobile game, wooden shaft with gray metal tip, colored fletching, viewed from a 45-degree angle, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style, small weapon sprite, in-flight pose, PNG with alpha channel
 ```

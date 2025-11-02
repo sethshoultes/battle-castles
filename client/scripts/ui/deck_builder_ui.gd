@@ -37,6 +37,9 @@ var filtered_cards: Array = []
 var current_filter: String = "all"
 var deck_modified: bool = false
 
+# Card frames
+var card_frames: Dictionary = {}
+
 # Card slot references
 var deck_card_slots: Array = []
 var collection_card_slots: Array = []
@@ -47,7 +50,15 @@ signal deck_cancelled()
 signal card_info_requested(card: Resource)
 
 func _ready() -> void:
+	_load_card_frames()
 	_setup_ui()
+
+func _load_card_frames() -> void:
+	card_frames["Common"] = load("res://assets/sprites/ui/card_frame_common.png")
+	card_frames["Rare"] = load("res://assets/sprites/ui/card_frame_rare.png")
+	card_frames["Epic"] = load("res://assets/sprites/ui/card_frame_epic.png")
+	card_frames["Legendary"] = load("res://assets/sprites/ui/card_frame_legendary.png")
+	card_frames["Default"] = load("res://assets/sprites/ui/card_frame.png")
 	_connect_signals()
 	_create_deck_slots()
 	_load_card_collection()
@@ -228,6 +239,19 @@ func _create_collection_card_slot(card_data: CardData, index: int) -> Control:
 	var empty_label = card_display.get_node("EmptyLabel")
 	empty_label.visible = false
 
+	# Add card frame based on rarity
+	var frame_texture = card_frames.get(card_data.rarity, card_frames["Default"])
+	if frame_texture:
+		var card_frame = TextureRect.new()
+		card_frame.name = "CardFrame"
+		card_frame.anchor_right = 1.0
+		card_frame.anchor_bottom = 0.75
+		card_frame.texture = frame_texture
+		card_frame.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		card_frame.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		card_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card_display.add_child(card_frame)
+
 	# Add card icon
 	if card_data.icon:
 		var card_icon = TextureRect.new()
@@ -326,6 +350,19 @@ func _update_deck_display() -> void:
 
 func _add_card_to_slot(slot: Control, card_data: CardData) -> void:
 	var card_display = slot.get_node("CardDisplay")
+
+	# Add card frame based on rarity
+	var frame_texture = card_frames.get(card_data.rarity, card_frames["Default"])
+	if frame_texture:
+		var card_frame = TextureRect.new()
+		card_frame.name = "CardFrame"
+		card_frame.anchor_right = 1.0
+		card_frame.anchor_bottom = 0.75
+		card_frame.texture = frame_texture
+		card_frame.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		card_frame.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		card_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card_display.add_child(card_frame)
 
 	# Add card icon
 	if card_data.icon:
