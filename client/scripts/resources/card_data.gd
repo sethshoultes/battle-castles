@@ -8,6 +8,7 @@ extends Resource
 @export var description: String = ""
 @export var icon: Texture2D = null
 @export var rarity: String = "Common" # Common, Rare, Epic, Legendary
+@export var card_type: String = "Troop" # "Troop", "Spell", "Building"
 
 ## Game mechanics
 @export var elixir_cost: int = 3

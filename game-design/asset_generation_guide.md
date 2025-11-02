@@ -201,6 +201,113 @@ A square portrait icon of a cartoon giant character for a mobile game card, faci
 
 ---
 
+### 2b. Additional Troop Card Icons
+
+#### Barbarians Card Icon []
+```
+A square portrait icon of a cartoon barbarian warrior for a mobile game card, facing forward, fierce bearded warrior with horned helmet, muscular build, holding large sword or axe, orange-brown fur and leather armor, fierce battle cry expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Musketeer Card Icon []
+```
+A square portrait icon of a cartoon musketeer character for a mobile game card, facing forward, elegant female musketeer with feathered hat, holding long rifle/musket, blue uniform with gold trim, confident expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Mini PEKKA Card Icon []
+```
+A square portrait icon of a cartoon robot knight character for a mobile game card, facing forward, compact armored robot with glowing eyes, metallic dark blue armor, holding large sword, menacing but cartoonish appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Wizard Card Icon []
+```
+A square portrait icon of a cartoon wizard character for a mobile game card, facing forward, bearded wizard with purple robe and pointed hat, magical staff with glowing orb, mystical expression, magical energy swirls, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Baby Dragon Card Icon []
+```
+A square portrait icon of a cartoon baby dragon for a mobile game card, facing forward, cute but fierce purple dragon with small wings, breathing fire, large eyes, flying pose, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Skeleton Army Card Icon []
+```
+A square portrait icon of cartoon skeletons for a mobile game card, facing forward, group of 3-4 skeleton warriors with swords and shields, white bones, cartoonish and not scary, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Minions Card Icon []
+```
+A square portrait icon of cartoon minion creatures for a mobile game card, facing forward, small flying imp-like creatures with wings, purple-black skin, menacing grins, holding small spears, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Valkyrie Card Icon []
+```
+A square portrait icon of a cartoon valkyrie warrior for a mobile game card, facing forward, fierce female warrior with horned helmet, red hair in braids, holding large double-bladed axe, orange-red armor, battle-ready expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+---
+
+### 2c. Spell Card Icons
+
+#### Fireball Card Icon []
+```
+A square portrait icon of a fireball spell for a mobile game card, large flaming orange-red fireball with yellow flames and sparks, magical energy swirls, explosive appearance, no character just the spell effect, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Arrows Card Icon []
+```
+A square portrait icon of an arrows spell for a mobile game card, multiple arrows flying in formation, blue-gray metal tips, wooden shafts, motion lines, spell card aesthetic, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Lightning Card Icon []
+```
+A square portrait icon of a lightning spell for a mobile game card, bright yellow-white lightning bolts striking down, electric energy crackling, storm clouds, powerful magical appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Freeze Card Icon []
+```
+A square portrait icon of a freeze spell for a mobile game card, ice crystal formation with snowflakes, blue-white frozen energy, magical frost effect radiating outward, cold mist, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Rage Card Icon []
+```
+A square portrait icon of a rage spell for a mobile game card, purple-pink magical energy swirl with sparkles, speed lines, energizing aura effect, glowing magical runes, no character just the spell effect, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Heal Card Icon []
+```
+A square portrait icon of a heal spell for a mobile game card, green-white healing energy with sparkles, medical cross or healing symbols, restorative magical light, gentle glow, no character just the spell effect, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+---
+
+### 2d. Building Card Icons
+
+#### Cannon Card Icon []
+```
+A square portrait icon of a defensive cannon for a mobile game card, small medieval cannon mounted on wooden base, brown wood and dark metal, angled upward ready to fire, compact defensive structure, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Tesla Card Icon []
+```
+A square portrait icon of a tesla tower for a mobile game card, electric defensive turret with copper coils, blue-white electricity crackling, retractable electric weapon, steampunk aesthetic, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Bomb Tower Card Icon []
+```
+A square portrait icon of a bomb tower for a mobile game card, stone defensive tower with bomb launcher on top, dark stone construction, explosive bombs visible, menacing appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Inferno Tower Card Icon []
+```
+A square portrait icon of an inferno tower for a mobile game card, tall dark tower with glowing orange-red beam weapon, lava-like energy, single eye or targeting lens, threatening appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+#### Elixir Collector Card Icon []
+```
+A square portrait icon of an elixir collector building for a mobile game card, purple crystal formation in stone housing, magical elixir pumping machine, glowing purple energy, gold trim on structure, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
+```
+
+---
+
 ### 3. Towers & Buildings
 
 #### Player Tower (Blue) [x]
@@ -227,22 +334,42 @@ A cartoon-style castle keep for a mobile game, isometric top-down view, large re
 
 ### 4. UI Elements
 
-#### Card Frame/Background []
+#### Generic Card Frame/Background [x]
 ```
 A decorative card frame border for a mobile game interface, ornate medieval fantasy style with gold trim, gemstone corners, inner space left empty for content, simple bold outlines, Clash Royale UI style, gradient background from dark to light, portrait orientation, elegant design, PNG format
 ```
 
-#### Elixir Drop Icon []
+#### Card Frame - Common (Gray/Silver) [x]
+```
+A decorative card frame border for a mobile game interface, COMMON rarity tier, simple silver-gray metal trim with subtle weathering, plain gemstone corners, ornate but modest medieval fantasy style, inner space left empty for content, portrait orientation, simple bold outlines, Clash Royale UI style, soft gray gradient background, PNG format
+```
+
+#### Card Frame - Rare (Blue) [x]
+```
+A decorative card frame border for a mobile game interface, RARE rarity tier, polished blue metal trim with gold accents, sapphire gemstone corners, more ornate medieval fantasy style with elegant engravings, inner space left empty for content, portrait orientation, simple bold outlines, Clash Royale UI style, blue-to-teal gradient background with subtle glow, PNG format
+```
+
+#### Card Frame - Epic (Purple) [x]
+```
+A decorative card frame border for a mobile game interface, EPIC rarity tier, luxurious purple and gold trim with intricate patterns, amethyst gemstone corners, highly ornate medieval fantasy style with detailed filigree, magical energy effects, inner space left empty for content, portrait orientation, bold outlines, Clash Royale UI style, purple gradient background with mystical shimmer, PNG format
+```
+
+#### Card Frame - Legendary (Gold/Orange) [x]
+```
+A decorative card frame border for a mobile game interface, LEGENDARY rarity tier, radiant gold trim with diamond gemstone corners, extremely ornate medieval fantasy style with elaborate engravings, glowing magical aura, light rays, sparkles, inner space left empty for content, portrait orientation, bold outlines, Clash Royale UI style, orange-to-gold gradient background with intense glow effect, most prestigious design, PNG format
+```
+
+#### Elixir Drop Icon [x]
 ```
 A glowing purple elixir drop icon for a mobile game, shiny liquid droplet with magical sparkles, gradient from light purple to deep violet, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style, icon format, 32x32 pixel scale, PNG with alpha channel
 ```
 
-#### Crown Icon []
+#### Crown Icon [x]
 ```
 A golden crown icon for a mobile game score display, simple royal crown with three points, jewels embedded, shiny metallic gold texture, simple bold outlines, TRANSPARENT BACKGROUND, Clash Royale style, icon format, small and readable, PNG with alpha channel
 ```
 
-#### Health Bar Fill []
+#### Health Bar Fill [x]
 ```
 A health bar fill texture for a mobile game UI, horizontal gradient from bright green on left to yellow-green on right, shiny glossy effect, simple design, seamless tileable texture, Clash Royale UI style, PNG format
 ```

@@ -14,6 +14,10 @@ class_name DeckBuilderUI
 @onready var average_elixir_label: Label = $StatsPanel/VBoxContainer/AverageElixir
 @onready var card_count_label: Label = $StatsPanel/VBoxContainer/CardCount
 @onready var deck_validation_label: Label = $StatsPanel/VBoxContainer/ValidationStatus
+@onready var deck_type_label: Label = $StatsPanel/VBoxContainer/DeckType
+@onready var troops_count_label: Label = $StatsPanel/VBoxContainer/TroopsCount
+@onready var spells_count_label: Label = $StatsPanel/VBoxContainer/SpellsCount
+@onready var buildings_count_label: Label = $StatsPanel/VBoxContainer/BuildingsCount
 
 # Filter buttons
 @onready var filter_all_button: Button = $CollectionPanel/FilterContainer/AllButton
@@ -144,20 +148,18 @@ func _create_card_slot(is_deck_slot: bool, index: int) -> Control:
 	return slot
 
 func _load_card_collection() -> void:
-	# Load available cards from player's collection
-	# This would normally load from game data
-	# For now, create placeholder cards
-	for i in range(30):
-		var card_data = {
-			"id": "card_" + str(i),
-			"name": "Card " + str(i),
-			"elixir_cost": (i % 8) + 1,
-			"type": ["troops", "spells", "buildings"][i % 3],
-			"rarity": ["common", "rare", "epic", "legendary"][i % 4],
-			"level": 1,
-			"owned": true
-		}
-		collection_cards.append(card_data)
+	# Load actual card resources
+	var card_paths = [
+		"res://resources/cards/knight.tres",
+		"res://resources/cards/goblin.tres",
+		"res://resources/cards/archer.tres",
+		"res://resources/cards/giant.tres"
+	]
+
+	for path in card_paths:
+		var card = load(path)
+		if card:
+			collection_cards.append(card)
 
 	_apply_filter()
 
@@ -171,15 +173,15 @@ func _apply_filter() -> void:
 			"all":
 				matches_filter = true
 			"troops":
-				matches_filter = card.type == "troops"
+				matches_filter = card.card_type == "Troop"
 			"spells":
-				matches_filter = card.type == "spells"
+				matches_filter = card.card_type == "Spell"
 			"buildings":
-				matches_filter = card.type == "buildings"
+				matches_filter = card.card_type == "Building"
 
 		# Apply search filter
 		if matches_filter and not search_line_edit.text.is_empty():
-			matches_filter = card.name.to_lower().contains(search_line_edit.text.to_lower())
+			matches_filter = card.card_name.to_lower().contains(search_line_edit.text.to_lower())
 
 		if matches_filter:
 			filtered_cards.append(card)
@@ -194,9 +196,9 @@ func _sort_cards() -> void:
 		1: # Rarity
 			filtered_cards.sort_custom(func(a, b): return _get_rarity_value(a.rarity) > _get_rarity_value(b.rarity))
 		2: # Type
-			filtered_cards.sort_custom(func(a, b): return a.type < b.type)
+			filtered_cards.sort_custom(func(a, b): return a.card_type < b.card_type)
 		3: # Name
-			filtered_cards.sort_custom(func(a, b): return a.name < b.name)
+			filtered_cards.sort_custom(func(a, b): return a.card_name < b.card_name)
 
 func _get_rarity_value(rarity: String) -> int:
 	match rarity:
@@ -218,7 +220,7 @@ func _display_collection() -> void:
 		card_collection_container.add_child(slot)
 		collection_card_slots.append(slot)
 
-func _create_collection_card_slot(card_data: Dictionary, index: int) -> Control:
+func _create_collection_card_slot(card_data: CardData, index: int) -> Control:
 	var slot = _create_card_slot(false, index)
 
 	# Update the display with card data
@@ -226,25 +228,17 @@ func _create_collection_card_slot(card_data: Dictionary, index: int) -> Control:
 	var empty_label = card_display.get_node("EmptyLabel")
 	empty_label.visible = false
 
-	# Add card visual
-	var card_visual = Panel.new()
-	card_visual.name = "CardVisual"
-	card_visual.anchor_right = 1.0
-	card_visual.anchor_bottom = 0.75
-	card_visual.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-	# Set color based on type
-	var visual_style = StyleBoxFlat.new()
-	match card_data.type:
-		"troops":
-			visual_style.bg_color = Color(0.3, 0.5, 0.3, 0.8)
-		"spells":
-			visual_style.bg_color = Color(0.5, 0.3, 0.5, 0.8)
-		"buildings":
-			visual_style.bg_color = Color(0.4, 0.4, 0.3, 0.8)
-
-	card_visual.add_theme_stylebox_override("panel", visual_style)
-	card_display.add_child(card_visual)
+	# Add card icon
+	if card_data.icon:
+		var card_icon = TextureRect.new()
+		card_icon.name = "CardIcon"
+		card_icon.anchor_right = 1.0
+		card_icon.anchor_bottom = 0.75
+		card_icon.texture = card_data.icon
+		card_icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		card_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		card_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card_display.add_child(card_icon)
 
 	# Add elixir cost
 	var elixir_label = Label.new()
@@ -261,16 +255,11 @@ func _create_collection_card_slot(card_data: Dictionary, index: int) -> Control:
 	# Store card data
 	slot.set_meta("card_data", card_data)
 
-	# Check if card is already in deck
-	var is_in_deck = _is_card_in_deck(card_data.id)
-	if is_in_deck:
-		slot.modulate = Color(0.5, 0.5, 0.5, 0.5)
-
 	return slot
 
-func _is_card_in_deck(card_id: String) -> bool:
+func _is_card_in_deck(card_data: CardData) -> bool:
 	for card in current_deck:
-		if card.id == card_id:
+		if card.card_name == card_data.card_name:
 			return true
 	return false
 
@@ -304,19 +293,14 @@ func _handle_collection_slot_click(slot: Control, index: int) -> void:
 
 	var card_data = filtered_cards[index]
 
-	# Check if card is already in deck
-	if _is_card_in_deck(card_data.id):
-		return
-
 	# Check if deck is full
 	if current_deck.size() >= max_deck_size:
 		_show_deck_full_message()
 		return
 
-	# Add card to deck
+	# Add card to deck (allow duplicates)
 	current_deck.append(card_data)
 	_update_deck_display()
-	_update_collection_availability()
 	_update_deck_stats()
 	deck_modified = true
 	_validate_deck()
@@ -340,27 +324,20 @@ func _update_deck_display() -> void:
 		if i < current_deck.size():
 			_add_card_to_slot(slot, current_deck[i])
 
-func _add_card_to_slot(slot: Control, card_data: Dictionary) -> void:
+func _add_card_to_slot(slot: Control, card_data: CardData) -> void:
 	var card_display = slot.get_node("CardDisplay")
 
-	# Add card visual (similar to collection display)
-	var card_visual = Panel.new()
-	card_visual.name = "CardVisual"
-	card_visual.anchor_right = 1.0
-	card_visual.anchor_bottom = 0.75
-	card_visual.mouse_filter = Control.MOUSE_FILTER_IGNORE
-
-	var visual_style = StyleBoxFlat.new()
-	match card_data.type:
-		"troops":
-			visual_style.bg_color = Color(0.3, 0.5, 0.3, 0.8)
-		"spells":
-			visual_style.bg_color = Color(0.5, 0.3, 0.5, 0.8)
-		"buildings":
-			visual_style.bg_color = Color(0.4, 0.4, 0.3, 0.8)
-
-	card_visual.add_theme_stylebox_override("panel", visual_style)
-	card_display.add_child(card_visual)
+	# Add card icon
+	if card_data.icon:
+		var card_icon = TextureRect.new()
+		card_icon.name = "CardIcon"
+		card_icon.anchor_right = 1.0
+		card_icon.anchor_bottom = 0.75
+		card_icon.texture = card_data.icon
+		card_icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+		card_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		card_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card_display.add_child(card_icon)
 
 	# Add elixir cost
 	var elixir_label = Label.new()
@@ -377,13 +354,8 @@ func _add_card_to_slot(slot: Control, card_data: Dictionary) -> void:
 	slot.set_meta("card_data", card_data)
 
 func _update_collection_availability() -> void:
-	# Update the visual state of collection cards
-	for i in range(collection_card_slots.size()):
-		var slot = collection_card_slots[i]
-		var card_data = slot.get_meta("card_data", null)
-		if card_data:
-			var is_in_deck = _is_card_in_deck(card_data.id)
-			slot.modulate = Color(0.5, 0.5, 0.5, 0.5) if is_in_deck else Color.WHITE
+	# No longer needed since we allow duplicates
+	pass
 
 func _update_deck_stats() -> void:
 	# Calculate average elixir
@@ -396,6 +368,30 @@ func _update_deck_stats() -> void:
 
 	# Update card count
 	card_count_label.text = "Cards: %d/%d" % [current_deck.size(), max_deck_size]
+
+	# Calculate deck type breakdown
+	var troops_count = 0
+	var spells_count = 0
+	var buildings_count = 0
+
+	for card in current_deck:
+		match card.card_type:
+			"Troop":
+				troops_count += 1
+			"Spell":
+				spells_count += 1
+			"Building":
+				buildings_count += 1
+
+	# Update deck type labels
+	if deck_type_label:
+		deck_type_label.text = "Deck Type:"
+	if troops_count_label:
+		troops_count_label.text = "Troops: %d" % troops_count
+	if spells_count_label:
+		spells_count_label.text = "Spells: %d" % spells_count
+	if buildings_count_label:
+		buildings_count_label.text = "Buildings: %d" % buildings_count
 
 func _validate_deck() -> void:
 	var is_valid = current_deck.size() == max_deck_size
