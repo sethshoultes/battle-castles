@@ -27,7 +27,7 @@ var is_attacking: bool = false
 
 # References
 var health_bar: ProgressBar = null
-var sprite: ColorRect = null
+var sprite: Sprite2D = null
 
 func _ready() -> void:
 	print("SimpleUnit _ready() called - Team: ", team, " Type: ", unit_type, " Pos: ", global_position)
@@ -36,7 +36,7 @@ func _ready() -> void:
 	for child in get_children():
 		if child is ProgressBar:
 			health_bar = child
-		elif child is ColorRect:
+		elif child is Sprite2D:
 			sprite = child
 
 	# Apply stats if we have card_data already
@@ -234,11 +234,11 @@ func update_health_bar() -> void:
 
 func flash_sprite() -> void:
 	if sprite:
-		var original_color = sprite.color
-		sprite.color = Color.WHITE
+		var original_modulate = sprite.modulate
+		sprite.modulate = Color(2.0, 2.0, 2.0, 1.0)  # Brighten the sprite
 		await get_tree().create_timer(0.1).timeout
 		if is_instance_valid(sprite):
-			sprite.color = original_color
+			sprite.modulate = original_modulate
 
 func get_team() -> int:
 	return team

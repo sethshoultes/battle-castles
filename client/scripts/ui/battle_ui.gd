@@ -135,9 +135,8 @@ func set_card_hand(cards: Array) -> void:
 func set_next_card(card: Resource) -> void:
 	next_card = card
 	# Update next card preview visual
-	if next_card and next_card_preview:
-		# Set preview texture when card resources are implemented
-		pass
+	if next_card and next_card_preview and next_card is CardData:
+		next_card_preview.texture = next_card.icon
 
 func cycle_card(index: int) -> void:
 	if index < 0 or index >= 4:
@@ -164,6 +163,9 @@ func cycle_card(index: int) -> void:
 	if card_slot:
 		card_slot.set_card(new_card)
 		print("  New card: ", new_card.card_name)
+
+	# Update next card preview with another random card
+	set_next_card(available_cards[randi() % available_cards.size()])
 
 func use_elixir(amount: float) -> bool:
 	if current_elixir >= amount:
@@ -259,10 +261,11 @@ func _load_initial_cards() -> void:
 	# Create a deck with multiple copies of each card
 	card_hand = starting_hand.duplicate()
 
-	# Set up next card (for cycling)
-	next_card = knight  # Will be randomized
-
 	# Set the card hand
 	set_card_hand(starting_hand)
+
+	# Set up next card (random from available cards)
+	var available_cards: Array = [knight, goblin, archer, giant]
+	set_next_card(available_cards[randi() % available_cards.size()])
 
 	print("Cards loaded and initialized in battle UI")

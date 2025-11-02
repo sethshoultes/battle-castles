@@ -35,12 +35,6 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="ColorRect" type="ColorRect" parent="CardBackground/CardIcon"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color(0.4, 0.4, 0.4, 1.0)
-
 [node name="ElixirBadge" type="Panel" parent="CardBackground"]
 anchor_left = 0.05
 anchor_top = 0.7

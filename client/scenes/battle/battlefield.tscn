@@ -1,9 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://battlefield001"]
+[gd_scene load_steps=12 format=3 uid="uid://battlefield001"]
 
 [ext_resource type="Script" path="res://scripts/battle/battlefield.gd" id="1_battlefield"]
 [ext_resource type="Script" path="res://scripts/battle/tower.gd" id="2_tower"]
 [ext_resource type="Script" path="res://scripts/battle/castle.gd" id="3_castle"]
 [ext_resource type="PackedScene" uid="uid://battle_ui_001" path="res://scenes/ui/battle_ui.tscn" id="4_battle_ui"]
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/tower_player.png" id="5_tower_player"]
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/tower_enemy.png" id="6_tower_enemy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/castle_player.png" id="7_castle_player"]
+[ext_resource type="Texture2D" path="res://assets/sprites/buildings/castle_enemy.png" id="8_castle_enemy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tower_range"]
 radius = 480.0
@@ -15,12 +19,6 @@ size = Vector2(64, 96)
 radius = 448.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_castle_collision"]
-size = Vector2(96, 128)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1"]
-size = Vector2(64, 96)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2"]
 size = Vector2(96, 128)
 
 [node name="Battlefield" type="Node2D"]
@@ -47,8 +45,8 @@ collision_mask = 1
 script = ExtResource("2_tower")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/PlayerLeftTower"]
-texture = SubResource("PlaceholderTexture2D_1")
-modulate = Color(0.2, 0.5, 1, 1)
+texture = ExtResource("5_tower_player")
+scale = Vector2(0.135, 0.135)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/PlayerLeftTower"]
 shape = SubResource("RectangleShape2D_tower_collision")
@@ -78,8 +76,8 @@ collision_mask = 1
 script = ExtResource("2_tower")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/PlayerRightTower"]
-texture = SubResource("PlaceholderTexture2D_1")
-modulate = Color(0.2, 0.5, 1, 1)
+texture = ExtResource("5_tower_player")
+scale = Vector2(0.135, 0.135)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/PlayerRightTower"]
 shape = SubResource("RectangleShape2D_tower_collision")
@@ -109,8 +107,8 @@ collision_mask = 1
 script = ExtResource("3_castle")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/PlayerCastle"]
-texture = SubResource("PlaceholderTexture2D_2")
-modulate = Color(0.2, 0.5, 1, 1)
+texture = ExtResource("7_castle_player")
+scale = Vector2(0.18, 0.18)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/PlayerCastle"]
 shape = SubResource("RectangleShape2D_castle_collision")
@@ -140,8 +138,8 @@ collision_mask = 1
 script = ExtResource("2_tower")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/OpponentLeftTower"]
-texture = SubResource("PlaceholderTexture2D_1")
-modulate = Color(1, 0.2, 0.2, 1)
+texture = ExtResource("6_tower_enemy")
+scale = Vector2(0.135, 0.135)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/OpponentLeftTower"]
 shape = SubResource("RectangleShape2D_tower_collision")
@@ -171,8 +169,8 @@ collision_mask = 1
 script = ExtResource("2_tower")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/OpponentRightTower"]
-texture = SubResource("PlaceholderTexture2D_1")
-modulate = Color(1, 0.2, 0.2, 1)
+texture = ExtResource("6_tower_enemy")
+scale = Vector2(0.135, 0.135)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/OpponentRightTower"]
 shape = SubResource("RectangleShape2D_tower_collision")
@@ -202,8 +200,8 @@ collision_mask = 1
 script = ExtResource("3_castle")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/OpponentCastle"]
-texture = SubResource("PlaceholderTexture2D_2")
-modulate = Color(1, 0.2, 0.2, 1)
+texture = ExtResource("8_castle_enemy")
+scale = Vector2(0.18, 0.18)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/OpponentCastle"]
 shape = SubResource("RectangleShape2D_castle_collision")
