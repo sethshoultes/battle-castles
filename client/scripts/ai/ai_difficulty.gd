@@ -137,12 +137,12 @@ static func get_difficulty_description(level: Level) -> String:
 			return ""
 
 # Generate a random personality based on difficulty
-static func generate_personality(level: Level, seed: int = 0) -> Array:
+static func generate_personality(level: Level, seed: int = 0) -> Array[PersonalityTrait]:
 	var rng = RandomNumberGenerator.new()
 	if seed != 0:
 		rng.seed = seed
 
-	var traits: Array = []
+	var traits: Array[PersonalityTrait] = []
 	var num_traits = 1
 
 	match level:

@@ -563,12 +563,18 @@ func _on_card_played(card: Resource, position: Vector2) -> void:
 			print("Refunded ", card.elixir_cost, " elixir - unit limit reached")
 
 # AI Enemy System
+enum AILevel {
+	EASY,
+	MEDIUM,
+	HARD
+}
+
 var ai_timer: Timer
 var ai_cards: Array = []
 var ai_elixir: float = 5.0  # AI starts with 5 elixir like player
 var ai_max_elixir: float = 10.0
 var ai_elixir_rate: float = 1.0 / 2.8  # Same rate as player: 1 per 2.8 seconds
-var ai_difficulty: AIDifficulty.Level = AIDifficulty.Level.MEDIUM  # Default to medium difficulty
+var ai_difficulty: AILevel = AILevel.MEDIUM  # Default to medium difficulty
 var ai_elixir_reserve: float = 3.0  # AI keeps this much elixir in reserve for defense
 
 func start_ai_timer() -> void:
@@ -692,7 +698,7 @@ func _choose_ai_card_strategic(threat_data: Dictionary) -> CardData:
 		return null
 
 	# EASY AI: Random (simple behavior)
-	if ai_difficulty == AIDifficulty.Level.EASY:
+	if ai_difficulty == AILevel.EASY:
 		return affordable_cards[randi() % affordable_cards.size()]
 
 	# MEDIUM+ AI: Strategic decisions
