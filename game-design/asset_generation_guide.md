@@ -115,6 +115,24 @@ Referenced in CardData resources (card_data.gd:9)
 - `elixir_bar_bg.png`
 - `avatar_frame.png` (64x64px or 128x128px)
 
+**Main Menu Buttons:**
+- `button_battle.png` (Play/Battle button, 256x128px)
+- `button_deck.png` (Deck Builder button, 128x128px)
+- `button_shop.png` (Shop/Store button, 128x128px)
+- `button_settings.png` (Settings button, 96x96px)
+- `button_profile.png` (Profile button, 96x96px)
+- `button_clan.png` (Clan/Friends button, 128x128px)
+- `button_training.png` (Training/Practice button, 128x128px)
+- `button_collection.png` (Collection/Cards button, 128x128px)
+- `button_leaderboard.png` (Trophy/Leaderboard button, 96x96px)
+- `button_news.png` (News/Events button, 96x96px)
+
+**Button States (optional):**
+- `button_*_normal.png` (default state)
+- `button_*_hover.png` (mouse over)
+- `button_*_pressed.png` (clicked)
+- `button_*_disabled.png` (inactive)
+
 ### Visual Effects → `/assets/sprites/effects/`
 
 - `impact_hit.png` (attack impact)
@@ -401,6 +419,56 @@ A golden crown icon for a mobile game score display, simple royal crown with thr
 #### Health Bar Fill [x]
 ```
 A health bar fill texture for a mobile game UI, horizontal gradient from bright green on left to yellow-green on right, shiny glossy effect, simple design, seamless tileable texture, Clash Royale UI style, PNG format
+```
+
+#### Battle Button []
+```
+A large rectangular battle button for a mobile game main menu, vibrant orange-red gradient background, bold white text saying "BATTLE", crossed swords icon, medieval fantasy style with gold trim and ornate borders, glowing effect, action-focused design, TRANSPARENT BACKGROUND or subtle shadow, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
+```
+
+#### Deck Builder Button []
+```
+A square button for a mobile game main menu, purple-blue gradient background, white deck of cards icon, medieval fantasy style with silver trim, clean design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+```
+
+#### Shop Button []
+```
+A square button for a mobile game main menu, gold-yellow gradient background, shopping bag or coin icon, medieval fantasy style with ornate trim, sparkle effects suggesting premium content, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+```
+
+#### Settings Button []
+```
+A circular or square button for a mobile game main menu, gray-blue gradient background, gear/cog icon in center, simple clean design, medieval fantasy style with subtle metallic trim, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+```
+
+#### Profile Button []
+```
+A circular or square button for a mobile game main menu, teal-blue gradient background, player avatar silhouette or portrait frame icon, medieval fantasy style with gold trim, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+```
+
+#### Clan Button []
+```
+A square button for a mobile game main menu, purple gradient background, shield with two crossed swords or group of people icon, medieval fantasy style with silver trim, community-focused design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+```
+
+#### Training Button []
+```
+A square button for a mobile game main menu, green gradient background, target or training dummy icon, medieval fantasy style with wooden frame, practice-focused design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+```
+
+#### Collection Button []
+```
+A square button for a mobile game main menu, orange gradient background, open book or card collection icon, medieval fantasy style with ornate trim, collection showcase design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+```
+
+#### Leaderboard Button []
+```
+A circular or square button for a mobile game main menu, gold gradient background, trophy or crown icon, medieval fantasy style with shiny metallic trim, competitive design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+```
+
+#### News Button []
+```
+A circular or square button for a mobile game main menu, red-orange gradient background, exclamation mark or newspaper icon, medieval fantasy style with simple trim, attention-grabbing design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
 ```
 
 ---
