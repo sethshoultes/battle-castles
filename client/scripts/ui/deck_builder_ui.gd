@@ -164,7 +164,15 @@ func _load_card_collection() -> void:
 		"res://resources/cards/knight.tres",
 		"res://resources/cards/goblin.tres",
 		"res://resources/cards/archer.tres",
-		"res://resources/cards/giant.tres"
+		"res://resources/cards/giant.tres",
+		"res://resources/cards/barbarians.tres",
+		"res://resources/cards/musketeer.tres",
+		"res://resources/cards/mini_pekka.tres",
+		"res://resources/cards/wizard.tres",
+		"res://resources/cards/baby_dragon.tres",
+		"res://resources/cards/skeleton_army.tres",
+		"res://resources/cards/minions.tres",
+		"res://resources/cards/valkyrie.tres"
 	]
 
 	for path in card_paths:

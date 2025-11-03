@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/icons/wizard_icon.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2")
+card_name = "Wizard"
+description = "The Wizard hurls fireballs at his enemies, dealing area damage. He's also got a mean mustache."
+rarity = "Rare"
+card_type = "Troop"
+elixir_cost = 5
+unit_type = "wizard"
+deploy_count = 1
+deploy_time = 1.0
+hitpoints = 600
+damage = 130
+attack_speed = 1.4
+movement_speed = 60.0
+attack_range = 5.0
+target_type = "Both"
+targets_buildings_only = false
+flies = false
+splash_damage = true
+hp_growth = 1.1
+damage_growth = 1.1
+color_modulate = Color(0.7, 0.3, 0.9, 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://battlefield001"]
+[gd_scene load_steps=18 format=3 uid="uid://battlefield001"]
 
 [ext_resource type="Script" path="res://scripts/battle/battlefield.gd" id="1_battlefield"]
 [ext_resource type="Script" path="res://scripts/battle/tower.gd" id="2_tower"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/ui/health_bar_fill.png" id="9_health_bar"]
 [ext_resource type="Texture2D" path="res://assets/sprites/battlefield/grass_texture.png" id="10_grass"]
 [ext_resource type="Texture2D" path="res://assets/sprites/battlefield/river_texture.png" id="11_river"]
+[ext_resource type="Texture2D" path="res://assets/sprites/battlefield/bridge_left.png" id="12_bridge_left"]
+[ext_resource type="Texture2D" path="res://assets/sprites/battlefield/bridge_right.png" id="13_bridge_right"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_health_fill"]
 texture = ExtResource("9_health_bar")
@@ -59,6 +61,16 @@ position = Vector2(576, 896)
 texture = ExtResource("11_river")
 region_enabled = true
 region_rect = Rect2(0, 0, 1152, 128)
+
+[node name="BridgeLeft" type="Sprite2D" parent="River"]
+position = Vector2(288, 896)
+texture = ExtResource("12_bridge_left")
+scale = Vector2(0.25, 0.25)
+
+[node name="BridgeRight" type="Sprite2D" parent="River"]
+position = Vector2(864, 896)
+texture = ExtResource("13_bridge_right")
+scale = Vector2(0.25, 0.25)
 
 [node name="Towers" type="Node2D" parent="."]
 z_index = 0

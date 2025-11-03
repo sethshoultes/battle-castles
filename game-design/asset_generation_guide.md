@@ -247,27 +247,27 @@ A square portrait icon of a cartoon musketeer character for a mobile game card, 
 A square portrait icon of a cartoon robot knight character for a mobile game card, facing forward, compact armored robot with glowing eyes, metallic dark blue armor, holding large sword, menacing but cartoonish appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Wizard Card Icon []
+#### Wizard Card Icon [x]
 ```
 A square portrait icon of a cartoon wizard character for a mobile game card, facing forward, bearded wizard with purple robe and pointed hat, magical staff with glowing orb, mystical expression, magical energy swirls, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Baby Dragon Card Icon []
+#### Baby Dragon Card Icon [x]
 ```
 A square portrait icon of a cartoon baby dragon for a mobile game card, facing forward, cute but fierce purple dragon with small wings, breathing fire, large eyes, flying pose, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Skeleton Army Card Icon []
+#### Skeleton Army Card Icon [x]
 ```
 A square portrait icon of cartoon skeletons for a mobile game card, facing forward, group of 3-4 skeleton warriors with swords and shields, white bones, cartoonish and not scary, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Minions Card Icon []
+#### Minions Card Icon [x]
 ```
 A square portrait icon of cartoon minion creatures for a mobile game card, facing forward, small flying imp-like creatures with wings, purple-black skin, menacing grins, holding small spears, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
-#### Valkyrie Card Icon []
+#### Valkyrie Card Icon [x]
 ```
 A square portrait icon of a cartoon valkyrie warrior for a mobile game card, facing forward, fierce female warrior with horned helmet, red hair in braids, holding large double-bladed axe, orange-red armor, battle-ready expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
@@ -436,12 +436,12 @@ A top-down view of a flowing river texture for a mobile game battlefield, cartoo
 A top-down view of grass terrain texture for a mobile game battlefield, cartoon-style green grass with subtle variation, simple blades of grass detail, vibrant green colors, tileable seamless texture, Clash Royale art style, clean background pattern, PNG format
 ```
 
-#### Bridge Left []
+#### Bridge Left [x]
 ```
 A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks with rope railings, brown wood texture, medieval fantasy style, spans across water, positioned at left side of river, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, horizontal orientation, PNG with alpha channel
 ```
 
-#### Bridge Right []
+#### Bridge Right [x]
 ```
 A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks with rope railings, brown wood texture, medieval fantasy style, spans across water, positioned at right side of river, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, horizontal orientation, PNG with alpha channel
 ```

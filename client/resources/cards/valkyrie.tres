@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/icons/valkyrie_icon.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2")
+card_name = "Valkyrie"
+description = "Tough warrior woman with a mean swing. Deals area damage around her."
+rarity = "Rare"
+card_type = "Troop"
+elixir_cost = 4
+unit_type = "valkyrie"
+deploy_count = 1
+deploy_time = 1.0
+hitpoints = 1500
+damage = 120
+attack_speed = 1.5
+movement_speed = 70.0
+attack_range = 0.5
+target_type = "Ground"
+targets_buildings_only = false
+flies = false
+splash_damage = true
+hp_growth = 1.1
+damage_growth = 1.1
+color_modulate = Color(0.9, 0.5, 0.3, 1)

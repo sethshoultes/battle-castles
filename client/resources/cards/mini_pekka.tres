@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/icons/mini_pekka_icon.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2")
+card_name = "Mini P.E.K.K.A"
+description = "The Arena is a certified P.E.K.K.A. mini. Deals devastating damage to anything in its path."
+rarity = "Rare"
+card_type = "Troop"
+elixir_cost = 4
+unit_type = "mini_pekka"
+deploy_count = 1
+deploy_time = 1.0
+hitpoints = 1100
+damage = 340
+attack_speed = 1.8
+movement_speed = 70.0
+attack_range = 0.5
+target_type = "Ground"
+targets_buildings_only = false
+flies = false
+splash_damage = false
+hp_growth = 1.1
+damage_growth = 1.1
+color_modulate = Color(0.3, 0.3, 0.5, 1)

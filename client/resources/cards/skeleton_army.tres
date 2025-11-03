@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/card_data.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/icons/skeleton_army_icon.png" id="2"]
+
+[resource]
+script = ExtResource("1")
+icon = ExtResource("2")
+card_name = "Skeleton Army"
+description = "Spawns a horde of skeletons. Meet Larry and his friends - a bunch of fast, unarmored fighters."
+rarity = "Epic"
+card_type = "Troop"
+elixir_cost = 3
+unit_type = "skeleton"
+deploy_count = 15
+deploy_time = 1.0
+hitpoints = 60
+damage = 60
+attack_speed = 1.0
+movement_speed = 85.0
+attack_range = 0.5
+target_type = "Ground"
+targets_buildings_only = false
+flies = false
+splash_damage = false
+hp_growth = 1.1
+damage_growth = 1.1
+color_modulate = Color(0.9, 0.9, 0.9, 1)
