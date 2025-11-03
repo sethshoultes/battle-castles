@@ -482,20 +482,77 @@ func _on_sort_changed(index: int) -> void:
 
 func _on_save_pressed() -> void:
 	if current_deck.size() == max_deck_size:
+		# Save deck to file
+		_save_deck_to_file()
 		deck_saved.emit(current_deck)
 		deck_modified = false
+		# Return to main menu
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+	else:
+		print("Cannot save: Deck needs exactly ", max_deck_size, " cards. Current: ", current_deck.size())
 
 func _on_cancel_pressed() -> void:
 	if deck_modified:
 		_show_unsaved_changes_dialog()
 	else:
+		# Return to main menu
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
 		deck_cancelled.emit()
+
+func _save_deck_to_file() -> void:
+	var save_data = []
+	for card in current_deck:
+		save_data.append({
+			"card_name": card.card_name,
+			"resource_path": card.resource_path
+		})
+
+	var file = FileAccess.open("user://current_deck.json", FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(save_data, "\t"))
+		file.close()
+		print("Deck saved successfully to user://current_deck.json")
+	else:
+		print("Error saving deck: ", FileAccess.get_open_error())
+
+func _load_deck_from_file() -> void:
+	if not FileAccess.file_exists("user://current_deck.json"):
+		print("No saved deck found")
+		return
+
+	var file = FileAccess.open("user://current_deck.json", FileAccess.READ)
+	if file:
+		var json_string = file.get_as_text()
+		file.close()
+
+		var json = JSON.new()
+		var parse_result = json.parse(json_string)
+
+		if parse_result == OK:
+			var deck_data = json.data
+			current_deck.clear()
+
+			for card_info in deck_data:
+				var card_resource = load(card_info.resource_path)
+				if card_resource:
+					current_deck.append(card_resource)
+
+			_update_deck_display()
+			_update_deck_stats()
+			print("Deck loaded successfully: ", current_deck.size(), " cards")
+		else:
+			print("Error parsing saved deck: ", json.get_error_message())
+	else:
+		print("Error loading deck: ", FileAccess.get_open_error())
 
 func _show_unsaved_changes_dialog() -> void:
 	var dialog = AcceptDialog.new()
 	dialog.dialog_text = "You have unsaved changes. Discard them?"
 	dialog.add_button("Discard", true, "discard")
-	dialog.confirmed.connect(func(): deck_cancelled.emit())
+	dialog.confirmed.connect(func():
+		deck_cancelled.emit()
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+	)
 	get_tree().root.add_child(dialog)
 	dialog.popup_centered()
 

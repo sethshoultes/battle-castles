@@ -3,11 +3,11 @@ extends Control
 class_name MainMenuUI
 
 # UI Elements
-@onready var play_button: Button = $MenuContainer/ButtonContainer/PlayButton
-@onready var deck_builder_button: Button = $MenuContainer/ButtonContainer/DeckBuilderButton
-@onready var settings_button: Button = $MenuContainer/ButtonContainer/SettingsButton
-@onready var shop_button: Button = $MenuContainer/ButtonContainer/ShopButton
-@onready var quit_button: Button = $MenuContainer/ButtonContainer/QuitButton
+@onready var play_button: TextureButton = $MenuContainer/ButtonContainer/PlayButton
+@onready var deck_builder_button: TextureButton = $MenuContainer/ButtonContainer/DeckBuilderButton
+@onready var settings_button: TextureButton = $MenuContainer/ButtonContainer/SettingsButton
+@onready var shop_button: TextureButton = $MenuContainer/ButtonContainer/ShopButton
+@onready var quit_button: TextureButton = $MenuContainer/ButtonContainer/QuitButton
 
 # Profile elements
 @onready var profile_panel: Panel = $ProfilePanel
@@ -54,19 +54,7 @@ func _ready() -> void:
 	_load_player_data()
 
 func _setup_ui() -> void:
-	# Set up button styles and text
-	if play_button:
-		play_button.text = "BATTLE"
-		play_button.custom_minimum_size = Vector2(200, 60)
-
-	if deck_builder_button:
-		deck_builder_button.text = "DECK"
-	if settings_button:
-		settings_button.text = "SETTINGS"
-	if shop_button:
-		shop_button.text = "SHOP"
-	if quit_button:
-		quit_button.text = "QUIT"
+	# TextureButtons already have images, no text setup needed
 
 	# Set version
 	if version_label:
@@ -94,7 +82,7 @@ func _connect_signals() -> void:
 	if cancel_matchmaking_button:
 		cancel_matchmaking_button.pressed.connect(_cancel_matchmaking)
 
-	# Profile interaction
+	# Profile panel interaction
 	if profile_panel:
 		profile_panel.gui_input.connect(_on_profile_input)
 
@@ -227,7 +215,7 @@ func _on_profile_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		profile_pressed.emit()
 
-func _animate_button_press(button: Button) -> void:
+func _animate_button_press(button) -> void:
 	var tween = create_tween()
 	tween.tween_property(button, "scale", Vector2(0.95, 0.95), 0.05)
 	tween.tween_property(button, "scale", Vector2.ONE, 0.05)

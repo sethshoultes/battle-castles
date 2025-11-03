@@ -20,11 +20,14 @@ class_name BattleUI
 # Game state
 var current_elixir: float = 5.0
 var max_elixir: float = 10.0
-var elixir_rate: float = 2.8 # Elixir per second (normal speed)
+var elixir_rate: float = 1.0 / 2.8  # Clash Royale: 1 elixir per 2.8 seconds = 0.357 elixir/second
 var card_hand: Array = []
+var full_deck: Array = []  # Complete deck for cycling
+var deck_index: int = 4  # Start after initial 4 cards
 var next_card: Resource = null
 var match_time: float = 180.0 # 3 minutes
 var is_overtime: bool = false
+var is_double_elixir: bool = false
 
 # Card selection state
 var selected_card: Resource = null
@@ -73,6 +76,10 @@ func _process(delta: float) -> void:
 		match_time -= delta
 		_update_timer_display()
 
+		# Start double elixir at last minute (Clash Royale style)
+		if match_time <= 60.0 and not is_double_elixir:
+			_start_double_elixir()
+
 		# Check for overtime
 		if match_time <= 0 and not is_overtime:
 			_start_overtime()
@@ -100,10 +107,16 @@ func _update_timer_display() -> void:
 	else:
 		timer_label.modulate = Color.WHITE
 
+func _start_double_elixir() -> void:
+	is_double_elixir = true
+	elixir_rate = 1.0 / 1.4  # Clash Royale double elixir: 1 per 1.4s = 0.714 elixir/second
+	print("DOUBLE ELIXIR STARTED!")
+	# TODO: Show visual indicator on UI
+
 func _start_overtime() -> void:
 	is_overtime = true
 	match_time = 60.0 # 1 minute overtime
-	elixir_rate = 5.6 # Double elixir in overtime
+	# Keep double elixir rate (already activated in last minute)
 	timer_label.text = "OVERTIME"
 	await get_tree().create_timer(1.0).timeout
 
@@ -144,15 +157,12 @@ func cycle_card(index: int) -> void:
 
 	print("Cycling card at slot ", index)
 
-	# Get a random new card
-	var available_cards: Array = [
-		load("res://resources/cards/knight.tres"),
-		load("res://resources/cards/goblin.tres"),
-		load("res://resources/cards/archer.tres"),
-		load("res://resources/cards/giant.tres")
-	]
+	if full_deck.is_empty():
+		print("No deck available for cycling")
+		return
 
-	var new_card: CardData = available_cards[randi() % available_cards.size()]
+	# Get next card from deck (cycles through the deck)
+	var new_card: CardData = full_deck[deck_index % full_deck.size()]
 
 	# Update card hand
 	if index < card_hand.size():
@@ -164,8 +174,11 @@ func cycle_card(index: int) -> void:
 		card_slot.set_card(new_card)
 		print("  New card: ", new_card.card_name)
 
-	# Update next card preview with another random card
-	set_next_card(available_cards[randi() % available_cards.size()])
+	# Move to next card in deck
+	deck_index += 1
+
+	# Update next card preview
+	set_next_card(full_deck[deck_index % full_deck.size()])
 
 func use_elixir(amount: float) -> bool:
 	if current_elixir >= amount:
@@ -249,23 +262,66 @@ func resume_game() -> void:
 	pass
 
 func _load_initial_cards() -> void:
-	# Load the 4 basic cards from resources
-	var knight: CardData = load("res://resources/cards/knight.tres")
-	var goblin: CardData = load("res://resources/cards/goblin.tres")
-	var archer: CardData = load("res://resources/cards/archer.tres")
-	var giant: CardData = load("res://resources/cards/giant.tres")
+	# Try to load saved deck first
+	full_deck = _load_deck_from_file()
 
-	# Create starting hand (all 4 basic cards for now)
-	var starting_hand: Array = [knight, goblin, archer, giant]
+	# If no saved deck or invalid, use default cards
+	if full_deck.is_empty():
+		print("No saved deck found, using default cards")
+		var knight: CardData = load("res://resources/cards/knight.tres")
+		var goblin: CardData = load("res://resources/cards/goblin.tres")
+		var archer: CardData = load("res://resources/cards/archer.tres")
+		var giant: CardData = load("res://resources/cards/giant.tres")
+		full_deck = [knight, goblin, archer, giant, knight, goblin, archer, giant]
 
-	# Create a deck with multiple copies of each card
+	# Shuffle the deck
+	full_deck.shuffle()
+
+	# Take first 4 cards as starting hand
+	var starting_hand: Array = []
+	for i in range(min(4, full_deck.size())):
+		starting_hand.append(full_deck[i])
+
+	# Store starting hand
 	card_hand = starting_hand.duplicate()
+	deck_index = 4  # Next card to cycle from deck
 
 	# Set the card hand
 	set_card_hand(starting_hand)
 
-	# Set up next card (random from available cards)
-	var available_cards: Array = [knight, goblin, archer, giant]
-	set_next_card(available_cards[randi() % available_cards.size()])
+	# Set up next card (next card from deck)
+	if full_deck.size() > 4:
+		set_next_card(full_deck[4])
+	else:
+		set_next_card(full_deck[0])
 
-	print("Cards loaded and initialized in battle UI")
+	print("Cards loaded - Using ", full_deck.size(), " card deck")
+
+func _load_deck_from_file() -> Array:
+	if not FileAccess.file_exists("user://current_deck.json"):
+		return []
+
+	var file = FileAccess.open("user://current_deck.json", FileAccess.READ)
+	if not file:
+		return []
+
+	var json_string = file.get_as_text()
+	file.close()
+
+	var json = JSON.new()
+	var parse_result = json.parse(json_string)
+
+	if parse_result != OK:
+		print("Error parsing saved deck")
+		return []
+
+	var deck_data = json.data
+	var deck: Array = []
+
+	for card_info in deck_data:
+		var card_resource = load(card_info.resource_path)
+		if card_resource:
+			deck.append(card_resource)
+
+	print("Loaded ", deck.size(), " cards from saved deck")
+	return deck

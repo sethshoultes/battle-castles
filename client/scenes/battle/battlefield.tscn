@@ -34,13 +34,13 @@ radius = 448.0
 size = Vector2(96, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_river_left"]
-size = Vector2(200, 128)
+size = Vector2(188, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_river_center"]
-size = Vector2(480, 128)
+size = Vector2(376, 200)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_river_right"]
-size = Vector2(200, 128)
+size = Vector2(188, 200)
 
 [node name="Battlefield" type="Node2D"]
 script = ExtResource("1_battlefield")
@@ -82,7 +82,7 @@ texture = ExtResource("13_bridge_right")
 scale = Vector2(0.25, 0.25)
 
 [node name="RiverCollisionLeft" type="StaticBody2D" parent="River"]
-position = Vector2(100, 896)
+position = Vector2(94, 896)
 collision_layer = 8
 collision_mask = 0
 
@@ -98,7 +98,7 @@ collision_mask = 0
 shape = SubResource("RectangleShape2D_river_center")
 
 [node name="RiverCollisionRight" type="StaticBody2D" parent="River"]
-position = Vector2(1052, 896)
+position = Vector2(1058, 896)
 collision_layer = 8
 collision_mask = 0
 
@@ -109,8 +109,8 @@ shape = SubResource("RectangleShape2D_river_right")
 z_index = 0
 
 [node name="PlayerLeftTower" type="Area2D" parent="Towers"]
-collision_layer = 2
-collision_mask = 1
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("2_tower")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/PlayerLeftTower"]
@@ -122,7 +122,7 @@ shape = SubResource("RectangleShape2D_tower_collision")
 
 [node name="RangeArea" type="Area2D" parent="Towers/PlayerLeftTower"]
 collision_layer = 0
-collision_mask = 1
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/PlayerLeftTower/RangeArea"]
 shape = SubResource("CircleShape2D_tower_range")
@@ -140,8 +140,8 @@ wait_time = 1.25
 one_shot = false
 
 [node name="PlayerRightTower" type="Area2D" parent="Towers"]
-collision_layer = 2
-collision_mask = 1
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("2_tower")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/PlayerRightTower"]
@@ -153,7 +153,7 @@ shape = SubResource("RectangleShape2D_tower_collision")
 
 [node name="RangeArea" type="Area2D" parent="Towers/PlayerRightTower"]
 collision_layer = 0
-collision_mask = 1
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/PlayerRightTower/RangeArea"]
 shape = SubResource("CircleShape2D_tower_range")
@@ -171,8 +171,8 @@ wait_time = 1.25
 one_shot = false
 
 [node name="PlayerCastle" type="Area2D" parent="Towers"]
-collision_layer = 2
-collision_mask = 1
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("3_castle")
 
 [node name="Sprite2D" type="Sprite2D" parent="Towers/PlayerCastle"]
@@ -184,7 +184,7 @@ shape = SubResource("RectangleShape2D_castle_collision")
 
 [node name="RangeArea" type="Area2D" parent="Towers/PlayerCastle"]
 collision_layer = 0
-collision_mask = 1
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Towers/PlayerCastle/RangeArea"]
 shape = SubResource("CircleShape2D_castle_range")

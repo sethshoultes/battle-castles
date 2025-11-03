@@ -1,6 +1,13 @@
-# Battle Castles - Asset Generation Guide
+# Battle Castles - Core Asset Generation Guide
 
-This document contains all DALL-E prompts and file naming conventions for generating game assets.
+This document contains DALL-E prompts and file naming conventions for generating **core/basic game assets** including:
+- 4 basic unit types (Knight, Goblin, Archer, Giant)
+- Towers and castles
+- UI elements
+- Battlefield elements
+- Visual effects
+
+For expanded content (8 additional units, spells, buildings), see `new_unit_sprites_prompts.md`.
 
 ## Table of Contents
 - [Directory Structure](#directory-structure)
@@ -126,6 +133,7 @@ Referenced in CardData resources (card_data.gd:9)
 - `button_collection.png` (Collection/Cards button, 128x128px)
 - `button_leaderboard.png` (Trophy/Leaderboard button, 96x96px)
 - `button_news.png` (News/Events button, 96x96px)
+- `button_exit.png` (Exit/Back button, 96x96px)
 
 **Button States (optional):**
 - `button_*_normal.png` (default state)
@@ -246,115 +254,6 @@ A square portrait icon of a cartoon archer character for a mobile game card, fac
 A square portrait icon of a cartoon giant character for a mobile game card, facing forward, massive muscular build, gray stone armor, fierce but friendly expression, club or hammer visible, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
 ```
 
----
-
-### 2b. Additional Troop Card Icons
-
-#### Barbarians Card Icon [x]
-```
-A square portrait icon of a cartoon barbarian warrior for a mobile game card, facing forward, fierce bearded warrior with horned helmet, muscular build, holding large sword or axe, orange-brown fur and leather armor, fierce battle cry expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Musketeer Card Icon [x]
-```
-A square portrait icon of a cartoon musketeer character for a mobile game card, facing forward, elegant female musketeer with feathered hat, holding long rifle/musket, blue uniform with gold trim, confident expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Mini PEKKA Card Icon [x]
-```
-A square portrait icon of a cartoon robot knight character for a mobile game card, facing forward, compact armored robot with glowing eyes, metallic dark blue armor, holding large sword, menacing but cartoonish appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Wizard Card Icon [x]
-```
-A square portrait icon of a cartoon wizard character for a mobile game card, facing forward, bearded wizard with purple robe and pointed hat, magical staff with glowing orb, mystical expression, magical energy swirls, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Baby Dragon Card Icon [x]
-```
-A square portrait icon of a cartoon baby dragon for a mobile game card, facing forward, cute but fierce purple dragon with small wings, breathing fire, large eyes, flying pose, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Skeleton Army Card Icon [x]
-```
-A square portrait icon of cartoon skeletons for a mobile game card, facing forward, group of 3-4 skeleton warriors with swords and shields, white bones, cartoonish and not scary, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Minions Card Icon [x]
-```
-A square portrait icon of cartoon minion creatures for a mobile game card, facing forward, small flying imp-like creatures with wings, purple-black skin, menacing grins, holding small spears, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Valkyrie Card Icon [x]
-```
-A square portrait icon of a cartoon valkyrie warrior for a mobile game card, facing forward, fierce female warrior with horned helmet, red hair in braids, holding large double-bladed axe, orange-red armor, battle-ready expression, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
----
-
-### 2c. Spell Card Icons
-
-#### Fireball Card Icon []
-```
-A square portrait icon of a fireball spell for a mobile game card, large flaming orange-red fireball with yellow flames and sparks, magical energy swirls, explosive appearance, no character just the spell effect, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Arrows Card Icon []
-```
-A square portrait icon of an arrows spell for a mobile game card, multiple arrows flying in formation, blue-gray metal tips, wooden shafts, motion lines, spell card aesthetic, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Lightning Card Icon []
-```
-A square portrait icon of a lightning spell for a mobile game card, bright yellow-white lightning bolts striking down, electric energy crackling, storm clouds, powerful magical appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Freeze Card Icon []
-```
-A square portrait icon of a freeze spell for a mobile game card, ice crystal formation with snowflakes, blue-white frozen energy, magical frost effect radiating outward, cold mist, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Rage Card Icon []
-```
-A square portrait icon of a rage spell for a mobile game card, purple-pink magical energy swirl with sparkles, speed lines, energizing aura effect, glowing magical runes, no character just the spell effect, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Heal Card Icon []
-```
-A square portrait icon of a heal spell for a mobile game card, green-white healing energy with sparkles, medical cross or healing symbols, restorative magical light, gentle glow, no character just the spell effect, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
----
-
-### 2d. Building Card Icons
-
-#### Cannon Card Icon []
-```
-A square portrait icon of a defensive cannon for a mobile game card, small medieval cannon mounted on wooden base, brown wood and dark metal, angled upward ready to fire, compact defensive structure, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Tesla Card Icon []
-```
-A square portrait icon of a tesla tower for a mobile game card, electric defensive turret with copper coils, blue-white electricity crackling, retractable electric weapon, steampunk aesthetic, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Bomb Tower Card Icon []
-```
-A square portrait icon of a bomb tower for a mobile game card, stone defensive tower with bomb launcher on top, dark stone construction, explosive bombs visible, menacing appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Inferno Tower Card Icon []
-```
-A square portrait icon of an inferno tower for a mobile game card, tall dark tower with glowing orange-red beam weapon, lava-like energy, single eye or targeting lens, threatening appearance, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
-#### Elixir Collector Card Icon []
-```
-A square portrait icon of an elixir collector building for a mobile game card, purple crystal formation in stone housing, magical elixir pumping machine, glowing purple energy, gold trim on structure, simple bold outlines, vibrant colors, Clash Royale style, TRANSPARENT BACKGROUND or subtle gradient, icon format, PNG with alpha channel
-```
-
----
-
 ### 3. Towers & Buildings
 
 #### Player Tower (Blue) [x]
@@ -421,54 +320,64 @@ A golden crown icon for a mobile game score display, simple royal crown with thr
 A health bar fill texture for a mobile game UI, horizontal gradient from bright green on left to yellow-green on right, shiny glossy effect, simple design, seamless tileable texture, Clash Royale UI style, PNG format
 ```
 
-#### Battle Button []
+#### Battle Button [x]
 ```
 A large rectangular battle button for a mobile game main menu, vibrant orange-red gradient background, bold white text saying "BATTLE", crossed swords icon, medieval fantasy style with gold trim and ornate borders, glowing effect, action-focused design, TRANSPARENT BACKGROUND or subtle shadow, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
-#### Deck Builder Button []
+#### Deck Builder Button [x]
 ```
-A square button for a mobile game main menu, purple-blue gradient background, white deck of cards icon, medieval fantasy style with silver trim, clean design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
-```
-
-#### Shop Button []
-```
-A square button for a mobile game main menu, gold-yellow gradient background, shopping bag or coin icon, medieval fantasy style with ornate trim, sparkle effects suggesting premium content, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+A large rectangular battle button for a mobile game main menu, vibrant purple-blue gradient background, bold white text saying "DECK", white deck of cards icon, medieval fantasy style with silver trim, glowing effect, action-focused design, TRANSPARENT BACKGROUND or subtle shadow, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
-#### Settings Button []
+#### Shop Button [x]
 ```
-A circular or square button for a mobile game main menu, gray-blue gradient background, gear/cog icon in center, simple clean design, medieval fantasy style with subtle metallic trim, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+A large rectangular battle button for a mobile game main menu, gold-yellow gradient background, bold white text saying "SHOP", shopping bag with coin icon, medieval fantasy style with ornate trim, sparkle effects suggesting premium content, glowing effect, action-focused design, TRANSPARENT BACKGROUND or subtle shadow, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
-#### Profile Button []
+#### Settings Button [x]
 ```
-A circular or square button for a mobile game main menu, teal-blue gradient background, player avatar silhouette or portrait frame icon, medieval fantasy style with gold trim, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+A large rectangular battle button for a mobile game main menu, gray-blue gradient background, bold white text saying "SETTINGS", silver gear/cog icon, medieval fantasy style with metallic trim, glowing effect, action-focused design, TRANSPARENT BACKGROUND or subtle shadow, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
+```
+
+#### Profile Button [x]
+```
+A large rectangular button for a mobile game main menu, teal-blue gradient background, player avatar silhouette or portrait frame icon, medieval fantasy style with gold trim, TRANSPARENT BACKGROUND, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
 #### Clan Button []
 ```
-A square button for a mobile game main menu, purple gradient background, shield with two crossed swords or group of people icon, medieval fantasy style with silver trim, community-focused design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+A large rectangular button for a mobile game main menu, purple gradient background, shield with two crossed swords or group of people icon, medieval fantasy style with silver trim, community-focused design, TRANSPARENT BACKGROUND, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
 #### Training Button []
 ```
-A square button for a mobile game main menu, green gradient background, target or training dummy icon, medieval fantasy style with wooden frame, practice-focused design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+A large rectangular button for a mobile game main menu, green gradient background, target or training dummy icon, medieval fantasy style with wooden frame, practice-focused design, TRANSPARENT BACKGROUND, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
 #### Collection Button []
 ```
-A square button for a mobile game main menu, orange gradient background, open book or card collection icon, medieval fantasy style with ornate trim, collection showcase design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (128x128px), PNG with alpha channel
+A large rectangular button for a mobile game main menu, orange gradient background, open book or card collection icon, medieval fantasy style with ornate trim, collection showcase design, TRANSPARENT BACKGROUND, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
 #### Leaderboard Button []
 ```
-A circular or square button for a mobile game main menu, gold gradient background, trophy or crown icon, medieval fantasy style with shiny metallic trim, competitive design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+A large rectangular button for a mobile game main menu, gold gradient background, trophy or crown icon, medieval fantasy style with shiny metallic trim, competitive design, TRANSPARENT BACKGROUND, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
 #### News Button []
 ```
-A circular or square button for a mobile game main menu, red-orange gradient background, exclamation mark or newspaper icon, medieval fantasy style with simple trim, attention-grabbing design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+A large rectangular button for a mobile game main menu, red-orange gradient background, exclamation mark or newspaper icon, medieval fantasy style with simple trim, attention-grabbing design, TRANSPARENT BACKGROUND, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
+```
+
+#### Exit Button []
+```
+A circular or square button for a mobile game interface, dark gray gradient background, white X or left-pointing arrow icon in center, medieval fantasy style with simple metallic trim, clean minimalist design, TRANSPARENT BACKGROUND, Clash Royale UI style, square format (96x96px), PNG with alpha channel
+```
+
+#### Quit Button []
+```
+A large rectangular button for a mobile game interface, dark gray gradient background, white X or left-pointing arrow icon in center, medieval fantasy style with simple metallic trim, clean minimalist design, TRANSPARENT BACKGROUND, Clash Royale UI style, landscape orientation (256x128px), PNG with alpha channel
 ```
 
 ---

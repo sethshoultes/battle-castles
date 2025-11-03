@@ -28,6 +28,7 @@ var is_attacking: bool = false
 # References
 var health_bar: ProgressBar = null
 var sprite: Sprite2D = null
+var collision_shape: CollisionShape2D = null
 
 func _ready() -> void:
 	print("SimpleUnit _ready() called - Team: ", team, " Type: ", unit_type, " Pos: ", global_position)
@@ -38,6 +39,8 @@ func _ready() -> void:
 			health_bar = child
 		elif child is Sprite2D:
 			sprite = child
+		elif child is CollisionShape2D:
+			collision_shape = child
 
 	# Apply stats if we have card_data already
 	if card_data:
@@ -82,8 +85,9 @@ func _process(delta: float) -> void:
 	if attack_timer > 0:
 		attack_timer -= delta
 
-	# Find target if we don't have one
-	if not target or not is_instance_valid(target):
+	# Retarget every 30 frames (twice per second) to check for blocking units
+	# More frequent retargeting would cause units to constantly switch targets
+	if Engine.get_process_frames() % 30 == 0 or not target or not is_instance_valid(target):
 		find_target()
 
 	# Behavior based on whether we have a target
@@ -92,12 +96,27 @@ func _process(delta: float) -> void:
 
 		if distance <= attack_range:
 			# In range - attack
+			if not is_attacking:
+				is_attacking = true
+				# Disable collision so other units can pass through
+				if collision_shape:
+					collision_shape.disabled = true
 			attack_target(delta)
 		else:
 			# Out of range - move closer
+			if is_attacking:
+				is_attacking = false
+				# Re-enable collision when moving
+				if collision_shape:
+					collision_shape.disabled = false
 			move_toward_target(delta)
 	else:
 		# No target - move forward
+		if is_attacking:
+			is_attacking = false
+			# Re-enable collision when not in combat
+			if collision_shape:
+				collision_shape.disabled = false
 		move_forward(delta)
 
 func find_target() -> void:
@@ -140,18 +159,20 @@ func find_target() -> void:
 				closest_unit_distance = dist
 				closest_unit = unit
 
-	# Targeting priority:
-	# 1. If enemy unit is in attack range, target it
-	# 2. Otherwise target closest tower (even if far)
-	# 3. If no towers, target closest unit
-	if closest_unit and closest_unit_distance <= attack_range * 1.5:
-		# Enemy in range - fight them
-		target = closest_unit
-	elif closest_tower:
-		# Head for tower
+	# Targeting priority (Clash Royale style):
+	# 1. Always prioritize buildings/towers
+	# 2. Only target units if they're in melee range (blocking path or attacking)
+	# 3. If no buildings, then target units
+
+	if closest_tower:
+		# Buildings are ALWAYS primary target
 		target = closest_tower
+
+		# But if an enemy unit is in melee range, fight them first (they're blocking us)
+		if closest_unit and closest_unit_distance <= attack_range * 1.5:
+			target = closest_unit
 	else:
-		# No towers left, clean up units
+		# No buildings left - clean up units
 		target = closest_unit
 
 func move_toward_target(delta: float) -> void:
@@ -160,9 +181,16 @@ func move_toward_target(delta: float) -> void:
 
 	var direction = (target.global_position - global_position).normalized()
 	velocity = direction * move_speed
+
+	# Use up_direction for proper sliding
+	var previous_velocity = velocity
 	move_and_slide()
 
-	# Check if we hit something
+	# Maintain speed when sliding along walls
+	if velocity.length() > 0 and velocity.length() < move_speed * 0.5:
+		velocity = velocity.normalized() * move_speed
+
+	# Check if we hit an enemy (not a wall)
 	if get_slide_collision_count() > 0:
 		var collision = get_slide_collision(0)
 		var collider = collision.get_collider()
@@ -184,7 +212,11 @@ func move_forward(delta: float) -> void:
 	velocity = direction * move_speed
 	move_and_slide()
 
-	# Check if we collided with something
+	# Maintain speed when sliding along walls
+	if velocity.length() > 0 and velocity.length() < move_speed * 0.5:
+		velocity = velocity.normalized() * move_speed
+
+	# Check if we collided with an enemy (not a wall)
 	if get_slide_collision_count() > 0:
 		var collision = get_slide_collision(0)
 		var collider = collision.get_collider()
@@ -205,10 +237,11 @@ func attack_target(delta: float) -> void:
 	# Deal damage
 	if target.has_method("take_damage"):
 		target.take_damage(damage, self)
-		print(unit_type, " attacked ", target.name, " for ", damage, " damage")
+		print("[ATTACK] ", unit_type, " hit ", target.name, " for ", damage, " damage (cooldown: ", attack_speed, "s)")
 
 	# Reset attack timer
 	attack_timer = attack_speed
+	print("[COOLDOWN] ", unit_type, " attack timer reset to ", attack_speed, "s")
 
 	# Visual feedback
 	flash_sprite()

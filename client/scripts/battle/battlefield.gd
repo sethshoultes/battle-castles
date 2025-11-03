@@ -64,6 +64,11 @@ func _ready() -> void:
 	connect_battle_ui()
 	start_ai_timer()
 
+func _process(delta: float) -> void:
+	# Regenerate AI elixir at same rate as player
+	if ai_elixir < ai_max_elixir:
+		ai_elixir = min(ai_elixir + ai_elixir_rate * delta, ai_max_elixir)
+
 func setup_battlefield() -> void:
 	# Set up deployment zone rectangles
 	player_deploy_area = Rect2(
@@ -277,16 +282,14 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 	# Get unit-specific visuals
 	var unit_visuals = _get_unit_visuals(unit_type)
 
-	# Add visual representation - Load actual sprite
-	var sprite = Sprite2D.new()
-
-	# Determine sprite path based on unit type and team
+	# Add visual representation - Try to load actual sprite first
 	var sprite_suffix = "_player" if team == TEAM_PLAYER else "_enemy"
 	var sprite_path = "res://assets/sprites/units/" + unit_type + sprite_suffix + ".png"
-
-	# Load the texture
 	var texture = load(sprite_path)
+
 	if texture:
+		# Use sprite if available
+		var sprite = Sprite2D.new()
 		sprite.texture = texture
 		# Scale sprite MUCH larger for visibility (3x the target size)
 		var texture_size = texture.get_size()
@@ -295,23 +298,33 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 			target_size.x / texture_size.x,
 			target_size.y / texture_size.y
 		)
+		# Center the sprite - bottom of sprite at unit position (feet)
+		sprite.offset = Vector2(0, -unit_visuals.size.y * 3)  # Sprite bottom at origin
+		unit.add_child(sprite)
 		print("  Loaded sprite: ", sprite_path, " (", texture_size, ") scaled to ", target_size)
 	else:
-		print("  WARNING: Could not load sprite: ", sprite_path)
+		# Use colored rectangle as fallback
+		print("  Sprite not found: ", sprite_path, " - using colored placeholder")
+		var color_rect = ColorRect.new()
+		var rect_size = unit_visuals.size * 3.0  # Match expected size
+		color_rect.size = rect_size
+		color_rect.position = Vector2(-rect_size.x / 2, -rect_size.y)  # Center and align to feet
 
-	# Center the sprite - bottom of sprite at unit position (feet)
-	sprite.offset = Vector2(0, -unit_visuals.size.y * 3)  # Sprite bottom at origin
+		# Set color based on team
+		if team == TEAM_PLAYER:
+			color_rect.color = unit_visuals.player_color
+		else:
+			color_rect.color = unit_visuals.enemy_color
 
-	unit.add_child(sprite)
+		unit.add_child(color_rect)
 
-	# Add health bar - ABOVE the head, calculated from actual sprite height
+	# Add health bar - ABOVE the head
 	var health_bar = ProgressBar.new()
 	var health_bar_height = 6
 
-	# The sprite top is at: -unit_visuals.size.y * 3
-	# We want the bar 1 pixel above that
-	var sprite_top_y = -unit_visuals.size.y * 3
-	var bar_y_position = sprite_top_y - health_bar_height - 1
+	# Calculate top of visual (works for both sprite and ColorRect)
+	var visual_top_y = -unit_visuals.size.y * 3
+	var bar_y_position = visual_top_y - health_bar_height - 1
 
 	health_bar.position = Vector2(-30, bar_y_position)
 	health_bar.size = Vector2(60, health_bar_height)  # Wide bar
@@ -342,18 +355,26 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 
 	unit.add_child(health_bar)
 
+	# Configure CharacterBody2D for smooth sliding
+	unit.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	unit.wall_min_slide_angle = 0  # Allow sliding at any angle
+
 	# Add collision shape - this is for physics, not rendering
 	var collision_shape = CollisionShape2D.new()
-	var shape = RectangleShape2D.new()
-	shape.size = Vector2(40, 50)  # Slightly larger for bigger sprites
+	var shape = CircleShape2D.new()
+	shape.radius = 12  # Very small collision for maximum flow
 	collision_shape.shape = shape
-	collision_shape.position = Vector2(0, -30)  # Adjusted for larger sprite
+	collision_shape.position = Vector2(0, 0)
 	collision_shape.debug_color = Color(0, 0, 0, 0)  # Make debug shape invisible
 	unit.add_child(collision_shape)
 
-	# Set collision layers
-	unit.collision_layer = 1
-	unit.collision_mask = 9  # Collide with layer 1 (units) and layer 8 (river)
+	# Set collision layers - separate layers per team to prevent same-team collisions
+	if team == TEAM_PLAYER:
+		unit.collision_layer = 1  # Player units on layer 1 (value 1)
+		unit.collision_mask = 10  # Collide with layer 2 (value 2) and layer 4 (value 8)
+	else:
+		unit.collision_layer = 2  # Enemy units on layer 2 (value 2)
+		unit.collision_mask = 9  # Collide with layer 1 (value 1) and layer 4 (value 8)
 
 	# Add unit to scene
 	units_container.add_child(unit)
@@ -391,6 +412,62 @@ func _get_unit_visuals(unit_type: String) -> Dictionary:
 				"size": Vector2(50, 70),
 				"player_color": Color(0.5, 0.5, 0.5),  # Gray
 				"enemy_color": Color(0.7, 0.1, 0.1)    # Dark Red
+			}
+		"barbarians":
+			return {
+				"display_name": "BARBARIAN",
+				"size": Vector2(38, 54),
+				"player_color": Color(0.9, 0.6, 0.2),  # Orange
+				"enemy_color": Color(0.7, 0.3, 0.1)    # Dark Orange
+			}
+		"musketeer":
+			return {
+				"display_name": "MUSKETEER",
+				"size": Vector2(34, 50),
+				"player_color": Color(0.2, 0.5, 0.8),  # Blue
+				"enemy_color": Color(0.8, 0.2, 0.4)    # Red-Pink
+			}
+		"mini_pekka":
+			return {
+				"display_name": "MINI PEKKA",
+				"size": Vector2(40, 56),
+				"player_color": Color(0.3, 0.3, 0.5),  # Dark Blue
+				"enemy_color": Color(0.5, 0.1, 0.1)    # Dark Red
+			}
+		"wizard":
+			return {
+				"display_name": "WIZARD",
+				"size": Vector2(35, 52),
+				"player_color": Color(0.5, 0.2, 0.8),  # Purple
+				"enemy_color": Color(0.8, 0.2, 0.2)    # Red
+			}
+		"baby_dragon":
+			return {
+				"display_name": "BABY DRAGON",
+				"size": Vector2(45, 60),
+				"player_color": Color(0.6, 0.3, 0.9),  # Purple
+				"enemy_color": Color(0.9, 0.3, 0.3)    # Red
+			}
+		"skeleton_army":
+			return {
+				"display_name": "SKELETON",
+				"size": Vector2(26, 42),
+				"player_color": Color(0.9, 0.9, 0.9),  # White
+				"enemy_color": Color(0.7, 0.7, 0.7)    # Gray
+			}
+		"minions":
+			return {
+				"display_name": "MINION",
+				"size": Vector2(28, 44),
+				"player_color": Color(0.4, 0.2, 0.6),  # Purple
+				"enemy_color": Color(0.6, 0.2, 0.2)    # Dark Red
+			}
+		"valkyrie":
+			return {
+				"display_name": "VALKYRIE",
+				"size": Vector2(38, 54),
+				"player_color": Color(0.9, 0.5, 0.3),  # Orange
+				"enemy_color": Color(0.7, 0.2, 0.2)    # Red
 			}
 		_:
 			# Default fallback
@@ -488,6 +565,9 @@ func _on_card_played(card: Resource, position: Vector2) -> void:
 # AI Enemy System
 var ai_timer: Timer
 var ai_cards: Array = []
+var ai_elixir: float = 5.0  # AI starts with 5 elixir like player
+var ai_max_elixir: float = 10.0
+var ai_elixir_rate: float = 1.0 / 2.8  # Same rate as player: 1 per 2.8 seconds
 
 func start_ai_timer() -> void:
 	# Load AI cards
@@ -498,13 +578,13 @@ func start_ai_timer() -> void:
 		load("res://resources/cards/giant.tres")
 	]
 
-	# Create AI timer
+	# Create AI timer - check every 1 second if we can deploy
 	ai_timer = Timer.new()
-	ai_timer.wait_time = 5.0  # Deploy every 5 seconds (balanced)
+	ai_timer.wait_time = 1.0  # Check every second for deployment opportunities
 	ai_timer.autostart = true
 	ai_timer.timeout.connect(_on_ai_timer_timeout)
 	add_child(ai_timer)
-	print("AI system started - deploying every 5 seconds")
+	print("AI system started - will deploy when elixir available")
 
 func _on_ai_timer_timeout() -> void:
 	# Stop spawning if game is over
@@ -513,21 +593,36 @@ func _on_ai_timer_timeout() -> void:
 			ai_timer.stop()
 		return
 
-	# Randomly deploy an AI unit
+	# Skip if no cards available
 	if ai_cards.is_empty():
 		return
 
-	var random_card: CardData = ai_cards[randi() % ai_cards.size()]
+	# Find cards we can afford
+	var affordable_cards: Array = []
+	for card in ai_cards:
+		if card.elixir_cost <= ai_elixir:
+			affordable_cards.append(card)
+
+	# If we can't afford anything, skip this tick
+	if affordable_cards.is_empty():
+		return
+
+	# Pick a random affordable card
+	var chosen_card: CardData = affordable_cards[randi() % affordable_cards.size()]
+
+	# Deduct elixir cost
+	ai_elixir -= chosen_card.elixir_cost
+	ai_elixir = max(0, ai_elixir)
 
 	# Random position in opponent deployment zone
 	var random_x = randf_range(opponent_deploy_area.position.x + 100, opponent_deploy_area.position.x + opponent_deploy_area.size.x - 100)
 	var random_y = randf_range(opponent_deploy_area.position.y + 100, opponent_deploy_area.position.y + opponent_deploy_area.size.y - 100)
 	var spawn_pos = Vector2(random_x, random_y)
 
-	var unit = spawn_unit(random_card.unit_type, spawn_pos, TEAM_OPPONENT)
+	var unit = spawn_unit(chosen_card.unit_type, spawn_pos, TEAM_OPPONENT)
 
 	if unit:
-		print("AI deployed: ", random_card.card_name, " at ", spawn_pos)
+		print("AI deployed: ", chosen_card.card_name, " (cost: ", chosen_card.elixir_cost, " | remaining: ", ai_elixir, ")")
 
 func _on_castle_destroyed(team: int, tower_type: String) -> void:
 	# A castle was destroyed - game over!

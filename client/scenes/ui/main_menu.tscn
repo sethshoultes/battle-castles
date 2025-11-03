@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bc3hjgw6raa2j"]
+[gd_scene load_steps=8 format=3 uid="uid://bc3hjgw6raa2j"]
 
 [ext_resource type="Script" uid="uid://bgha0788bk1s6" path="res://scripts/ui/main_menu_ui.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_battle.png" id="2_battle_button"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_deck.png" id="3_deck_button"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_settings.png" id="5_settings_button"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_shop.png" id="6_shop_button"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_quit.png" id="7_quit_button"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.1, 0.1, 0.15, 1)
@@ -44,10 +49,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -150.0
-offset_right = 150.0
-offset_bottom = 150.0
+offset_left = -450.0
+offset_top = -600.0
+offset_right = 450.0
+offset_bottom = 600.0
 theme_override_constants/separation = 20
 alignment = 1
 
@@ -56,35 +61,40 @@ layout_mode = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="PlayButton" type="Button" parent="MenuContainer/ButtonContainer"]
-custom_minimum_size = Vector2(200, 60)
+[node name="PlayButton" type="TextureButton" parent="MenuContainer/ButtonContainer"]
+custom_minimum_size = Vector2(900, 220)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "BATTLE"
+texture_normal = ExtResource("2_battle_button")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="DeckBuilderButton" type="Button" parent="MenuContainer/ButtonContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="DeckBuilderButton" type="TextureButton" parent="MenuContainer/ButtonContainer"]
+custom_minimum_size = Vector2(900, 220)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "DECK"
+texture_normal = ExtResource("3_deck_button")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="SettingsButton" type="Button" parent="MenuContainer/ButtonContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="SettingsButton" type="TextureButton" parent="MenuContainer/ButtonContainer"]
+custom_minimum_size = Vector2(900, 220)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "SETTINGS"
+texture_normal = ExtResource("5_settings_button")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="ShopButton" type="Button" parent="MenuContainer/ButtonContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="ShopButton" type="TextureButton" parent="MenuContainer/ButtonContainer"]
+custom_minimum_size = Vector2(900, 220)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "SHOP"
+texture_normal = ExtResource("6_shop_button")
+ignore_texture_size = true
+stretch_mode = 5
 
-[node name="QuitButton" type="Button" parent="MenuContainer/ButtonContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="QuitButton" type="TextureButton" parent="MenuContainer/ButtonContainer"]
+custom_minimum_size = Vector2(900, 220)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "QUIT"
+texture_normal = ExtResource("7_quit_button")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="ProfilePanel" type="Panel" parent="."]
 layout_mode = 0
