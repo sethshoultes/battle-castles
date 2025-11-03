@@ -237,11 +237,9 @@ func attack_target(delta: float) -> void:
 	# Deal damage
 	if target.has_method("take_damage"):
 		target.take_damage(damage, self)
-		print("[ATTACK] ", unit_type, " hit ", target.name, " for ", damage, " damage (cooldown: ", attack_speed, "s)")
 
 	# Reset attack timer
 	attack_timer = attack_speed
-	print("[COOLDOWN] ", unit_type, " attack timer reset to ", attack_speed, "s")
 
 	# Visual feedback
 	flash_sprite()

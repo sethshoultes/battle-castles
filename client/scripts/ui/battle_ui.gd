@@ -29,6 +29,12 @@ var match_time: float = 180.0 # 3 minutes
 var is_overtime: bool = false
 var is_double_elixir: bool = false
 
+# Double elixir visual indicator
+var double_elixir_label: Label = null
+var elixir_bar_normal_color: Color = Color(0.6, 0.2, 0.8)  # Purple
+var elixir_bar_double_color: Color = Color(1.0, 0.3, 0.4)  # Bright pink/red
+var pulse_tween: Tween = null
+
 # Card selection state
 var selected_card: Resource = null
 var selected_slot_index: int = -1
@@ -43,6 +49,7 @@ func _ready() -> void:
 	_setup_ui()
 	_connect_signals()
 	_load_initial_cards()
+	_create_double_elixir_label()
 
 func _setup_ui() -> void:
 	# Set up elixir bar
@@ -111,7 +118,9 @@ func _start_double_elixir() -> void:
 	is_double_elixir = true
 	elixir_rate = 1.0 / 1.4  # Clash Royale double elixir: 1 per 1.4s = 0.714 elixir/second
 	print("DOUBLE ELIXIR STARTED!")
-	# TODO: Show visual indicator on UI
+
+	# Visual indicators
+	_animate_double_elixir_visual()
 
 func _start_overtime() -> void:
 	is_overtime = true
@@ -260,6 +269,60 @@ func pause_game() -> void:
 func resume_game() -> void:
 	# Resume timer and elixir generation
 	pass
+
+func _create_double_elixir_label() -> void:
+	# Create label
+	double_elixir_label = Label.new()
+	double_elixir_label.text = "2X ELIXIR"
+	double_elixir_label.add_theme_font_size_override("font_size", 28)
+	double_elixir_label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.2))  # Gold
+	double_elixir_label.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+	double_elixir_label.add_theme_constant_override("outline_size", 3)
+
+	# Center text alignment
+	double_elixir_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	# Start hidden
+	double_elixir_label.modulate.a = 0.0
+	double_elixir_label.scale = Vector2(0.5, 0.5)
+
+	add_child(double_elixir_label)
+
+	# Position will be set after elixir_bar is ready
+	if elixir_bar:
+		# Position above elixir bar
+		double_elixir_label.global_position = Vector2(
+			elixir_bar.global_position.x + elixir_bar.size.x / 2 - 60,
+			elixir_bar.global_position.y - 40
+		)
+
+func _animate_double_elixir_visual() -> void:
+	# Change elixir bar color
+	if elixir_bar:
+		var color_tween = create_tween()
+		color_tween.tween_property(elixir_bar, "modulate", elixir_bar_double_color, 0.5)
+
+		# Add pulsing glow effect
+		_add_pulsing_effect()
+
+	# Animate label entrance
+	if double_elixir_label:
+		var label_tween = create_tween()
+		label_tween.set_parallel(true)
+		label_tween.tween_property(double_elixir_label, "modulate:a", 1.0, 0.3)
+		label_tween.tween_property(double_elixir_label, "scale", Vector2.ONE, 0.3)\
+			.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
+func _add_pulsing_effect() -> void:
+	# Stop existing pulse if any
+	if pulse_tween:
+		pulse_tween.kill()
+
+	# Create repeating pulse animation
+	pulse_tween = create_tween()
+	pulse_tween.set_loops()  # Infinite loop
+	pulse_tween.tween_property(elixir_bar, "modulate:a", 0.7, 0.5)
+	pulse_tween.tween_property(elixir_bar, "modulate:a", 1.0, 0.5)
 
 func _load_initial_cards() -> void:
 	# Try to load saved deck first
