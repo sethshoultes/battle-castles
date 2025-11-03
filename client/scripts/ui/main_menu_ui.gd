@@ -11,8 +11,8 @@ class_name MainMenuUI
 
 # Profile elements
 @onready var profile_panel: Panel = $ProfilePanel
-@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/NameLabel
-@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/LevelLabel
+@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/VBoxContainer/NameLabel
+@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/VBoxContainer/LevelLabel
 @onready var trophy_count_label: Label = $ProfilePanel/PlayerInfo/TrophyContainer/TrophyCount
 @onready var gold_count_label: Label = $ProfilePanel/Resources/GoldContainer/GoldCount
 @onready var gem_count_label: Label = $ProfilePanel/Resources/GemContainer/GemCount

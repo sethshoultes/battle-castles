@@ -72,8 +72,8 @@ func _create_transition_overlay() -> void:
 	transition_overlay.visible = false
 	transition_overlay.z_index = 1000  # Always on top
 
-	# Add to tree
-	get_tree().root.add_child(transition_overlay)
+	# Add to tree (deferred to avoid "parent busy" error during _ready)
+	get_tree().root.add_child.call_deferred(transition_overlay)
 
 
 ## Changes to a new scene with transition
