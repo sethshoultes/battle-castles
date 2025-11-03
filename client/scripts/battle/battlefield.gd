@@ -62,6 +62,7 @@ func _ready() -> void:
 	setup_towers()
 	draw_grid_visual()
 	connect_battle_ui()
+	_setup_battle_manager()
 	_load_ai_difficulty()
 	start_ai_timer()
 
@@ -138,6 +139,29 @@ func setup_towers() -> void:
 		]
 		# Connect to castle destruction for game over
 		opponent_castle.tower_destroyed.connect(_on_castle_destroyed)
+
+func _setup_battle_manager() -> void:
+	# Create and initialize battle manager
+	if not battle_manager:
+		battle_manager = BattleManager.new()
+		add_child(battle_manager)
+
+	# Create and initialize elixir manager
+	if not elixir_manager:
+		elixir_manager = ElixirManager.new()
+		add_child(elixir_manager)
+
+	# Initialize battle manager with references
+	battle_manager.initialize(self, elixir_manager)
+
+	# Connect battle manager signals
+	battle_manager.time_updated.connect(_on_battle_time_updated)
+	battle_manager.double_elixir_started.connect(_on_double_elixir_started)
+	battle_manager.battle_ended.connect(_on_battle_ended)
+
+	# Start the battle
+	battle_manager.start_battle()
+	print("Battle manager initialized and started")
 
 func draw_grid_visual() -> void:
 	# This will be called to draw the grid
@@ -576,7 +600,7 @@ var ai_elixir: float = 5.0  # AI starts with 5 elixir like player
 var ai_max_elixir: float = 10.0
 var ai_elixir_rate: float = 1.0 / 2.8  # Same rate as player: 1 per 2.8 seconds
 var ai_difficulty: AILevel = AILevel.MEDIUM  # Default to medium difficulty
-var ai_elixir_reserve: float = 3.0  # AI keeps this much elixir in reserve for defense
+var ai_elixir_reserve: float = 1.5  # AI keeps this much elixir in reserve for defense
 
 func _load_ai_difficulty() -> void:
 	# Load AI difficulty from GameManager
@@ -810,3 +834,47 @@ func _on_castle_destroyed(team: int, tower_type: String) -> void:
 		game_over_label.add_theme_color_override("font_outline_color", Color.BLACK)
 		game_over_label.add_theme_constant_override("outline_size", 8)
 		add_child(game_over_label)
+
+func _on_battle_time_updated(time_remaining: float) -> void:
+	# Update UI with time remaining
+	if battle_ui:
+		battle_ui.update_timer(time_remaining)
+
+func _on_double_elixir_started() -> void:
+	# Double elixir mode started
+	print("DOUBLE ELIXIR MODE ACTIVATED!")
+	if battle_ui:
+		battle_ui.show_double_elixir_indicator()
+
+func _on_battle_ended(winner: int) -> void:
+	# Battle ended by timer
+	game_over = true
+	winner_team = winner
+
+	# Stop AI spawning
+	if ai_timer:
+		ai_timer.stop()
+
+	# Show game over message
+	var winner_text = "VICTORY!" if winner == TEAM_PLAYER else ("DEFEAT!" if winner == TEAM_OPPONENT else "DRAW!")
+	print("===================")
+	print("BATTLE ENDED - ", winner_text)
+	print("===================")
+
+	# Create a simple game over label
+	var game_over_label = Label.new()
+	game_over_label.text = winner_text
+	game_over_label.position = Vector2(BATTLEFIELD_WIDTH / 2 - 100, BATTLEFIELD_HEIGHT / 2)
+	game_over_label.add_theme_font_size_override("font_size", 64)
+
+	# Color based on outcome
+	if winner == TEAM_PLAYER:
+		game_over_label.add_theme_color_override("font_color", Color(1, 1, 0, 1))  # Yellow for victory
+	elif winner == TEAM_OPPONENT:
+		game_over_label.add_theme_color_override("font_color", Color(1, 0, 0, 1))  # Red for defeat
+	else:
+		game_over_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1))  # Gray for draw
+
+	game_over_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	game_over_label.add_theme_constant_override("outline_size", 8)
+	add_child(game_over_label)

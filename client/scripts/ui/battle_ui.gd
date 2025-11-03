@@ -78,18 +78,8 @@ func _process(delta: float) -> void:
 		current_elixir = min(current_elixir + elixir_rate * delta, max_elixir)
 		_update_elixir_display()
 
-	# Update timer
-	if match_time > 0:
-		match_time -= delta
-		_update_timer_display()
-
-		# Start double elixir at last minute (Clash Royale style)
-		if match_time <= 60.0 and not is_double_elixir:
-			_start_double_elixir()
-
-		# Check for overtime
-		if match_time <= 0 and not is_overtime:
-			_start_overtime()
+	# Timer is now managed by battle_manager
+	# Battle manager will call update_timer() and show_double_elixir_indicator() as needed
 
 func _update_elixir_display() -> void:
 	elixir_bar.value = current_elixir
@@ -113,6 +103,11 @@ func _update_timer_display() -> void:
 		timer_label.modulate = Color.YELLOW
 	else:
 		timer_label.modulate = Color.WHITE
+
+func update_timer(time_remaining: float) -> void:
+	"""Called by battle_manager to update the timer"""
+	match_time = time_remaining
+	_update_timer_display()
 
 func _start_double_elixir() -> void:
 	is_double_elixir = true
