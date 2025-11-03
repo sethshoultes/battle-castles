@@ -436,14 +436,14 @@ A top-down view of a flowing river texture for a mobile game battlefield, cartoo
 A top-down view of grass terrain texture for a mobile game battlefield, cartoon-style green grass with subtle variation, simple blades of grass detail, vibrant green colors, tileable seamless texture, Clash Royale art style, clean background pattern, PNG format
 ```
 
-#### Bridge Left [x]
+#### Bridge Left []
 ```
-A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks with rope railings, brown wood texture, medieval fantasy style, spans across water, positioned at left side of river, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, horizontal orientation, PNG with alpha channel
+A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks running vertically with rope railings on sides, brown wood texture with metal reinforcements, medieval fantasy style, spans across horizontal river from top to bottom of image, positioned at left crossing point, wooden posts at top and bottom ends, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, vertical orientation (tall rectangle), PNG with alpha channel, 256x512px or larger
 ```
 
-#### Bridge Right [x]
+#### Bridge Right []
 ```
-A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks with rope railings, brown wood texture, medieval fantasy style, spans across water, positioned at right side of river, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, horizontal orientation, PNG with alpha channel
+A cartoon-style wooden bridge for a mobile game battlefield, top-down isometric view, sturdy wooden planks running vertically with rope railings on sides, brown wood texture with metal reinforcements, medieval fantasy style, spans across horizontal river from top to bottom of image, positioned at right crossing point, wooden posts at top and bottom ends, simple bold outlines, vibrant colors, TRANSPARENT BACKGROUND, Clash Royale art style, vertical orientation (tall rectangle), PNG with alpha channel, 256x512px or larger
 ```
 
 #### Deployment Zone Highlight (Player) [x]

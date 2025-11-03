@@ -64,13 +64,11 @@ region_rect = Rect2(0, 0, 1152, 128)
 
 [node name="BridgeLeft" type="Sprite2D" parent="River"]
 position = Vector2(288, 896)
-rotation = 1.5708
 texture = ExtResource("12_bridge_left")
 scale = Vector2(0.25, 0.25)
 
 [node name="BridgeRight" type="Sprite2D" parent="River"]
 position = Vector2(864, 896)
-rotation = 1.5708
 texture = ExtResource("13_bridge_right")
 scale = Vector2(0.25, 0.25)
 
