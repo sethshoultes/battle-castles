@@ -563,11 +563,19 @@ func _on_card_played(card: Resource, position: Vector2) -> void:
 			print("Refunded ", card.elixir_cost, " elixir - unit limit reached")
 
 # AI Enemy System
+enum AIDifficulty {
+	EASY,
+	MEDIUM,
+	HARD
+}
+
 var ai_timer: Timer
 var ai_cards: Array = []
 var ai_elixir: float = 5.0  # AI starts with 5 elixir like player
 var ai_max_elixir: float = 10.0
 var ai_elixir_rate: float = 1.0 / 2.8  # Same rate as player: 1 per 2.8 seconds
+var ai_difficulty: AIDifficulty = AIDifficulty.MEDIUM  # Default to medium difficulty
+var ai_elixir_reserve: float = 3.0  # AI keeps this much elixir in reserve for defense
 
 func start_ai_timer() -> void:
 	# Load AI cards
@@ -597,32 +605,170 @@ func _on_ai_timer_timeout() -> void:
 	if ai_cards.is_empty():
 		return
 
-	# Find cards we can afford
-	var affordable_cards: Array = []
-	for card in ai_cards:
-		if card.elixir_cost <= ai_elixir:
-			affordable_cards.append(card)
+	# Analyze battlefield situation
+	var threat_data = _analyze_threat_level()
 
-	# If we can't afford anything, skip this tick
-	if affordable_cards.is_empty():
-		return
+	# Choose card strategically based on situation
+	var chosen_card = _choose_ai_card_strategic(threat_data)
 
-	# Pick a random affordable card
-	var chosen_card: CardData = affordable_cards[randi() % affordable_cards.size()]
+	if not chosen_card:
+		return  # No good option right now or saving elixir
 
 	# Deduct elixir cost
 	ai_elixir -= chosen_card.elixir_cost
 	ai_elixir = max(0, ai_elixir)
 
-	# Random position in opponent deployment zone
-	var random_x = randf_range(opponent_deploy_area.position.x + 100, opponent_deploy_area.position.x + opponent_deploy_area.size.x - 100)
-	var random_y = randf_range(opponent_deploy_area.position.y + 100, opponent_deploy_area.position.y + opponent_deploy_area.size.y - 100)
-	var spawn_pos = Vector2(random_x, random_y)
+	# Choose strategic spawn position
+	var spawn_pos = _choose_spawn_position(chosen_card, threat_data)
 
+	# Spawn unit
 	var unit = spawn_unit(chosen_card.unit_type, spawn_pos, TEAM_OPPONENT)
 
 	if unit:
-		print("AI deployed: ", chosen_card.card_name, " (cost: ", chosen_card.elixir_cost, " | remaining: ", ai_elixir, ")")
+		var action = "defended" if threat_data.threat_level > 3 else "attacked"
+		print("AI ", action, " with: ", chosen_card.card_name, " (cost: ", chosen_card.elixir_cost, " | remaining: ", ai_elixir, ")")
+
+func _analyze_threat_level() -> Dictionary:
+	"""
+	Analyzes the battlefield to determine threat level to AI towers/castle
+	Returns:
+	{
+		"threat_level": int (0-10),
+		"threatened_tower": Node2D or null,
+		"enemy_units_near_tower": Array,
+		"our_units_alive": int
+	}
+	"""
+	var threat_data = {
+		"threat_level": 0,
+		"threatened_tower": null,
+		"enemy_units_near_tower": [],
+		"our_units_alive": 0
+	}
+
+	# Count our units
+	var units_container = get_node_or_null("Units")
+	if units_container:
+		for unit in units_container.get_children():
+			if unit.has_method("get_team") and unit.get_team() == TEAM_OPPONENT:
+				threat_data.our_units_alive += 1
+
+	# Find enemy units near our towers
+	var towers_container = get_node_or_null("Towers")
+	if not towers_container or not units_container:
+		return threat_data
+
+	for tower in towers_container.get_children():
+		if not tower.has_method("get"):
+			continue
+		if not ("team" in tower) or tower.team != TEAM_OPPONENT:
+			continue  # Not our tower
+
+		# Check for enemy units near this tower
+		var nearby_enemies = []
+		for unit in units_container.get_children():
+			if not unit.has_method("get_team"):
+				continue
+			if unit.get_team() == TEAM_OPPONENT:
+				continue  # Same team
+
+			var distance = tower.global_position.distance_to(unit.global_position)
+			if distance < 400:  # Within threat range
+				nearby_enemies.append(unit)
+
+		# Calculate threat level for this tower
+		if nearby_enemies.size() > 0:
+			threat_data.threat_level = nearby_enemies.size() * 2  # 2 points per enemy
+			threat_data.threatened_tower = tower
+			threat_data.enemy_units_near_tower = nearby_enemies
+			break  # Focus on most threatened tower
+
+	return threat_data
+
+func _choose_ai_card_strategic(threat_data: Dictionary) -> CardData:
+	"""
+	Choose card based on situation and AI difficulty
+	"""
+	var affordable_cards = []
+	for card in ai_cards:
+		if card.elixir_cost <= ai_elixir:
+			affordable_cards.append(card)
+
+	if affordable_cards.is_empty():
+		return null
+
+	# EASY AI: Random (simple behavior)
+	if ai_difficulty == AIDifficulty.EASY:
+		return affordable_cards[randi() % affordable_cards.size()]
+
+	# MEDIUM+ AI: Strategic decisions
+
+	# Save elixir reserve unless defending
+	var available_elixir = ai_elixir
+	if threat_data.threat_level <= 3:
+		available_elixir = ai_elixir - ai_elixir_reserve
+
+	# Re-filter cards we can afford while keeping reserve
+	var strategic_cards = []
+	for card in affordable_cards:
+		if card.elixir_cost <= available_elixir or threat_data.threat_level > 5:
+			strategic_cards.append(card)
+
+	if strategic_cards.is_empty():
+		return null  # Saving elixir
+
+	# Defend if threatened (threat_level > 3)
+	if threat_data.threat_level > 3:
+		# Prefer defensive cards (tanks and swarm)
+		var defensive_cards = strategic_cards.filter(func(card):
+			return card.unit_type in ["knight", "giant", "valkyrie", "barbarians"]
+		)
+		if not defensive_cards.is_empty():
+			return defensive_cards[randi() % defensive_cards.size()]
+
+	# Attack with any available card
+	return strategic_cards[randi() % strategic_cards.size()]
+
+func _choose_spawn_position(card: CardData, threat_data: Dictionary) -> Vector2:
+	"""
+	Choose strategic spawn position based on situation
+	"""
+	# If defending, spawn near threatened tower
+	if threat_data.threat_level > 3 and threat_data.threatened_tower:
+		var tower_pos = threat_data.threatened_tower.global_position
+
+		# Calculate average enemy position
+		var avg_enemy_x = 0.0
+		for enemy in threat_data.enemy_units_near_tower:
+			avg_enemy_x += enemy.global_position.x
+
+		if threat_data.enemy_units_near_tower.size() > 0:
+			avg_enemy_x /= threat_data.enemy_units_near_tower.size()
+
+			# Place unit between tower and enemies (defensive positioning)
+			var spawn_x = clamp(
+				(tower_pos.x + avg_enemy_x) / 2.0,
+				opponent_deploy_area.position.x + 100,
+				opponent_deploy_area.position.x + opponent_deploy_area.size.x - 100
+			)
+			var spawn_y = randf_range(
+				opponent_deploy_area.position.y + 100,
+				opponent_deploy_area.position.y + opponent_deploy_area.size.y - 100
+			)
+
+			return Vector2(spawn_x, spawn_y)
+
+	# Otherwise, random placement for attack
+	var random_x = randf_range(
+		opponent_deploy_area.position.x + 100,
+		opponent_deploy_area.position.x + opponent_deploy_area.size.x - 100
+	)
+	var random_y = randf_range(
+		opponent_deploy_area.position.y + 100,
+		opponent_deploy_area.position.y + opponent_deploy_area.size.y - 100
+	)
+
+	return Vector2(random_x, random_y)
 
 func _on_castle_destroyed(team: int, tower_type: String) -> void:
 	# A castle was destroyed - game over!
