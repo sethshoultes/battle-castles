@@ -62,6 +62,7 @@ func _ready() -> void:
 	setup_towers()
 	draw_grid_visual()
 	connect_battle_ui()
+	_load_ai_difficulty()
 	start_ai_timer()
 
 func _process(delta: float) -> void:
@@ -576,6 +577,20 @@ var ai_max_elixir: float = 10.0
 var ai_elixir_rate: float = 1.0 / 2.8  # Same rate as player: 1 per 2.8 seconds
 var ai_difficulty: AILevel = AILevel.MEDIUM  # Default to medium difficulty
 var ai_elixir_reserve: float = 3.0  # AI keeps this much elixir in reserve for defense
+
+func _load_ai_difficulty() -> void:
+	# Load AI difficulty from GameManager
+	if GameManager:
+		match GameManager.ai_difficulty:
+			0:
+				ai_difficulty = AILevel.EASY
+			1:
+				ai_difficulty = AILevel.MEDIUM
+			2:
+				ai_difficulty = AILevel.HARD
+			_:
+				ai_difficulty = AILevel.MEDIUM
+		print("AI difficulty set to: ", ai_difficulty)
 
 func start_ai_timer() -> void:
 	# Load AI cards

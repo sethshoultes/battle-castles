@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://co47xqbp6l8yx"]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_menu_ui.gd" id="1_2jk7h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.1, 0.1, 0.15, 0.95)
@@ -8,8 +10,13 @@ corner_radius_bottom_left = 10
 corner_radius_bottom_right = 10
 
 [node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2jk7h")
 
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -188,6 +195,19 @@ text = "Vibration"
 [node name="CheckBox" type="CheckBox" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/Vibration"]
 layout_mode = 2
 button_pressed = true
+
+[node name="AIDifficulty" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/AIDifficulty"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+text = "AI Difficulty"
+
+[node name="OptionButton" type="OptionButton" parent="SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/AIDifficulty"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 1
 
 [node name="ButtonContainer" type="HBoxContainer" parent="SettingsPanel"]
 anchor_left = 0.5

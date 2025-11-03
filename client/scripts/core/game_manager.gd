@@ -48,6 +48,7 @@ var pool_sizes: Dictionary = {
 	"Projectile": 100,
 	"Effect": 30
 }
+var ai_difficulty: int = 1  # 0: Easy, 1: Medium, 2: Hard
 
 ## Performance monitoring
 var entity_count: int = 0

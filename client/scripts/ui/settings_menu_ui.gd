@@ -17,6 +17,7 @@ class_name SettingsMenuUI
 # UI Elements - Gameplay
 @onready var confirm_placement_checkbox: CheckBox = $SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/ConfirmPlacement/CheckBox
 @onready var vibration_checkbox: CheckBox = $SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/Vibration/CheckBox
+@onready var ai_difficulty_option: OptionButton = $SettingsPanel/ScrollContainer/SettingsContainer/GameplaySection/AIDifficulty/OptionButton
 
 # Buttons
 @onready var apply_button: Button = $SettingsPanel/ButtonContainer/ApplyButton
@@ -36,7 +37,8 @@ var settings: Dictionary = {
 	},
 	"gameplay": {
 		"confirm_placement": false,
-		"vibration": true
+		"vibration": true,
+		"ai_difficulty": 1  # 0: Easy, 1: Medium, 2: Hard
 	}
 }
 
@@ -60,6 +62,11 @@ func _setup_ui() -> void:
 	quality_option.add_item("High")
 	quality_option.add_item("Ultra")
 
+	# Setup AI difficulty options
+	ai_difficulty_option.add_item("Easy")
+	ai_difficulty_option.add_item("Medium")
+	ai_difficulty_option.add_item("Hard")
+
 	# Set initial button states
 	apply_button.disabled = true
 
@@ -76,6 +83,7 @@ func _connect_signals() -> void:
 	# Gameplay options
 	confirm_placement_checkbox.toggled.connect(_on_confirm_placement_toggled)
 	vibration_checkbox.toggled.connect(_on_vibration_toggled)
+	ai_difficulty_option.item_selected.connect(_on_ai_difficulty_changed)
 
 	# Buttons
 	apply_button.pressed.connect(_on_apply_pressed)
@@ -100,8 +108,10 @@ func _load_settings() -> void:
 		# Load gameplay settings
 		settings.gameplay.confirm_placement = config.get_value("gameplay", "confirm_placement", false)
 		settings.gameplay.vibration = config.get_value("gameplay", "vibration", true)
+		settings.gameplay.ai_difficulty = config.get_value("gameplay", "ai_difficulty", 1)
 
 	_apply_settings_to_ui()
+	_apply_gameplay_settings()  # Apply to GameManager on load
 	original_settings = settings.duplicate(true)
 
 func _save_settings() -> void:
@@ -119,6 +129,7 @@ func _save_settings() -> void:
 	# Save gameplay settings
 	config.set_value("gameplay", "confirm_placement", settings.gameplay.confirm_placement)
 	config.set_value("gameplay", "vibration", settings.gameplay.vibration)
+	config.set_value("gameplay", "ai_difficulty", settings.gameplay.ai_difficulty)
 
 	config.save("user://settings.cfg")
 
@@ -138,6 +149,7 @@ func _apply_settings_to_ui() -> void:
 	# Gameplay
 	confirm_placement_checkbox.button_pressed = settings.gameplay.confirm_placement
 	vibration_checkbox.button_pressed = settings.gameplay.vibration
+	ai_difficulty_option.selected = settings.gameplay.ai_difficulty
 
 func _on_master_volume_changed(value: float) -> void:
 	settings.audio.master_volume = int(value)
@@ -173,6 +185,10 @@ func _on_vibration_toggled(button_pressed: bool) -> void:
 	settings.gameplay.vibration = button_pressed
 	_check_settings_changed()
 
+func _on_ai_difficulty_changed(index: int) -> void:
+	settings.gameplay.ai_difficulty = index
+	_check_settings_changed()
+
 func _check_settings_changed() -> void:
 	settings_changed = _are_settings_different()
 	apply_button.disabled = not settings_changed
@@ -192,6 +208,8 @@ func _are_settings_different() -> bool:
 	if settings.gameplay.confirm_placement != original_settings.gameplay.confirm_placement:
 		return true
 	if settings.gameplay.vibration != original_settings.gameplay.vibration:
+		return true
+	if settings.gameplay.ai_difficulty != original_settings.gameplay.ai_difficulty:
 		return true
 	return false
 
@@ -231,9 +249,15 @@ func _apply_graphics_settings() -> void:
 		3: # Ultra
 			RenderingServer.viewport_set_scaling_3d_scale(get_viewport().get_viewport_rid(), 1.5)
 
+func _apply_gameplay_settings() -> void:
+	# Apply AI difficulty to GameManager
+	if GameManager:
+		GameManager.ai_difficulty = settings.gameplay.ai_difficulty
+
 func _on_apply_pressed() -> void:
 	_save_settings()
 	_apply_graphics_settings()
+	_apply_gameplay_settings()
 	original_settings = settings.duplicate(true)
 	settings_changed = false
 	apply_button.disabled = true
@@ -245,6 +269,7 @@ func _on_cancel_pressed() -> void:
 	_apply_settings_to_ui()
 	_apply_audio_settings()
 	_apply_graphics_settings()
+	_apply_gameplay_settings()
 	hide_menu()
 
 func _on_close_pressed() -> void:
