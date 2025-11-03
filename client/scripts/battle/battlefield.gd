@@ -349,7 +349,7 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 
 	# Set collision layers
 	unit.collision_layer = 1
-	unit.collision_mask = 1
+	unit.collision_mask = 9  # Collide with layer 1 (units) and layer 8 (river)
 
 	# Add unit to scene
 	units_container.add_child(unit)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://battlefield001"]
+[gd_scene load_steps=21 format=3 uid="uid://battlefield001"]
 
 [ext_resource type="Script" path="res://scripts/battle/battlefield.gd" id="1_battlefield"]
 [ext_resource type="Script" path="res://scripts/battle/tower.gd" id="2_tower"]
@@ -32,6 +32,15 @@ radius = 448.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_castle_collision"]
 size = Vector2(96, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_river_left"]
+size = Vector2(200, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_river_center"]
+size = Vector2(480, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_river_right"]
+size = Vector2(200, 128)
 
 [node name="Battlefield" type="Node2D"]
 script = ExtResource("1_battlefield")
@@ -71,6 +80,30 @@ scale = Vector2(0.25, 0.25)
 position = Vector2(864, 896)
 texture = ExtResource("13_bridge_right")
 scale = Vector2(0.25, 0.25)
+
+[node name="RiverCollisionLeft" type="StaticBody2D" parent="River"]
+position = Vector2(100, 896)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="River/RiverCollisionLeft"]
+shape = SubResource("RectangleShape2D_river_left")
+
+[node name="RiverCollisionCenter" type="StaticBody2D" parent="River"]
+position = Vector2(576, 896)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="River/RiverCollisionCenter"]
+shape = SubResource("RectangleShape2D_river_center")
+
+[node name="RiverCollisionRight" type="StaticBody2D" parent="River"]
+position = Vector2(1052, 896)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="River/RiverCollisionRight"]
+shape = SubResource("RectangleShape2D_river_right")
 
 [node name="Towers" type="Node2D" parent="."]
 z_index = 0
