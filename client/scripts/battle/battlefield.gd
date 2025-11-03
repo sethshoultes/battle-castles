@@ -318,9 +318,13 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 	health_bar.show_percentage = false
 	health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	# Style the health bar with green fill
+	# Style the health bar with team-specific color
 	var style_box = StyleBoxFlat.new()
-	style_box.bg_color = Color(0.2, 0.8, 0.2, 1.0)  # Bright green
+	# Blue for player, red for enemy
+	if team == TEAM_PLAYER:
+		style_box.bg_color = Color(0.2, 0.5, 1.0, 1.0)  # Bright blue
+	else:
+		style_box.bg_color = Color(1.0, 0.2, 0.2, 1.0)  # Bright red
 	style_box.corner_radius_top_left = 2
 	style_box.corner_radius_top_right = 2
 	style_box.corner_radius_bottom_left = 2

@@ -49,6 +49,27 @@ func setup_health_bar() -> void:
 		health_bar.value = current_health
 		health_bar.show_percentage = false
 
+		# Style health bar based on team
+		var style_box = StyleBoxFlat.new()
+		if team == 0:  # Player team
+			style_box.bg_color = Color(0.2, 0.5, 1.0, 1.0)  # Bright blue
+		else:  # Enemy team
+			style_box.bg_color = Color(1.0, 0.2, 0.2, 1.0)  # Bright red
+		style_box.corner_radius_top_left = 2
+		style_box.corner_radius_top_right = 2
+		style_box.corner_radius_bottom_left = 2
+		style_box.corner_radius_bottom_right = 2
+		health_bar.add_theme_stylebox_override("fill", style_box)
+
+		# Dark background
+		var bg_style = StyleBoxFlat.new()
+		bg_style.bg_color = Color(0.2, 0.2, 0.2, 0.8)
+		bg_style.corner_radius_top_left = 2
+		bg_style.corner_radius_top_right = 2
+		bg_style.corner_radius_bottom_left = 2
+		bg_style.corner_radius_bottom_right = 2
+		health_bar.add_theme_stylebox_override("background", bg_style)
+
 func connect_signals() -> void:
 	if range_area:
 		range_area.body_entered.connect(_on_body_entered_range)
