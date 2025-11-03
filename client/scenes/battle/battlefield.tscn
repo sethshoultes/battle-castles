@@ -133,7 +133,6 @@ offset_left = -40.0
 offset_top = -60.0
 offset_right = 40.0
 offset_bottom = -50.0
-theme_override_styles/fill = SubResource("StyleBoxTexture_health_fill")
 show_percentage = false
 
 [node name="AttackTimer" type="Timer" parent="Towers/PlayerLeftTower"]
@@ -165,7 +164,6 @@ offset_left = -40.0
 offset_top = -60.0
 offset_right = 40.0
 offset_bottom = -50.0
-theme_override_styles/fill = SubResource("StyleBoxTexture_health_fill")
 show_percentage = false
 
 [node name="AttackTimer" type="Timer" parent="Towers/PlayerRightTower"]
@@ -197,7 +195,6 @@ offset_left = -50.0
 offset_top = -70.0
 offset_right = 50.0
 offset_bottom = -60.0
-theme_override_styles/fill = SubResource("StyleBoxTexture_health_fill")
 show_percentage = false
 
 [node name="AttackTimer" type="Timer" parent="Towers/PlayerCastle"]
@@ -229,7 +226,6 @@ offset_left = -40.0
 offset_top = -60.0
 offset_right = 40.0
 offset_bottom = -50.0
-theme_override_styles/fill = SubResource("StyleBoxTexture_health_fill")
 show_percentage = false
 
 [node name="AttackTimer" type="Timer" parent="Towers/OpponentLeftTower"]
@@ -261,7 +257,6 @@ offset_left = -40.0
 offset_top = -60.0
 offset_right = 40.0
 offset_bottom = -50.0
-theme_override_styles/fill = SubResource("StyleBoxTexture_health_fill")
 show_percentage = false
 
 [node name="AttackTimer" type="Timer" parent="Towers/OpponentRightTower"]
@@ -293,7 +288,6 @@ offset_left = -50.0
 offset_top = -70.0
 offset_right = 50.0
 offset_bottom = -60.0
-theme_override_styles/fill = SubResource("StyleBoxTexture_health_fill")
 show_percentage = false
 
 [node name="AttackTimer" type="Timer" parent="Towers/OpponentCastle"]
