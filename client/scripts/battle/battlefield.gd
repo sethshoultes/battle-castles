@@ -682,7 +682,7 @@ func _load_ai_difficulty() -> void:
 		# Get difficulty-specific settings from config
 		var ai_settings = balance_config.get_ai_settings_for_difficulty(GameManager.ai_difficulty)
 		ai_elixir_reserve = ai_settings.elixir_reserve
-		ai_timer.wait_time = ai_settings.decision_interval if ai_timer else balance_config.ai_decision_interval
+		# ai_timer.wait_time will be set in start_ai_timer() after timer is created
 
 		print("AI difficulty set to: ", ai_difficulty)
 		print("  - Elixir reserve: ", ai_elixir_reserve)
@@ -697,9 +697,13 @@ func start_ai_timer() -> void:
 		load("res://resources/cards/giant.tres")
 	]
 
-	# Create AI timer - check based on config decision interval
+	# Create AI timer with difficulty-specific decision interval
 	ai_timer = Timer.new()
-	ai_timer.wait_time = balance_config.ai_decision_interval if balance_config else 1.0
+	if balance_config and GameManager:
+		var ai_settings = balance_config.get_ai_settings_for_difficulty(GameManager.ai_difficulty)
+		ai_timer.wait_time = ai_settings.decision_interval
+	else:
+		ai_timer.wait_time = 1.0
 	ai_timer.autostart = true
 	ai_timer.timeout.connect(_on_ai_timer_timeout)
 	add_child(ai_timer)
