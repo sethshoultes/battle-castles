@@ -131,7 +131,7 @@ func _update_profile_display() -> void:
 		if player_name_label:
 			player_name_label.text = player_data.get("name", "Player")
 		if player_level_label:
-			player_level_label.text = "Level " + str(player_data.get("level", 1))
+			player_level_label.text = str(player_data.get("level", 1))
 		if trophy_count_label:
 			trophy_count_label.text = str(player_data.get("trophies", 0))
 		if gold_count_label:

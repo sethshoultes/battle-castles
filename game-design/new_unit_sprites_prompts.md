@@ -88,13 +88,13 @@ A cartoon-style compact robot knight character sprite for a mobile game, viewed 
 
 ### 4. Wizard
 
-#### Wizard (Player - Purple) []
+#### Wizard (Player - Purple) [x]
 ```
 A cartoon-style wizard character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, bearded wizard with purple robe and pointed wizard hat, holding magical staff with glowing orb, mystical energy swirls around hands, wise magical stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 35x52 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `wizard_player.png`
 
-#### Wizard (Enemy - Red/Dark) []
+#### Wizard (Enemy - Red/Dark) [x]
 ```
 A cartoon-style wizard character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, bearded wizard with dark red robe and pointed wizard hat, holding magical staff with glowing red orb, dark magical energy swirls around hands, sinister stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 35x52 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
