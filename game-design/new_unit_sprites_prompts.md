@@ -56,13 +56,13 @@ A cartoon-style barbarian warrior character sprite for a mobile game, viewed fro
 
 ### 2. Musketeer
 
-#### Musketeer (Player - Blue) []
+#### Musketeer (Player - Blue) [x]
 ```
 A cartoon-style musketeer character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, elegant female musketeer with feathered hat, wearing blue uniform with gold trim, holding long rifle/musket weapon, confident standing pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 34x50 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `musketeer_player.png`
 
-#### Musketeer (Enemy - Red) []
+#### Musketeer (Enemy - Red) [x]
 ```
 A cartoon-style musketeer character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, elegant female musketeer with feathered hat, wearing red uniform with dark trim, holding long rifle/musket weapon, confident standing pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 34x50 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -72,13 +72,13 @@ A cartoon-style musketeer character sprite for a mobile game, viewed from a 45-d
 
 ### 3. Mini PEKKA
 
-#### Mini PEKKA (Player - Dark Blue) []
+#### Mini PEKKA (Player - Dark Blue) [x]
 ```
 A cartoon-style compact robot knight character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small armored robot with glowing blue eyes, metallic dark blue armor with silver trim, holding large sword, powerful stance, mechanical appearance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 40x56 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `mini_pekka_player.png`
 
-#### Mini PEKKA (Enemy - Dark Red) []
+#### Mini PEKKA (Enemy - Dark Red) [x]
 ```
 A cartoon-style compact robot knight character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small armored robot with glowing red eyes, metallic dark red armor with black trim, holding large sword, powerful stance, menacing mechanical appearance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 40x56 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```

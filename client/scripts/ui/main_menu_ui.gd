@@ -10,13 +10,13 @@ class_name MainMenuUI
 @onready var quit_button: TextureButton = $MenuContainer/ButtonContainer/QuitButton
 
 # Profile elements
-@onready var profile_panel: Panel = $ProfilePanel
-@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/NameLabel
-@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/LevelLabel
-@onready var trophy_count_label: Label = $ProfilePanel/PlayerInfo/TrophyContainer/TrophyCount
+@onready var profile_panel: Control = $ProfilePanel
+@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/NameLabel
+@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/LevelContainer/LevelBadge/LevelLabel
+@onready var trophy_count_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/TrophyContainer/TrophyCount
 @onready var gold_count_label: Label = $ProfilePanel/Resources/GoldContainer/GoldCount
 @onready var gem_count_label: Label = $ProfilePanel/Resources/GemContainer/GemCount
-@onready var avatar_texture: TextureRect = $ProfilePanel/PlayerInfo/Avatar
+@onready var avatar_texture: TextureRect = $ProfilePanel/PlayerInfo/TopRow/AvatarContainer/AvatarFrame/Avatar
 
 # Arena display
 @onready var arena_name_label: Label = $ProfilePanel/ArenaInfo/ArenaName

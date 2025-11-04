@@ -16,7 +16,7 @@ This document contains prompts for generating visual assets for the main menu pr
 
 ## Required Assets
 
-### 1. Profile Panel Background
+### 1. Profile Panel Background [x]
 **File**: `client/assets/sprites/ui/profile_panel_bg.png`
 **Dimensions**: 320px × 400px (or similar rectangular)
 **Prompt**:
@@ -24,7 +24,7 @@ This document contains prompts for generating visual assets for the main menu pr
 Create a 320x400 pixel medieval fantasy game UI panel background with a dark blue-gray center (#2C2C3E) and thick golden ornate border. The border should have decorative corner pieces with subtle embossing. The style should match Clash Royale's UI aesthetic - cartoon style, clean, and professional. Include a slight inner shadow to give depth. The panel should look like it's made of polished wood or stone with gold trim. Make it suitable for displaying player profile information. PNG with transparency.
 ```
 
-### 2. Player Avatar Frame
+### 2. Player Avatar Frame [x]
 **File**: `client/assets/sprites/ui/avatar_frame.png`
 **Dimensions**: 80px × 80px (circular frame)
 **Prompt**:
@@ -32,7 +32,7 @@ Create a 320x400 pixel medieval fantasy game UI panel background with a dark blu
 Create an 80x80 pixel circular golden frame for a player avatar icon in Clash Royale style. The frame should have ornate decorative elements, a thick golden border with corner flourishes, and a dark inner circle where the avatar will be displayed. The frame should look prestigious and match the medieval fantasy theme. Include subtle highlights and shadows to make it look dimensional. PNG with transparency.
 ```
 
-### 3. Default Player Avatar
+### 3. Default Player Avatar [x]
 **File**: `client/assets/sprites/ui/default_avatar.png`
 **Dimensions**: 64px × 64px (circular, fits inside frame)
 **Prompt**:
@@ -40,7 +40,7 @@ Create an 80x80 pixel circular golden frame for a player avatar icon in Clash Ro
 Create a 64x64 pixel default player avatar icon showing a generic knight or warrior character in Clash Royale cartoon style. Should be a simple, friendly face with a helmet, shown from the front. Use bold colors and simple shapes. The icon should fit inside a circular frame and work well at small sizes. Make it gender-neutral and appealing. PNG with transparency.
 ```
 
-### 4. Trophy Icon
+### 4. Trophy Icon [x]
 **File**: `client/assets/sprites/ui/icons/trophy_icon.png`
 **Dimensions**: 32px × 32px
 **Prompt**:
@@ -48,7 +48,7 @@ Create a 64x64 pixel default player avatar icon showing a generic knight or warr
 Create a 32x32 pixel small trophy icon in Clash Royale style. Golden trophy cup with purple/blue gemstone in the center. Should be shiny and prestigious-looking but simple enough to read at small sizes. Use bold outlines and vibrant colors. The trophy should have a wide base and decorative handles. PNG with transparency.
 ```
 
-### 5. Gold Coin Icon
+### 5. Gold Coin Icon [x]
 **File**: `client/assets/sprites/ui/icons/gold_icon.png`
 **Dimensions**: 32px × 32px
 **Prompt**:
@@ -56,7 +56,7 @@ Create a 32x32 pixel small trophy icon in Clash Royale style. Golden trophy cup 
 Create a 32x32 pixel small gold coin icon in Clash Royale cartoon style. Round gold coin shown at a slight angle to show depth, with a simple emblem or star in the center. Use bright gold color (#FFD700) with darker gold shading. Include a white shine/highlight to make it look shiny and valuable. Simple and clear at small sizes. PNG with transparency.
 ```
 
-### 6. Gem Icon
+### 6. Gem Icon [x]
 **File**: `client/assets/sprites/ui/icons/gem_icon.png`
 **Dimensions**: 32px × 32px
 **Prompt**:
@@ -64,7 +64,7 @@ Create a 32x32 pixel small gold coin icon in Clash Royale cartoon style. Round g
 Create a 32x32 pixel small gem/diamond icon in Clash Royale style. Purple or pink gemstone with faceted cuts, shown from a 3/4 view. The gem should sparkle with white highlights and have a magical appearance. Use vibrant colors (magenta, purple, pink) and make it clearly distinguishable from the gold coin icon. Include a subtle glow effect. PNG with transparency.
 ```
 
-### 7. Level Badge Background
+### 7. Level Badge Background [x]
 **File**: `client/assets/sprites/ui/level_badge.png`
 **Dimensions**: 48px × 48px
 **Prompt**:
@@ -72,7 +72,7 @@ Create a 32x32 pixel small gem/diamond icon in Clash Royale style. Purple or pin
 Create a 48x48 pixel small hexagonal or shield-shaped badge background for displaying player level in Clash Royale style. Use a gradient from light blue to darker blue (#4A90E2 to #2C5AA0). Include a golden border and make it look like an achievement badge or military rank insignia. The center should be clear for displaying a level number. PNG with transparency.
 ```
 
-### 8. Arena Badge Frame
+### 8. Arena Badge Frame [x]
 **File**: `client/assets/sprites/ui/arena_badge_frame.png`
 **Dimensions**: 64px × 64px
 **Prompt**:
@@ -80,7 +80,7 @@ Create a 48x48 pixel small hexagonal or shield-shaped badge background for displ
 Create a 64x64 pixel decorative frame for arena/league badges in Clash Royale style. Shield or crest shape with golden ornate border and dark center. The frame should look prestigious and match the medieval fantasy theme. Include subtle details like rivets, engravings, or decorative flourishes. The center should be clear for displaying arena icons. PNG with transparency.
 ```
 
-### 9. Chest Slot Frame (Empty)
+### 9. Chest Slot Frame (Empty) [x]
 **File**: `client/assets/sprites/ui/chest_slot_empty.png`
 **Dimensions**: 64px × 64px
 **Prompt**:
@@ -88,7 +88,7 @@ Create a 64x64 pixel decorative frame for arena/league badges in Clash Royale st
 Create a 64x64 pixel empty chest slot frame in Clash Royale style. A square frame with rounded corners, golden border, and dark/gray interior to indicate it's empty. Include a subtle "plus" or "empty" indicator in the center. The frame should match the profile panel aesthetic and clearly indicate this is where a chest would appear when earned. PNG with transparency.
 ```
 
-### 10. Chest Slot Frame (Filled)
+### 10. Chest Slot Frame (Filled) [x]
 **File**: `client/assets/sprites/ui/chest_slot_filled.png`
 **Dimensions**: 64px × 64px
 **Prompt**:
@@ -96,7 +96,7 @@ Create a 64x64 pixel empty chest slot frame in Clash Royale style. A square fram
 Create a 64x64 pixel filled chest slot frame in Clash Royale style. Same dimensions as empty slot but with a golden glow or highlight effect to indicate a chest is present. The border should be more vibrant and include a subtle animation-ready glow effect. This will be used as background when a chest icon is displayed. PNG with transparency.
 ```
 
-### 11. Resource Container Background
+### 11. Resource Container Background [x]
 **File**: `client/assets/sprites/ui/resource_counter_bg.png`
 **Dimensions**: 120px × 36px (horizontal pill shape)
 **Prompt**:
@@ -106,7 +106,7 @@ Create a 120x36 pixel small horizontal pill-shaped background for resource count
 
 ---
 
-## Arena Badge Icons (Future Enhancement)
+## Arena Badge Icons (Future Enhancement) [x]
 These can be created later but are referenced in the profile panel:
 
 ### Training Camp Arena
