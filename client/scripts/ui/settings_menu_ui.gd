@@ -97,6 +97,7 @@ func _load_settings() -> void:
 	var err = config.load("user://settings.cfg")
 
 	if err == OK:
+		print("Settings loaded successfully from user://settings.cfg")
 		# Load audio settings
 		settings.audio.master_volume = config.get_value("audio", "master_volume", 75)
 		settings.audio.sfx_volume = config.get_value("audio", "sfx_volume", 75)
@@ -110,6 +111,8 @@ func _load_settings() -> void:
 		settings.gameplay.confirm_placement = config.get_value("gameplay", "confirm_placement", false)
 		settings.gameplay.vibration = config.get_value("gameplay", "vibration", true)
 		settings.gameplay.ai_difficulty = config.get_value("gameplay", "ai_difficulty", 1)
+	else:
+		print("No saved settings found, using defaults (settings already initialized)")
 
 	_apply_settings_to_ui()
 	_apply_gameplay_settings()  # Apply to GameManager on load
@@ -132,7 +135,11 @@ func _save_settings() -> void:
 	config.set_value("gameplay", "vibration", settings.gameplay.vibration)
 	config.set_value("gameplay", "ai_difficulty", settings.gameplay.ai_difficulty)
 
-	config.save("user://settings.cfg")
+	var err = config.save("user://settings.cfg")
+	if err == OK:
+		print("Settings saved successfully to user://settings.cfg")
+	else:
+		push_error("Failed to save settings: " + str(err))
 
 func _apply_settings_to_ui() -> void:
 	# Audio
@@ -263,6 +270,9 @@ func _on_apply_pressed() -> void:
 	settings_changed = false
 	apply_button.disabled = true
 	settings_applied.emit(settings)
+
+	# Close menu after applying settings
+	hide_menu()
 
 func _on_cancel_pressed() -> void:
 	# Revert to original settings
