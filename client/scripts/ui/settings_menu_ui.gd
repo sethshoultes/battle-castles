@@ -53,7 +53,8 @@ func _ready() -> void:
 	_setup_ui()
 	_connect_signals()
 	_load_settings()
-	visible = false
+	# Visible by default when loaded as standalone scene
+	# Use show_menu() to show as overlay during gameplay
 
 func _setup_ui() -> void:
 	# Setup quality options
@@ -312,13 +313,20 @@ func show_menu() -> void:
 	tween.tween_property(self, "modulate:a", 1.0, 0.3)
 
 func hide_menu() -> void:
-	# Animate disappearance
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 0.3)
-	tween.tween_callback(func():
-		visible = false
-		settings_closed.emit()
-	)
+	# Check if loaded as standalone scene (from main menu) vs overlay (during gameplay)
+	var is_standalone = get_tree().current_scene == self
+
+	if is_standalone:
+		# Return to main menu
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	else:
+		# Animate disappearance (overlay mode)
+		var tween = create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 0.3)
+		tween.tween_callback(func():
+			visible = false
+			settings_closed.emit()
+		)
 
 func get_settings() -> Dictionary:
 	return settings
