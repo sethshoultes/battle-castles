@@ -53,7 +53,8 @@ func _ready() -> void:
 	_setup_ui()
 	_connect_signals()
 	_load_settings()
-	visible = false
+	# Visible by default when loaded as standalone scene
+	# Use show_menu() to show as overlay during gameplay
 
 func _setup_ui() -> void:
 	# Setup quality options
@@ -96,97 +97,105 @@ func _load_settings() -> void:
 	var err = config.load("user://settings.cfg")
 
 	if err == OK:
+		print("Settings loaded successfully from user://settings.cfg")
 		# Load audio settings
-		settings.audio.master_volume = config.get_value("audio", "master_volume", 75)
-		settings.audio.sfx_volume = config.get_value("audio", "sfx_volume", 75)
-		settings.audio.music_volume = config.get_value("audio", "music_volume", 50)
+		settings["audio"]["master_volume"] = config.get_value("audio", "master_volume", 75)
+		settings["audio"]["sfx_volume"] = config.get_value("audio", "sfx_volume", 75)
+		settings["audio"]["music_volume"] = config.get_value("audio", "music_volume", 50)
 
 		# Load graphics settings
-		settings.graphics.quality = config.get_value("graphics", "quality", 1)
-		settings.graphics.vsync = config.get_value("graphics", "vsync", true)
+		settings["graphics"]["quality"] = config.get_value("graphics", "quality", 1)
+		settings["graphics"]["vsync"] = config.get_value("graphics", "vsync", true)
 
 		# Load gameplay settings
-		settings.gameplay.confirm_placement = config.get_value("gameplay", "confirm_placement", false)
-		settings.gameplay.vibration = config.get_value("gameplay", "vibration", true)
-		settings.gameplay.ai_difficulty = config.get_value("gameplay", "ai_difficulty", 1)
+		settings["gameplay"]["confirm_placement"] = config.get_value("gameplay", "confirm_placement", false)
+		settings["gameplay"]["vibration"] = config.get_value("gameplay", "vibration", true)
+		settings["gameplay"]["ai_difficulty"] = config.get_value("gameplay", "ai_difficulty", 1)
+	else:
+		print("No saved settings found, using defaults (settings already initialized)")
 
+	# Duplicate settings BEFORE applying to UI to avoid comparison errors during slider initialization
+	original_settings = settings.duplicate(true)
 	_apply_settings_to_ui()
 	_apply_gameplay_settings()  # Apply to GameManager on load
-	original_settings = settings.duplicate(true)
 
 func _save_settings() -> void:
 	var config = ConfigFile.new()
 
 	# Save audio settings
-	config.set_value("audio", "master_volume", settings.audio.master_volume)
-	config.set_value("audio", "sfx_volume", settings.audio.sfx_volume)
-	config.set_value("audio", "music_volume", settings.audio.music_volume)
+	config.set_value("audio", "master_volume", settings["audio"]["master_volume"])
+	config.set_value("audio", "sfx_volume", settings["audio"]["sfx_volume"])
+	config.set_value("audio", "music_volume", settings["audio"]["music_volume"])
 
 	# Save graphics settings
-	config.set_value("graphics", "quality", settings.graphics.quality)
-	config.set_value("graphics", "vsync", settings.graphics.vsync)
+	config.set_value("graphics", "quality", settings["graphics"]["quality"])
+	config.set_value("graphics", "vsync", settings["graphics"]["vsync"])
 
 	# Save gameplay settings
-	config.set_value("gameplay", "confirm_placement", settings.gameplay.confirm_placement)
-	config.set_value("gameplay", "vibration", settings.gameplay.vibration)
-	config.set_value("gameplay", "ai_difficulty", settings.gameplay.ai_difficulty)
+	config.set_value("gameplay", "confirm_placement", settings["gameplay"]["confirm_placement"])
+	config.set_value("gameplay", "vibration", settings["gameplay"]["vibration"])
+	config.set_value("gameplay", "ai_difficulty", settings["gameplay"]["ai_difficulty"])
 
-	config.save("user://settings.cfg")
+	var err = config.save("user://settings.cfg")
+	if err == OK:
+		print("Settings saved successfully to user://settings.cfg")
+	else:
+		push_error("Failed to save settings: " + str(err))
 
 func _apply_settings_to_ui() -> void:
 	# Audio
-	master_volume_slider.value = settings.audio.master_volume
-	master_volume_value.text = str(settings.audio.master_volume)
-	sfx_volume_slider.value = settings.audio.sfx_volume
-	sfx_volume_value.text = str(settings.audio.sfx_volume)
-	music_volume_slider.value = settings.audio.music_volume
-	music_volume_value.text = str(settings.audio.music_volume)
+	master_volume_slider.value = settings["audio"]["master_volume"]
+	master_volume_value.text = str(settings["audio"]["master_volume"])
+	sfx_volume_slider.value = settings["audio"]["sfx_volume"]
+	sfx_volume_value.text = str(settings["audio"]["sfx_volume"])
+	music_volume_slider.value = settings["audio"]["music_volume"]
+	music_volume_value.text = str(settings["audio"]["music_volume"])
 
 	# Graphics
-	quality_option.selected = settings.graphics.quality
-	vsync_checkbox.button_pressed = settings.graphics.vsync
+	quality_option.selected = settings["graphics"]["quality"]
+	vsync_checkbox.button_pressed = settings["graphics"]["vsync"]
 
 	# Gameplay
-	confirm_placement_checkbox.button_pressed = settings.gameplay.confirm_placement
-	vibration_checkbox.button_pressed = settings.gameplay.vibration
-	ai_difficulty_option.selected = settings.gameplay.ai_difficulty
+	confirm_placement_checkbox.button_pressed = settings["gameplay"]["confirm_placement"]
+	vibration_checkbox.button_pressed = settings["gameplay"]["vibration"]
+	ai_difficulty_option.selected = settings["gameplay"]["ai_difficulty"]
 
 func _on_master_volume_changed(value: float) -> void:
-	settings.audio.master_volume = int(value)
+	settings["audio"]["master_volume"] = int(value)
 	master_volume_value.text = str(int(value))
 	_check_settings_changed()
 	_apply_audio_settings()
 
 func _on_sfx_volume_changed(value: float) -> void:
-	settings.audio.sfx_volume = int(value)
+	settings["audio"]["sfx_volume"] = int(value)
 	sfx_volume_value.text = str(int(value))
 	_check_settings_changed()
 	_apply_audio_settings()
 
 func _on_music_volume_changed(value: float) -> void:
-	settings.audio.music_volume = int(value)
+	settings["audio"]["music_volume"] = int(value)
 	music_volume_value.text = str(int(value))
 	_check_settings_changed()
 	_apply_audio_settings()
 
 func _on_quality_changed(index: int) -> void:
-	settings.graphics.quality = index
+	settings["graphics"]["quality"] = index
 	_check_settings_changed()
 
 func _on_vsync_toggled(button_pressed: bool) -> void:
-	settings.graphics.vsync = button_pressed
+	settings["graphics"]["vsync"] = button_pressed
 	_check_settings_changed()
 
 func _on_confirm_placement_toggled(button_pressed: bool) -> void:
-	settings.gameplay.confirm_placement = button_pressed
+	settings["gameplay"]["confirm_placement"] = button_pressed
 	_check_settings_changed()
 
 func _on_vibration_toggled(button_pressed: bool) -> void:
-	settings.gameplay.vibration = button_pressed
+	settings["gameplay"]["vibration"] = button_pressed
 	_check_settings_changed()
 
 func _on_ai_difficulty_changed(index: int) -> void:
-	settings.gameplay.ai_difficulty = index
+	settings["gameplay"]["ai_difficulty"] = index
 	_check_settings_changed()
 
 func _check_settings_changed() -> void:
@@ -195,21 +204,21 @@ func _check_settings_changed() -> void:
 
 func _are_settings_different() -> bool:
 	# Check if current settings differ from original
-	if settings.audio.master_volume != original_settings.audio.master_volume:
+	if settings["audio"]["master_volume"] != original_settings["audio"]["master_volume"]:
 		return true
-	if settings.audio.sfx_volume != original_settings.audio.sfx_volume:
+	if settings["audio"]["sfx_volume"] != original_settings["audio"]["sfx_volume"]:
 		return true
-	if settings.audio.music_volume != original_settings.audio.music_volume:
+	if settings["audio"]["music_volume"] != original_settings["audio"]["music_volume"]:
 		return true
-	if settings.graphics.quality != original_settings.graphics.quality:
+	if settings["graphics"]["quality"] != original_settings["graphics"]["quality"]:
 		return true
-	if settings.graphics.vsync != original_settings.graphics.vsync:
+	if settings["graphics"]["vsync"] != original_settings["graphics"]["vsync"]:
 		return true
-	if settings.gameplay.confirm_placement != original_settings.gameplay.confirm_placement:
+	if settings["gameplay"]["confirm_placement"] != original_settings["gameplay"]["confirm_placement"]:
 		return true
-	if settings.gameplay.vibration != original_settings.gameplay.vibration:
+	if settings["gameplay"]["vibration"] != original_settings["gameplay"]["vibration"]:
 		return true
-	if settings.gameplay.ai_difficulty != original_settings.gameplay.ai_difficulty:
+	if settings["gameplay"]["ai_difficulty"] != original_settings["gameplay"]["ai_difficulty"]:
 		return true
 	return false
 
@@ -220,26 +229,26 @@ func _apply_audio_settings() -> void:
 	var music_bus = AudioServer.get_bus_index("Music")
 
 	if master_bus != -1:
-		var master_db = linear_to_db(settings.audio.master_volume / 100.0)
+		var master_db = linear_to_db(settings["audio"]["master_volume"] / 100.0)
 		AudioServer.set_bus_volume_db(master_bus, master_db)
 
 	if sfx_bus != -1:
-		var sfx_db = linear_to_db(settings.audio.sfx_volume / 100.0)
+		var sfx_db = linear_to_db(settings["audio"]["sfx_volume"] / 100.0)
 		AudioServer.set_bus_volume_db(sfx_bus, sfx_db)
 
 	if music_bus != -1:
-		var music_db = linear_to_db(settings.audio.music_volume / 100.0)
+		var music_db = linear_to_db(settings["audio"]["music_volume"] / 100.0)
 		AudioServer.set_bus_volume_db(music_bus, music_db)
 
 func _apply_graphics_settings() -> void:
 	# Apply VSync
-	if settings.graphics.vsync:
+	if settings["graphics"]["vsync"]:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 
 	# Apply quality settings
-	match settings.graphics.quality:
+	match settings["graphics"]["quality"]:
 		0: # Low
 			RenderingServer.viewport_set_scaling_3d_scale(get_viewport().get_viewport_rid(), 0.75)
 		1: # Medium
@@ -252,7 +261,7 @@ func _apply_graphics_settings() -> void:
 func _apply_gameplay_settings() -> void:
 	# Apply AI difficulty to GameManager
 	if GameManager:
-		GameManager.ai_difficulty = settings.gameplay.ai_difficulty
+		GameManager.ai_difficulty = settings["gameplay"]["ai_difficulty"]
 
 func _on_apply_pressed() -> void:
 	_save_settings()
@@ -262,6 +271,9 @@ func _on_apply_pressed() -> void:
 	settings_changed = false
 	apply_button.disabled = true
 	settings_applied.emit(settings)
+
+	# Close menu after applying settings
+	hide_menu()
 
 func _on_cancel_pressed() -> void:
 	# Revert to original settings
@@ -312,13 +324,21 @@ func show_menu() -> void:
 	tween.tween_property(self, "modulate:a", 1.0, 0.3)
 
 func hide_menu() -> void:
-	# Animate disappearance
-	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 0.3)
-	tween.tween_callback(func():
-		visible = false
-		settings_closed.emit()
-	)
+	# Check if loaded as standalone scene (from main menu) vs overlay (during gameplay)
+	var is_standalone = get_tree().current_scene == self
+
+	if is_standalone:
+		# Return to main menu
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
+	else:
+		# Animate disappearance (overlay mode)
+		var tween = create_tween()
+		tween.tween_property(self, "modulate:a", 0.0, 0.3)
+		tween.tween_callback(_on_hide_animation_complete)
+
+func _on_hide_animation_complete() -> void:
+	visible = false
+	settings_closed.emit()
 
 func get_settings() -> Dictionary:
 	return settings
