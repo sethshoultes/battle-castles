@@ -46,7 +46,7 @@ A cartoon-style barbarian warrior character sprite for a mobile game, viewed fro
 ```
 **File:** `barbarians_player.png`
 
-#### Barbarians (Enemy - Dark Orange/Red) []
+#### Barbarians (Enemy - Dark Orange/Red) [x]
 ```
 A cartoon-style barbarian warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, fierce bearded warrior with horned helmet and wild hair, muscular build, wearing dark orange fur and leather armor with red accents, holding large sword or battleaxe, aggressive battle stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 38x54 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
