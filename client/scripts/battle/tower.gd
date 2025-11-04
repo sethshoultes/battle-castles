@@ -6,7 +6,7 @@ class_name Tower
 @export var current_health: float = max_health
 @export var attack_damage: float = 109.0
 @export var attack_speed: float = 0.8  # Attacks per second
-@export var attack_range: float = 7.5 * 64  # 7.5 tiles * 64 pixels
+@export var attack_range: float = 6.0 * 64  # 6.0 tiles * 64 pixels
 @export var team: int = 0  # 0 = Player, 1 = Opponent
 @export var tower_type: String = "princess"  # "princess" or "castle"
 

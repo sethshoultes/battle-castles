@@ -40,13 +40,13 @@ All unit sprites should be saved to: `/client/assets/sprites/units/`
 
 ### 1. Barbarians
 
-#### Barbarians (Player - Orange/Blue)
+#### Barbarians (Player - Orange/Blue) [x]
 ```
 A cartoon-style barbarian warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, fierce bearded warrior with horned helmet and wild hair, muscular build, wearing orange-brown fur and leather armor with blue accents, holding large sword or battleaxe, aggressive battle stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 38x54 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `barbarians_player.png`
 
-#### Barbarians (Enemy - Dark Orange/Red)
+#### Barbarians (Enemy - Dark Orange/Red) []
 ```
 A cartoon-style barbarian warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, fierce bearded warrior with horned helmet and wild hair, muscular build, wearing dark orange fur and leather armor with red accents, holding large sword or battleaxe, aggressive battle stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 38x54 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -56,13 +56,13 @@ A cartoon-style barbarian warrior character sprite for a mobile game, viewed fro
 
 ### 2. Musketeer
 
-#### Musketeer (Player - Blue)
+#### Musketeer (Player - Blue) []
 ```
 A cartoon-style musketeer character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, elegant female musketeer with feathered hat, wearing blue uniform with gold trim, holding long rifle/musket weapon, confident standing pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 34x50 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `musketeer_player.png`
 
-#### Musketeer (Enemy - Red)
+#### Musketeer (Enemy - Red) []
 ```
 A cartoon-style musketeer character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, elegant female musketeer with feathered hat, wearing red uniform with dark trim, holding long rifle/musket weapon, confident standing pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 34x50 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -72,13 +72,13 @@ A cartoon-style musketeer character sprite for a mobile game, viewed from a 45-d
 
 ### 3. Mini PEKKA
 
-#### Mini PEKKA (Player - Dark Blue)
+#### Mini PEKKA (Player - Dark Blue) []
 ```
 A cartoon-style compact robot knight character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small armored robot with glowing blue eyes, metallic dark blue armor with silver trim, holding large sword, powerful stance, mechanical appearance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 40x56 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `mini_pekka_player.png`
 
-#### Mini PEKKA (Enemy - Dark Red)
+#### Mini PEKKA (Enemy - Dark Red) []
 ```
 A cartoon-style compact robot knight character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small armored robot with glowing red eyes, metallic dark red armor with black trim, holding large sword, powerful stance, menacing mechanical appearance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 40x56 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -88,13 +88,13 @@ A cartoon-style compact robot knight character sprite for a mobile game, viewed 
 
 ### 4. Wizard
 
-#### Wizard (Player - Purple)
+#### Wizard (Player - Purple) []
 ```
 A cartoon-style wizard character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, bearded wizard with purple robe and pointed wizard hat, holding magical staff with glowing orb, mystical energy swirls around hands, wise magical stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 35x52 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `wizard_player.png`
 
-#### Wizard (Enemy - Red/Dark)
+#### Wizard (Enemy - Red/Dark) []
 ```
 A cartoon-style wizard character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, bearded wizard with dark red robe and pointed wizard hat, holding magical staff with glowing red orb, dark magical energy swirls around hands, sinister stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 35x52 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -104,13 +104,13 @@ A cartoon-style wizard character sprite for a mobile game, viewed from a 45-degr
 
 ### 5. Baby Dragon
 
-#### Baby Dragon (Player - Purple)
+#### Baby Dragon (Player - Purple) []
 ```
 A cartoon-style baby dragon creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, cute but fierce purple dragon with small wings, breathing small fire, large expressive eyes, flying pose with wings spread, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 45x60 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `baby_dragon_player.png`
 
-#### Baby Dragon (Enemy - Red)
+#### Baby Dragon (Enemy - Red) []
 ```
 A cartoon-style baby dragon creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, cute but fierce red dragon with small wings, breathing small fire, glowing orange eyes, flying pose with wings spread, menacing appearance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 45x60 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -120,13 +120,13 @@ A cartoon-style baby dragon creature sprite for a mobile game, viewed from a 45-
 
 ### 6. Skeleton Army
 
-#### Skeleton (Player - White/Light)
+#### Skeleton (Player - White/Light) []
 ```
 A cartoon-style skeleton warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, friendly skeleton with white bones wearing simple armor, holding small sword and shield, cartoonish not scary, energetic battle pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 26x42 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `skeleton_army_player.png`
 
-#### Skeleton (Enemy - Gray/Dark)
+#### Skeleton (Enemy - Gray/Dark) []
 ```
 A cartoon-style skeleton warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, skeleton with gray bones wearing tattered dark armor, holding rusty sword and shield, cartoonish not scary, menacing battle pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 26x42 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -136,13 +136,13 @@ A cartoon-style skeleton warrior character sprite for a mobile game, viewed from
 
 ### 7. Minions
 
-#### Minion (Player - Purple)
+#### Minion (Player - Purple) []
 ```
 A cartoon-style flying minion creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small imp-like creature with bat wings, purple-black skin with blue highlights, menacing grin showing teeth, holding small spear, flying pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 28x44 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `minions_player.png`
 
-#### Minion (Enemy - Dark Red)
+#### Minion (Enemy - Dark Red) []
 ```
 A cartoon-style flying minion creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small imp-like creature with bat wings, dark red skin with orange highlights, menacing grin showing teeth, holding small spear, aggressive flying pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 28x44 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -152,13 +152,13 @@ A cartoon-style flying minion creature sprite for a mobile game, viewed from a 4
 
 ### 8. Valkyrie
 
-#### Valkyrie (Player - Orange)
+#### Valkyrie (Player - Orange) []
 ```
 A cartoon-style valkyrie warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, fierce female warrior with horned helmet, red hair in braids, wearing orange-red armor with gold trim, holding large double-bladed axe, powerful battle-ready stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 38x54 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `valkyrie_player.png`
 
-#### Valkyrie (Enemy - Dark Red)
+#### Valkyrie (Enemy - Dark Red) []
 ```
 A cartoon-style valkyrie warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, fierce female warrior with horned helmet, dark hair in braids, wearing dark red armor with black trim, holding large double-bladed axe, menacing battle-ready stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 38x54 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```

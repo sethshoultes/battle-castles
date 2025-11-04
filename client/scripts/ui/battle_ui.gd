@@ -109,6 +109,10 @@ func update_timer(time_remaining: float) -> void:
 	match_time = time_remaining
 	_update_timer_display()
 
+func show_double_elixir_indicator() -> void:
+	"""Called by battle_manager when double elixir starts"""
+	_start_double_elixir()
+
 func _start_double_elixir() -> void:
 	is_double_elixir = true
 	elixir_rate = 1.0 / 1.4  # Clash Royale double elixir: 1 per 1.4s = 0.714 elixir/second

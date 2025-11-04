@@ -14,7 +14,7 @@ func _ready() -> void:
 	current_health = max_health
 	attack_damage = 139.0  # Higher damage
 	attack_speed = 1.0  # Slightly faster
-	attack_range = 7.0 * 64  # 7 tiles
+	attack_range = 6.5 * 64  # 6.5 tiles
 
 	# Initially inactive if requires activation
 	if requires_activation:
