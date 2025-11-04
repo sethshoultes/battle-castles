@@ -1,19 +1,19 @@
 [gd_scene load_steps=16 format=3 uid="uid://bc3hjgw6raa2j"]
 
 [ext_resource type="Script" uid="uid://bgha0788bk1s6" path="res://scripts/ui/main_menu_ui.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_battle.png" id="2_battle_button"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_deck.png" id="3_deck_button"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_settings.png" id="5_settings_button"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_shop.png" id="6_shop_button"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/button_quit.png" id="7_quit_button"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/profile_panel_bg.png" id="8_profile_bg"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/avatar_frame.png" id="9_avatar_frame"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/default_avatar.png" id="10_default_avatar"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/icons/trophy_icon.png" id="11_trophy_icon"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/icons/gold_icon.png" id="12_gold_icon"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/icons/gem_icon.png" id="13_gem_icon"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/level_badge.png" id="14_level_badge"]
-[ext_resource type="Texture2D" path="res://assets/sprites/ui/arenas/training_camp.png" id="15_arena_icon"]
+[ext_resource type="Texture2D" uid="uid://dq5rcldbjsimm" path="res://assets/sprites/ui/button_battle.png" id="2_battle_button"]
+[ext_resource type="Texture2D" uid="uid://djs2hqtgcjvuh" path="res://assets/sprites/ui/button_deck.png" id="3_deck_button"]
+[ext_resource type="Texture2D" uid="uid://b42mxlmhjqoqo" path="res://assets/sprites/ui/button_settings.png" id="5_settings_button"]
+[ext_resource type="Texture2D" uid="uid://cjrfbe38c1nhi" path="res://assets/sprites/ui/button_shop.png" id="6_shop_button"]
+[ext_resource type="Texture2D" uid="uid://bathny284xl10" path="res://assets/sprites/ui/button_quit.png" id="7_quit_button"]
+[ext_resource type="Texture2D" uid="uid://domi2atg7ouuw" path="res://assets/sprites/ui/profile_panel_bg.png" id="8_profile_bg"]
+[ext_resource type="Texture2D" uid="uid://baymu2dn4l20j" path="res://assets/sprites/ui/avatar_frame.png" id="9_avatar_frame"]
+[ext_resource type="Texture2D" uid="uid://bktw78po4m4fp" path="res://assets/sprites/ui/default_avatar.png" id="10_default_avatar"]
+[ext_resource type="Texture2D" uid="uid://d3ia7sqs4nktp" path="res://assets/sprites/ui/icons/trophy_icon.png" id="11_trophy_icon"]
+[ext_resource type="Texture2D" uid="uid://cuxd5bmvxh1rr" path="res://assets/sprites/ui/icons/gold_icon.png" id="12_gold_icon"]
+[ext_resource type="Texture2D" uid="uid://q13xu4qm0gp1" path="res://assets/sprites/ui/icons/gem_icon.png" id="13_gem_icon"]
+[ext_resource type="Texture2D" uid="uid://lcr6h6d05qky" path="res://assets/sprites/ui/level_badge.png" id="14_level_badge"]
+[ext_resource type="Texture2D" uid="uid://d2bkt3l5p3svi" path="res://assets/sprites/ui/training_camp.png" id="15_arena_icon"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.1, 0.1, 0.15, 1)
@@ -126,10 +126,10 @@ stretch_mode = 5
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 120.0
+offset_left = 30.0
+offset_top = 40.0
+offset_right = -30.0
+offset_bottom = 140.0
 
 [node name="TopRow" type="HBoxContainer" parent="ProfilePanel/PlayerInfo"]
 layout_mode = 2
@@ -224,10 +224,10 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 20.0
-offset_top = 140.0
-offset_right = -20.0
-offset_bottom = 185.0
+offset_left = 30.0
+offset_top = 160.0
+offset_right = -30.0
+offset_bottom = 200.0
 theme_override_constants/separation = 15
 
 [node name="GoldContainer" type="HBoxContainer" parent="ProfilePanel/Resources"]
@@ -274,10 +274,10 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -60.0
-offset_right = -20.0
-offset_bottom = -20.0
+offset_left = 30.0
+offset_top = -70.0
+offset_right = -30.0
+offset_bottom = -30.0
 theme_override_constants/separation = 10
 
 [node name="ArenaIcon" type="TextureRect" parent="ProfilePanel/ArenaInfo"]
