@@ -1,0 +1,56 @@
+╔════════════════════════════════════════════════════════════════╗
+║                                                                ║
+║                     BATTLE CASTLES                             ║
+║                    Loading Screen Design                       ║
+║                                                                ║
+║                                                                ║
+║                                                                ║
+║                          ┌─────────┐                           ║
+║                          │░░░░░   ░│  ← Animated Spinner      ║
+║                          │░     ░░░│     (Rotates clockwise)  ║
+║                          │░  ○   ░░│     Blue color           ║
+║                          │░░    ░░░│                           ║
+║                          └─────────┘                           ║
+║                                                                ║
+║                       Loading... 45%                           ║
+║                                                                ║
+║              ╔════════════════════════════╗                    ║
+║              ║████████████░░░░░░░░░░░░░░░░║  ← Progress Bar   ║
+║              ╚════════════════════════════╝     (0-100%)      ║
+║                                                                ║
+║        Tip: Deploy units strategically to counter             ║
+║                  your opponent's cards                         ║
+║                                                                ║
+║                                                                ║
+╚════════════════════════════════════════════════════════════════╝
+
+COLOR SCHEME:
+─────────────
+Background:     Color(0.05, 0.05, 0.08, 1)  - Very dark blue-gray
+Spinner:        Color(0.3, 0.6, 0.9, 1)     - Bright blue
+Progress Bar:   Color(0.3, 0.6, 0.9, 1)     - Bright blue (fill)
+                Color(0.2, 0.2, 0.25, 1)    - Dark gray (background)
+Loading Text:   White (default)             - 24px
+Tip Text:       Color(0.7, 0.7, 0.75, 1)    - Light gray - 16px
+
+LAYOUT:
+───────
+- Full screen coverage (anchor_preset = 15)
+- Centered vertically and horizontally
+- Spinner: 60x60 px square with hollow center
+- Progress Bar: 400x30 px with rounded corners
+- Tip Label: 600px max width, auto word wrap
+- Spacing: 30px between elements
+
+ANIMATIONS:
+───────────
+- Spinner rotates at 3 radians/second
+- Progress bar fills smoothly from 0% to 100%
+- Automatic updates from SceneManager signals
+
+RESPONSIVE:
+───────────
+✓ Works on all resolutions
+✓ Center-aligned content
+✓ No hardcoded positions
+✓ Scales properly on different screens

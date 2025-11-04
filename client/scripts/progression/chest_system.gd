@@ -337,7 +337,7 @@ func _generate_chest_rewards(chest_type: int, card_collection: Node) -> Dictiona
 
 	while cards_generated < total_cards:
 		var rarity = _determine_card_rarity(chest_def)
-		var eligible_cards = _filter_cards_by_rarity(available_cards, rarity)
+		var eligible_cards = _filter_cards_by_rarity(available_cards, rarity, card_collection)
 
 		if eligible_cards.is_empty():
 			continue
@@ -395,21 +395,15 @@ func _get_available_cards(card_collection: Node) -> Array:
 	# In a real implementation, this would filter by arena
 	return card_collection.card_definitions.keys()
 
-func _filter_cards_by_rarity(cards: Array, rarity: int) -> Array:
-	# This would need access to card definitions to filter properly
-	# For now, return a subset based on rarity
+func _filter_cards_by_rarity(cards: Array, rarity: int, card_collection: Node) -> Array:
 	var filtered = []
 
-	# Mock implementation - in real game would check actual card rarities
-	match rarity:
-		CardCollection.Rarity.COMMON:
-			filtered = ["knight", "archer", "goblin", "barbarian", "arrows", "zap", "cannon", "tesla"]
-		CardCollection.Rarity.RARE:
-			filtered = ["giant", "musketeer", "wizard", "fireball", "bomb_tower", "inferno_tower"]
-		CardCollection.Rarity.EPIC:
-			filtered = ["prince", "dragon", "pekka", "lightning", "freeze", "poison", "xbow"]
-		CardCollection.Rarity.LEGENDARY:
-			filtered = ["ice_wizard", "princess"]
+	# Filter cards by checking their actual rarity from card_definitions
+	for card_id in cards:
+		if card_collection.card_definitions.has(card_id):
+			var card_def = card_collection.card_definitions[card_id]
+			if card_def.rarity == rarity:
+				filtered.append(card_id)
 
 	return filtered
 

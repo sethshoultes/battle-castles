@@ -40,6 +40,10 @@ var combat_system: CombatSystem
 var movement_system: MovementSystem
 var targeting_system: TargetingSystem
 
+## Configuration resources (loaded from data files - NO HARDCODED VALUES)
+var battlefield_config: BattlefieldConfig = null
+var balance_config: GameBalanceConfig = null
+
 ## Game configuration
 var max_entities: int = 200
 var enable_object_pooling: bool = true
@@ -68,8 +72,36 @@ var team_scores: Dictionary = {
 
 func _ready() -> void:
 	set_process(false)
+	_load_game_configs()
 	_initialize_systems()
 	_initialize_pools()
+
+
+func _load_game_configs() -> void:
+	"""Load game configuration resources from data files"""
+	print("GameManager: Loading game configurations...")
+
+	# Load battlefield configuration
+	battlefield_config = load("res://resources/configs/battlefield_default.tres")
+	if not battlefield_config:
+		push_error("GameManager: Failed to load battlefield config! Creating default...")
+		battlefield_config = BattlefieldConfig.new()
+	else:
+		print("  ✓ Battlefield config loaded")
+
+	# Load game balance configuration
+	balance_config = load("res://resources/configs/game_balance_default.tres")
+	if not balance_config:
+		push_error("GameManager: Failed to load game balance config! Creating default...")
+		balance_config = GameBalanceConfig.new()
+	else:
+		print("  ✓ Game balance config loaded")
+
+	# Update match duration from config
+	if balance_config:
+		match_duration = balance_config.match_duration
+
+	print("GameManager: Configurations loaded successfully")
 
 
 ## Initializes all game systems
@@ -403,3 +435,13 @@ func reset() -> void:
 	targeting_system.reset_statistics()
 	_change_state(GameState.MENU)
 	set_process(false)
+
+
+## Get battlefield configuration (globally accessible)
+func get_battlefield_config() -> BattlefieldConfig:
+	return battlefield_config
+
+
+## Get game balance configuration (globally accessible)
+func get_balance_config() -> GameBalanceConfig:
+	return balance_config

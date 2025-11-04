@@ -1,29 +1,52 @@
 extends Node2D
 class_name Battlefield
 
-# Grid constants
-const TILE_SIZE := 64  # 64 pixels per tile
-const GRID_WIDTH := 18  # tiles
-const GRID_HEIGHT := 28  # tiles (reduced for better proportions)
-const BATTLEFIELD_WIDTH := GRID_WIDTH * TILE_SIZE  # 1152 pixels
-const BATTLEFIELD_HEIGHT := GRID_HEIGHT * TILE_SIZE  # 1792 pixels
+## Configuration resources - loaded from data files (NO HARDCODED VALUES)
+var battlefield_config: BattlefieldConfig
+var balance_config: GameBalanceConfig
 
-# Unit limits
-const MAX_UNITS_TOTAL := 50  # Maximum units on battlefield at once
-const MAX_UNITS_PER_TEAM := 30  # Maximum per team
+## Convenience accessors (computed from configs)
+var TILE_SIZE: int:
+	get: return battlefield_config.tile_size if battlefield_config else 64
 
-# River position (middle of the battlefield)
-const RIVER_Y := GRID_HEIGHT / 2 * TILE_SIZE  # 1024 pixels from top
+var GRID_WIDTH: int:
+	get: return battlefield_config.grid_width if battlefield_config else 18
 
-# Deployment zones (where players can place units)
-const PLAYER_DEPLOY_START_Y := 16  # Start at tile 16
-const PLAYER_DEPLOY_END_Y := 27  # End at tile 27
-const OPPONENT_DEPLOY_START_Y := 1  # Start at tile 1
-const OPPONENT_DEPLOY_END_Y := 12  # End at tile 12
+var GRID_HEIGHT: int:
+	get: return battlefield_config.grid_height if battlefield_config else 28
 
-# Team constants
-const TEAM_PLAYER := 0
-const TEAM_OPPONENT := 1
+var BATTLEFIELD_WIDTH: int:
+	get: return battlefield_config.battlefield_width if battlefield_config else 1152
+
+var BATTLEFIELD_HEIGHT: int:
+	get: return battlefield_config.battlefield_height if battlefield_config else 1792
+
+var MAX_UNITS_TOTAL: int:
+	get: return battlefield_config.max_units_total if battlefield_config else 50
+
+var MAX_UNITS_PER_TEAM: int:
+	get: return battlefield_config.max_units_per_team if battlefield_config else 30
+
+var RIVER_Y: int:
+	get: return battlefield_config.river_y if battlefield_config else 896
+
+var PLAYER_DEPLOY_START_Y: int:
+	get: return battlefield_config.player_deploy_start_y if battlefield_config else 16
+
+var PLAYER_DEPLOY_END_Y: int:
+	get: return battlefield_config.player_deploy_end_y if battlefield_config else 27
+
+var OPPONENT_DEPLOY_START_Y: int:
+	get: return battlefield_config.opponent_deploy_start_y if battlefield_config else 1
+
+var OPPONENT_DEPLOY_END_Y: int:
+	get: return battlefield_config.opponent_deploy_end_y if battlefield_config else 12
+
+var TEAM_PLAYER: int:
+	get: return battlefield_config.team_player if battlefield_config else 0
+
+var TEAM_OPPONENT: int:
+	get: return battlefield_config.team_opponent if battlefield_config else 1
 
 # Node references
 @onready var grid_visual: Node2D = $GridVisual
@@ -56,6 +79,7 @@ var player_deploy_area: Rect2
 var opponent_deploy_area: Rect2
 
 func _ready() -> void:
+	_load_configs()
 	setup_battlefield()
 	setup_deployment_zones()
 	setup_camera()
@@ -65,6 +89,26 @@ func _ready() -> void:
 	_setup_battle_manager()
 	_load_ai_difficulty()
 	start_ai_timer()
+
+
+func _load_configs() -> void:
+	"""Load configuration resources from data files"""
+	# Load battlefield configuration
+	battlefield_config = load("res://resources/configs/battlefield_default.tres")
+	if not battlefield_config:
+		push_error("Failed to load battlefield config! Using fallback values.")
+		battlefield_config = BattlefieldConfig.new()  # Use defaults from resource class
+
+	# Load game balance configuration
+	balance_config = load("res://resources/configs/game_balance_default.tres")
+	if not balance_config:
+		push_error("Failed to load game balance config! Using fallback values.")
+		balance_config = GameBalanceConfig.new()  # Use defaults from resource class
+
+	print("Configs loaded successfully")
+	print("  - Battlefield: ", GRID_WIDTH, "x", GRID_HEIGHT, " tiles @ ", TILE_SIZE, "px")
+	print("  - Unit limits: ", MAX_UNITS_TOTAL, " total, ", MAX_UNITS_PER_TEAM, " per team")
+	print("  - AI elixir reserve: ", balance_config.ai_elixir_reserve)
 
 func _process(delta: float) -> void:
 	# Regenerate AI elixir at same rate as player
@@ -104,15 +148,15 @@ func setup_camera() -> void:
 func setup_towers() -> void:
 	# Position player towers (bottom of field)
 	if player_left_tower:
-		player_left_tower.position = grid_to_world(Vector2i(3, 20))
+		player_left_tower.position = grid_to_world(battlefield_config.player_left_tower_pos if battlefield_config else Vector2i(3, 20))
 		player_left_tower.team = TEAM_PLAYER
 
 	if player_right_tower:
-		player_right_tower.position = grid_to_world(Vector2i(14, 20))
+		player_right_tower.position = grid_to_world(battlefield_config.player_right_tower_pos if battlefield_config else Vector2i(14, 20))
 		player_right_tower.team = TEAM_PLAYER
 
 	if player_castle:
-		player_castle.position = grid_to_world(Vector2i(8, 23))
+		player_castle.position = grid_to_world(battlefield_config.player_castle_pos if battlefield_config else Vector2i(8, 23))
 		player_castle.team = TEAM_PLAYER
 		player_castle.linked_towers = [
 			player_left_tower.get_path(),
@@ -123,15 +167,15 @@ func setup_towers() -> void:
 
 	# Position opponent towers (top of field)
 	if opponent_left_tower:
-		opponent_left_tower.position = grid_to_world(Vector2i(14, 4))  # Mirror of player right
+		opponent_left_tower.position = grid_to_world(battlefield_config.opponent_left_tower_pos if battlefield_config else Vector2i(14, 4))
 		opponent_left_tower.team = TEAM_OPPONENT
 
 	if opponent_right_tower:
-		opponent_right_tower.position = grid_to_world(Vector2i(3, 4))  # Mirror of player left
+		opponent_right_tower.position = grid_to_world(battlefield_config.opponent_right_tower_pos if battlefield_config else Vector2i(3, 4))
 		opponent_right_tower.team = TEAM_OPPONENT
 
 	if opponent_castle:
-		opponent_castle.position = grid_to_world(Vector2i(8, 3))
+		opponent_castle.position = grid_to_world(battlefield_config.opponent_castle_pos if battlefield_config else Vector2i(8, 3))
 		opponent_castle.team = TEAM_OPPONENT
 		opponent_castle.linked_towers = [
 			opponent_left_tower.get_path(),
@@ -178,7 +222,8 @@ func _draw() -> void:
 	draw_river()
 
 func draw_grid() -> void:
-	var grid_color := Color(0.2, 0.2, 0.2, 0.3)
+	var grid_color = battlefield_config.grid_color if battlefield_config else Color(0.2, 0.2, 0.2, 0.3)
+	var line_width = battlefield_config.grid_line_width if battlefield_config else 1.0
 
 	# Vertical lines
 	for x in range(GRID_WIDTH + 1):
@@ -186,7 +231,7 @@ func draw_grid() -> void:
 			Vector2(x * TILE_SIZE, 0),
 			Vector2(x * TILE_SIZE, BATTLEFIELD_HEIGHT),
 			grid_color,
-			1.0
+			line_width
 		)
 
 	# Horizontal lines
@@ -195,35 +240,38 @@ func draw_grid() -> void:
 			Vector2(0, y * TILE_SIZE),
 			Vector2(BATTLEFIELD_WIDTH, y * TILE_SIZE),
 			grid_color,
-			1.0
+			line_width
 		)
 
 func draw_deployment_zones() -> void:
 	# Player deployment zone (blue tint)
 	draw_rect(
 		player_deploy_area,
-		Color(0, 0.5, 1, 0.1)
+		battlefield_config.player_zone_color if battlefield_config else Color(0, 0.5, 1, 0.1)
 	)
 
 	# Opponent deployment zone (red tint)
 	draw_rect(
 		opponent_deploy_area,
-		Color(1, 0.2, 0.2, 0.1)
+		battlefield_config.opponent_zone_color if battlefield_config else Color(1, 0.2, 0.2, 0.1)
 	)
 
 func draw_river() -> void:
+	var river_width = battlefield_config.river_width if battlefield_config else 64
+	var river_half_width = river_width / 2
+
 	# Draw river line
 	draw_line(
 		Vector2(0, RIVER_Y),
 		Vector2(BATTLEFIELD_WIDTH, RIVER_Y),
-		Color(0.2, 0.4, 0.8, 0.5),
+		battlefield_config.river_color if battlefield_config else Color(0.2, 0.4, 0.8, 0.5),
 		3.0
 	)
 
 	# Draw river area
 	draw_rect(
-		Rect2(0, RIVER_Y - 32, BATTLEFIELD_WIDTH, 64),
-		Color(0.2, 0.4, 0.8, 0.1)
+		Rect2(0, RIVER_Y - river_half_width, BATTLEFIELD_WIDTH, river_width),
+		battlefield_config.river_area_color if battlefield_config else Color(0.2, 0.4, 0.8, 0.1)
 	)
 
 func grid_to_world(grid_pos: Vector2i) -> Vector2:
@@ -312,26 +360,29 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 	var sprite_path = "res://assets/sprites/units/" + unit_type + sprite_suffix + ".png"
 	var texture = load(sprite_path)
 
+	# Get visual scale from config
+	var sprite_scale = balance_config.unit_sprite_scale_multiplier if balance_config else 3.0
+
 	if texture:
 		# Use sprite if available
 		var sprite = Sprite2D.new()
 		sprite.texture = texture
-		# Scale sprite MUCH larger for visibility (3x the target size)
+		# Scale sprite for visibility based on config
 		var texture_size = texture.get_size()
-		var target_size = unit_visuals.size * 3.0  # Make 3x larger
+		var target_size = unit_visuals.size * sprite_scale
 		sprite.scale = Vector2(
 			target_size.x / texture_size.x,
 			target_size.y / texture_size.y
 		)
 		# Center the sprite - bottom of sprite at unit position (feet)
-		sprite.offset = Vector2(0, -unit_visuals.size.y * 3)  # Sprite bottom at origin
+		sprite.offset = Vector2(0, -unit_visuals.size.y * sprite_scale)  # Sprite bottom at origin
 		unit.add_child(sprite)
 		print("  Loaded sprite: ", sprite_path, " (", texture_size, ") scaled to ", target_size)
 	else:
 		# Use colored rectangle as fallback
 		print("  Sprite not found: ", sprite_path, " - using colored placeholder")
 		var color_rect = ColorRect.new()
-		var rect_size = unit_visuals.size * 3.0  # Match expected size
+		var rect_size = unit_visuals.size * sprite_scale  # Match expected size
 		color_rect.size = rect_size
 		color_rect.position = Vector2(-rect_size.x / 2, -rect_size.y)  # Center and align to feet
 
@@ -345,14 +396,16 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 
 	# Add health bar - ABOVE the head
 	var health_bar = ProgressBar.new()
-	var health_bar_height = 6
+	var health_bar_width = balance_config.health_bar_width if balance_config else 60.0
+	var health_bar_height = balance_config.health_bar_height if balance_config else 6.0
+	var health_bar_offset = balance_config.health_bar_offset_y if balance_config else -1.0
 
 	# Calculate top of visual (works for both sprite and ColorRect)
-	var visual_top_y = -unit_visuals.size.y * 3
-	var bar_y_position = visual_top_y - health_bar_height - 1
+	var visual_top_y = -unit_visuals.size.y * sprite_scale
+	var bar_y_position = visual_top_y - health_bar_height + health_bar_offset
 
-	health_bar.position = Vector2(-30, bar_y_position)
-	health_bar.size = Vector2(60, health_bar_height)  # Wide bar
+	health_bar.position = Vector2(-health_bar_width / 2, bar_y_position)
+	health_bar.size = Vector2(health_bar_width, health_bar_height)
 	health_bar.show_percentage = false
 	health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
@@ -387,7 +440,8 @@ func spawn_unit(unit_type: String, position: Vector2, team: int) -> Node2D:
 	# Add collision shape - this is for physics, not rendering
 	var collision_shape = CollisionShape2D.new()
 	var shape = CircleShape2D.new()
-	shape.radius = 12  # Very small collision for maximum flow
+	var collision_radius = balance_config.unit_collision_radius if balance_config else 12.0
+	shape.radius = collision_radius  # Small collision for maximum flow
 	collision_shape.shape = shape
 	collision_shape.position = Vector2(0, 0)
 	collision_shape.debug_color = Color(0, 0, 0, 0)  # Make debug shape invisible
@@ -596,13 +650,23 @@ enum AILevel {
 
 var ai_timer: Timer
 var ai_cards: Array = []
-var ai_elixir: float = 5.0  # AI starts with 5 elixir like player
-var ai_max_elixir: float = 10.0
-var ai_elixir_rate: float = 1.0 / 2.8  # Same rate as player: 1 per 2.8 seconds
+var ai_elixir: float = 5.0  # Set from config on load
+var ai_max_elixir: float = 10.0  # Set from config on load
+var ai_elixir_rate: float = 0.357  # Set from config on load (1 per 2.8s = 0.357/s)
 var ai_difficulty: AILevel = AILevel.MEDIUM  # Default to medium difficulty
-var ai_elixir_reserve: float = 1.5  # AI keeps this much elixir in reserve for defense
+var ai_elixir_reserve: float = 1.5  # Set from config based on difficulty
 
 func _load_ai_difficulty() -> void:
+	"""Load AI difficulty from GameManager and apply config values"""
+	if not balance_config:
+		push_warning("Balance config not loaded, using defaults")
+		return
+
+	# Set base AI values from config
+	ai_elixir = balance_config.ai_starting_elixir
+	ai_max_elixir = balance_config.ai_max_elixir
+	ai_elixir_rate = balance_config.elixir_generation_rate
+
 	# Load AI difficulty from GameManager
 	if GameManager:
 		match GameManager.ai_difficulty:
@@ -614,7 +678,15 @@ func _load_ai_difficulty() -> void:
 				ai_difficulty = AILevel.HARD
 			_:
 				ai_difficulty = AILevel.MEDIUM
+
+		# Get difficulty-specific settings from config
+		var ai_settings = balance_config.get_ai_settings_for_difficulty(GameManager.ai_difficulty)
+		ai_elixir_reserve = ai_settings.elixir_reserve
+		ai_timer.wait_time = ai_settings.decision_interval if ai_timer else balance_config.ai_decision_interval
+
 		print("AI difficulty set to: ", ai_difficulty)
+		print("  - Elixir reserve: ", ai_elixir_reserve)
+		print("  - Decision interval: ", ai_settings.decision_interval, "s")
 
 func start_ai_timer() -> void:
 	# Load AI cards
@@ -625,13 +697,13 @@ func start_ai_timer() -> void:
 		load("res://resources/cards/giant.tres")
 	]
 
-	# Create AI timer - check every 1 second if we can deploy
+	# Create AI timer - check based on config decision interval
 	ai_timer = Timer.new()
-	ai_timer.wait_time = 1.0  # Check every second for deployment opportunities
+	ai_timer.wait_time = balance_config.ai_decision_interval if balance_config else 1.0
 	ai_timer.autostart = true
 	ai_timer.timeout.connect(_on_ai_timer_timeout)
 	add_child(ai_timer)
-	print("AI system started - will deploy when elixir available")
+	print("AI system started - decision interval: ", ai_timer.wait_time, "s")
 
 func _on_ai_timer_timeout() -> void:
 	# Stop spawning if game is over
@@ -712,7 +784,8 @@ func _analyze_threat_level() -> Dictionary:
 				continue  # Same team
 
 			var distance = tower.global_position.distance_to(unit.global_position)
-			if distance < 400:  # Within threat range
+			var threat_radius = balance_config.tower_threat_radius if balance_config else 400.0
+			if distance < threat_radius:  # Within threat range
 				nearby_enemies.append(unit)
 
 		# Calculate threat level for this tower
@@ -772,6 +845,8 @@ func _choose_spawn_position(card: CardData, threat_data: Dictionary) -> Vector2:
 	"""
 	Choose strategic spawn position based on situation
 	"""
+	var margin = balance_config.deployment_zone_margin if balance_config else 100.0
+
 	# If defending, spawn near threatened tower
 	if threat_data.threat_level > 3 and threat_data.threatened_tower:
 		var tower_pos = threat_data.threatened_tower.global_position
@@ -787,24 +862,24 @@ func _choose_spawn_position(card: CardData, threat_data: Dictionary) -> Vector2:
 			# Place unit between tower and enemies (defensive positioning)
 			var spawn_x = clamp(
 				(tower_pos.x + avg_enemy_x) / 2.0,
-				opponent_deploy_area.position.x + 100,
-				opponent_deploy_area.position.x + opponent_deploy_area.size.x - 100
+				opponent_deploy_area.position.x + margin,
+				opponent_deploy_area.position.x + opponent_deploy_area.size.x - margin
 			)
 			var spawn_y = randf_range(
-				opponent_deploy_area.position.y + 100,
-				opponent_deploy_area.position.y + opponent_deploy_area.size.y - 100
+				opponent_deploy_area.position.y + margin,
+				opponent_deploy_area.position.y + opponent_deploy_area.size.y - margin
 			)
 
 			return Vector2(spawn_x, spawn_y)
 
 	# Otherwise, random placement for attack
 	var random_x = randf_range(
-		opponent_deploy_area.position.x + 100,
-		opponent_deploy_area.position.x + opponent_deploy_area.size.x - 100
+		opponent_deploy_area.position.x + margin,
+		opponent_deploy_area.position.x + opponent_deploy_area.size.x - margin
 	)
 	var random_y = randf_range(
-		opponent_deploy_area.position.y + 100,
-		opponent_deploy_area.position.y + opponent_deploy_area.size.y - 100
+		opponent_deploy_area.position.y + margin,
+		opponent_deploy_area.position.y + opponent_deploy_area.size.y - margin
 	)
 
 	return Vector2(random_x, random_y)
