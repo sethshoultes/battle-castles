@@ -136,7 +136,7 @@ layout_mode = 2
 theme_override_constants/separation = 15
 
 [node name="AvatarContainer" type="Control" parent="ProfilePanel/PlayerInfo/TopRow"]
-custom_minimum_size = Vector2(80, 80)
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
 [node name="AvatarFrame" type="TextureRect" parent="ProfilePanel/PlayerInfo/TopRow/AvatarContainer"]
@@ -155,10 +155,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -32.0
-offset_right = 32.0
-offset_bottom = 32.0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
 texture = ExtResource("10_default_avatar")
 expand_mode = 1
 stretch_mode = 5
@@ -171,7 +171,7 @@ theme_override_constants/separation = 5
 [node name="NameLabel" type="Label" parent="ProfilePanel/PlayerInfo/TopRow/InfoColumn"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 24
 text = "Player"
 
 [node name="LevelContainer" type="HBoxContainer" parent="ProfilePanel/PlayerInfo/TopRow/InfoColumn"]
@@ -179,7 +179,7 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="LevelBadge" type="TextureRect" parent="ProfilePanel/PlayerInfo/TopRow/InfoColumn/LevelContainer"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("14_level_badge")
 expand_mode = 1
@@ -192,12 +192,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
+offset_left = -15.0
+offset_top = -12.0
+offset_right = 15.0
+offset_bottom = 12.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -207,7 +207,7 @@ layout_mode = 2
 theme_override_constants/separation = 8
 
 [node name="TrophyIcon" type="TextureRect" parent="ProfilePanel/PlayerInfo/TopRow/InfoColumn/TrophyContainer"]
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 texture = ExtResource("11_trophy_icon")
 expand_mode = 1
@@ -216,7 +216,7 @@ stretch_mode = 5
 [node name="TrophyCount" type="Label" parent="ProfilePanel/PlayerInfo/TopRow/InfoColumn/TrophyContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 text = "0"
 vertical_alignment = 1
 
@@ -236,7 +236,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
 [node name="GoldIcon" type="TextureRect" parent="ProfilePanel/Resources/GoldContainer"]
-custom_minimum_size = Vector2(28, 28)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture = ExtResource("12_gold_icon")
 expand_mode = 1
@@ -245,7 +245,7 @@ stretch_mode = 5
 [node name="GoldCount" type="Label" parent="ProfilePanel/Resources/GoldContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.843, 0, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 text = "100"
 vertical_alignment = 1
 
@@ -255,7 +255,7 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
 [node name="GemIcon" type="TextureRect" parent="ProfilePanel/Resources/GemContainer"]
-custom_minimum_size = Vector2(28, 28)
+custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture = ExtResource("13_gem_icon")
 expand_mode = 1
@@ -264,7 +264,7 @@ stretch_mode = 5
 [node name="GemCount" type="Label" parent="ProfilePanel/Resources/GemContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.914, 0.118, 0.388, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 22
 text = "10"
 vertical_alignment = 1
 
@@ -281,7 +281,7 @@ offset_bottom = -30.0
 theme_override_constants/separation = 10
 
 [node name="ArenaIcon" type="TextureRect" parent="ProfilePanel/ArenaInfo"]
-custom_minimum_size = Vector2(40, 40)
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("15_arena_icon")
 expand_mode = 1
@@ -291,7 +291,7 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "Training Camp"
 vertical_alignment = 1
 
