@@ -333,10 +333,11 @@ func hide_menu() -> void:
 		# Animate disappearance (overlay mode)
 		var tween = create_tween()
 		tween.tween_property(self, "modulate:a", 0.0, 0.3)
-		tween.tween_callback(func():
-			visible = false
-			settings_closed.emit()
-		)
+		tween.tween_callback(_on_hide_animation_complete)
+
+func _on_hide_animation_complete() -> void:
+	visible = false
+	settings_closed.emit()
 
 func get_settings() -> Dictionary:
 	return settings
