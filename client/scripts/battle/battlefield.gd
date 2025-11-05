@@ -196,7 +196,10 @@ func setup_navigation() -> void:
 	# Create navigation polygon
 	var nav_poly = NavigationPolygon.new()
 
-	# Define the overall battlefield area
+	# IMPORTANT: NavigationPolygon needs proper winding order
+	# Add LARGEST outline first (outer boundary), then holes in REVERSE winding
+
+	# Define the overall battlefield area (CLOCKWISE - outer boundary)
 	var battlefield_outline = PackedVector2Array([
 		Vector2(0, 0),
 		Vector2(BATTLEFIELD_WIDTH, 0),
@@ -205,32 +208,32 @@ func setup_navigation() -> void:
 	])
 	nav_poly.add_outline(battlefield_outline)
 
-	# Define river as obstacle (exclude from nav mesh)
+	# Define river as obstacle holes (COUNTER-CLOCKWISE - holes)
 	# River is at y = 896 (RIVER_Y), height ~ 128 pixels
 	# Left section (before left bridge at x=288)
 	var river_left = PackedVector2Array([
 		Vector2(0, RIVER_Y - 64),
-		Vector2(220, RIVER_Y - 64),
+		Vector2(0, RIVER_Y + 64),
 		Vector2(220, RIVER_Y + 64),
-		Vector2(0, RIVER_Y + 64)
+		Vector2(220, RIVER_Y - 64)
 	])
 	nav_poly.add_outline(river_left)
 
 	# Center section (between bridges, x=356 to x=796)
 	var river_center = PackedVector2Array([
 		Vector2(356, RIVER_Y - 64),
-		Vector2(796, RIVER_Y - 64),
+		Vector2(356, RIVER_Y + 64),
 		Vector2(796, RIVER_Y + 64),
-		Vector2(356, RIVER_Y + 64)
+		Vector2(796, RIVER_Y - 64)
 	])
 	nav_poly.add_outline(river_center)
 
 	# Right section (after right bridge at x=864)
 	var river_right = PackedVector2Array([
 		Vector2(932, RIVER_Y - 64),
-		Vector2(BATTLEFIELD_WIDTH, RIVER_Y - 64),
+		Vector2(932, RIVER_Y + 64),
 		Vector2(BATTLEFIELD_WIDTH, RIVER_Y + 64),
-		Vector2(932, RIVER_Y + 64)
+		Vector2(BATTLEFIELD_WIDTH, RIVER_Y - 64)
 	])
 	nav_poly.add_outline(river_right)
 
@@ -928,7 +931,8 @@ func _prefer_variety(cards: Array) -> Array:
 	var fresh_cards = []
 
 	for card in cards:
-		var card_name = card.card_name if card.has("card_name") else ""
+		# CardData is a Resource, not Dictionary - access properties directly
+		var card_name = card.card_name if card else ""
 
 		# Check if this card was recently played
 		var recently_played = false
