@@ -1,8 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8j4q5r6t7u8v9"]
+[gd_scene load_steps=2 format=3 uid="uid://2i4tcbbjmh7e"]
 
 [ext_resource type="Script" path="res://scripts/ui/level_up_notification.gd" id="1_level_up"]
-[ext_resource type="AudioStream" uid="uid://placeholder_levelup" path="res://audio/sfx/level_up.ogg" id="2_level_up_sound"]
-[ext_resource type="AudioStream" uid="uid://placeholder_reward" path="res://audio/sfx/reward.ogg" id="3_reward_sound"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_background"]
 bg_color = Color(0, 0, 0, 0.8)
@@ -224,9 +222,7 @@ layout_mode = 2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="LevelUpSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_level_up_sound")
 volume_db = -5.0
 
 [node name="RewardSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_reward_sound")
 volume_db = -8.0
