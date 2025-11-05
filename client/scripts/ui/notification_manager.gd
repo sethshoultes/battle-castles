@@ -1,8 +1,8 @@
 extends CanvasLayer
-class_name NotificationManager
 
 # Global notification manager for level-up and other notifications
-# Add as autoload to make notifications available from anywhere
+# Registered as autoload singleton "NotificationManager"
+# Access globally via: NotificationManager.show_level_up(level, rewards)
 
 var level_up_notification: LevelUpNotification = null
 
