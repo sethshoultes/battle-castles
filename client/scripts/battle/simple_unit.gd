@@ -80,27 +80,16 @@ func _ready() -> void:
 	print("=========================================")
 
 func _setup_navigation() -> void:
-	# Create and configure navigation agent
-	navigation_agent = NavigationAgent2D.new()
-	add_child(navigation_agent)
-
-	# Configure navigation properties
-	navigation_agent.path_desired_distance = 4.0
-	navigation_agent.target_desired_distance = 4.0
-	navigation_agent.radius = 16.0
-	navigation_agent.neighbor_distance = 50.0
-	navigation_agent.max_neighbors = 10
-	navigation_agent.time_horizon = 0.5
-	navigation_agent.max_speed = move_speed
-	navigation_agent.avoidance_enabled = true
-	navigation_agent.debug_enabled = true  # Show paths in editor
-
-	# DISABLE NAVIGATION FOR NOW - causing units to freeze
-	# Will re-enable once properly debugged
+	# COMPLETELY DISABLE NAVIGATION - don't even create the agent
+	# Navigation was causing units to freeze
 	use_navigation = false
 
-	# TODO: Fix navigation pathfinding
-	# call_deferred("_on_navigation_ready")
+	# TODO: Re-implement navigation pathfinding properly
+	# When re-enabling:
+	# 1. Create NavigationAgent2D
+	# 2. Configure properties (radius, avoidance, etc.)
+	# 3. Wait for NavigationServer2D to sync (await physics_frame)
+	# 4. Set use_navigation = true
 
 func initialize(type: String, team_id: int, data: CardData) -> void:
 	unit_type = type
