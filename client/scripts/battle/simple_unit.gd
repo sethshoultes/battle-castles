@@ -37,7 +37,13 @@ var sprite: Sprite2D = null
 var collision_shape: CollisionShape2D = null
 
 func _ready() -> void:
-	print("SimpleUnit _ready() called - Team: ", team, " Type: ", unit_type, " Pos: ", global_position)
+	print("=========================================")
+	print("SimpleUnit _ready() called")
+	print("  Team: ", team, " Type: ", unit_type)
+	print("  Position: ", global_position)
+	print("  In scene tree: ", is_inside_tree())
+	print("  Parent: ", get_parent())
+	print("=========================================")
 
 	# Find child nodes
 	for child in get_children():
@@ -48,6 +54,8 @@ func _ready() -> void:
 		elif child is CollisionShape2D:
 			collision_shape = child
 
+	print("  Found children - HealthBar:", health_bar != null, " Sprite:", sprite != null, " Collision:", collision_shape != null)
+
 	# Apply stats if we have card_data already
 	if card_data:
 		max_health = float(card_data.hitpoints)
@@ -57,12 +65,19 @@ func _ready() -> void:
 		move_speed = card_data.movement_speed
 		attack_range = card_data.attack_range * 64.0
 
-		print("  Stats loaded - HP:", max_health, " Damage:", damage, " Speed:", move_speed)
+		print("  Stats loaded from card_data:")
+		print("    HP:", max_health, " Damage:", damage)
+		print("    Speed:", move_speed, " Attack Speed:", attack_speed)
+		print("    Attack Range:", attack_range)
+	else:
+		print("  WARNING: No card_data! Using default stats.")
+		print("    Default move_speed:", move_speed)
 
 	update_health_bar()
 	_setup_navigation()
 
-	print("  Ready complete - Will move: ", move_speed > 0)
+	print("  Ready complete - Will move:", move_speed > 0, " use_navigation:", use_navigation)
+	print("=========================================")
 
 func _setup_navigation() -> void:
 	# Create and configure navigation agent
@@ -107,9 +122,15 @@ func initialize(type: String, team_id: int, data: CardData) -> void:
 		update_health_bar()
 
 func _process(delta: float) -> void:
-	# Debug once per second
-	if Engine.get_process_frames() % 60 == 0:
-		print(unit_type, " PROCESS - Team:", team, " HasTarget:", target != null, " Pos:", global_position, " Speed:", move_speed)
+	# DETAILED DEBUG - Print every frame for first 120 frames (2 seconds)
+	if Engine.get_process_frames() <= 120:
+		print("[FRAME ", Engine.get_process_frames(), "] ", unit_type, " Team:", team,
+			  " Pos:", global_position, " Velocity:", velocity, " Speed:", move_speed,
+			  " Target:", target != null, " Attacking:", is_attacking)
+
+	# Debug once per second after initial 2 seconds
+	elif Engine.get_process_frames() % 60 == 0:
+		print(unit_type, " PROCESS - Team:", team, " HasTarget:", target != null, " Pos:", global_position, " Speed:", move_speed, " Velocity:", velocity)
 
 	# Update attack timer
 	if attack_timer > 0:
@@ -216,6 +237,7 @@ func _on_navigation_ready() -> void:
 
 func move_toward_target(delta: float) -> void:
 	if not target:
+		print("  [DEBUG] move_toward_target called but no target!")
 		return
 
 	if use_navigation and navigation_agent:
@@ -242,6 +264,8 @@ func move_toward_target(delta: float) -> void:
 		# Use direct movement (navigation disabled or not ready)
 		var direction = (target.global_position - global_position).normalized()
 		velocity = direction * move_speed
+		if Engine.get_process_frames() <= 120:
+			print("  [DEBUG] move_toward_target - Direction:", direction, " Velocity:", velocity, " move_speed:", move_speed)
 
 	move_and_slide()
 
@@ -295,6 +319,8 @@ func move_forward(delta: float) -> void:
 		else:  # Opponent team - move down
 			direction = Vector2(0, 1)
 		velocity = direction * move_speed
+		if Engine.get_process_frames() <= 120:
+			print("  [DEBUG] move_forward - Team:", team, " Direction:", direction, " Velocity:", velocity, " move_speed:", move_speed)
 
 	move_and_slide()
 
