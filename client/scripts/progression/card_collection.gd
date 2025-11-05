@@ -60,14 +60,27 @@ func _load_card_definitions() -> void:
 	# Load card definitions from game data
 	# This would normally load from a JSON file or resource
 	card_definitions = {
-		# Troops
+		# Troops - Common (basic units)
 		"knight": {"name": "Knight", "rarity": Rarity.COMMON, "elixir": 3, "type": "troop"},
 		"archer": {"name": "Archer", "rarity": Rarity.COMMON, "elixir": 3, "type": "troop"},
 		"goblin": {"name": "Goblin", "rarity": Rarity.COMMON, "elixir": 2, "type": "troop"},
-		"giant": {"name": "Giant", "rarity": Rarity.RARE, "elixir": 5, "type": "troop"},
+
+		# Troops - Rare (medium units)
+		"barbarian": {"name": "Barbarians", "rarity": Rarity.RARE, "elixir": 5, "type": "troop"},
+		"minion": {"name": "Minions", "rarity": Rarity.RARE, "elixir": 3, "type": "troop"},
 		"musketeer": {"name": "Musketeer", "rarity": Rarity.RARE, "elixir": 4, "type": "troop"},
-		"barbarian": {"name": "Barbarian", "rarity": Rarity.COMMON, "elixir": 4, "type": "troop"},
-		"wizard": {"name": "Wizard", "rarity": Rarity.RARE, "elixir": 5, "type": "troop"},
+
+		# Troops - Epic (special units)
+		"baby_dragon": {"name": "Baby Dragon", "rarity": Rarity.EPIC, "elixir": 4, "type": "troop"},
+		"valkyrie": {"name": "Valkyrie", "rarity": Rarity.EPIC, "elixir": 4, "type": "troop"},
+		"wizard": {"name": "Wizard", "rarity": Rarity.EPIC, "elixir": 5, "type": "troop"},
+
+		# Troops - Legendary (powerful units)
+		"giant": {"name": "Giant", "rarity": Rarity.LEGENDARY, "elixir": 5, "type": "troop"},
+		"mini_pekka": {"name": "Mini P.E.K.K.A", "rarity": Rarity.LEGENDARY, "elixir": 4, "type": "troop"},
+		"skeleton": {"name": "Skeleton Army", "rarity": Rarity.LEGENDARY, "elixir": 3, "type": "troop"},
+
+		# Other units (not yet implemented as .tres files)
 		"prince": {"name": "Prince", "rarity": Rarity.EPIC, "elixir": 5, "type": "troop"},
 		"dragon": {"name": "Baby Dragon", "rarity": Rarity.EPIC, "elixir": 4, "type": "troop"},
 		"pekka": {"name": "P.E.K.K.A", "rarity": Rarity.EPIC, "elixir": 7, "type": "troop"},

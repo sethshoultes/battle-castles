@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="GameBalanceConfig" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/game_balance_config.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+starting_elixir = 5.0
+max_elixir = 10.0
+elixir_generation_rate = 0.357
+double_elixir_start_time = 120.0
+match_duration = 180.0
+overtime_duration = 60.0
+ai_starting_elixir = 5.0
+ai_max_elixir = 10.0
+ai_elixir_reserve = 0.25
+ai_decision_interval = 1.0
+ai_easy_reaction_delay = 2.0
+ai_medium_reaction_delay = 1.0
+ai_hard_reaction_delay = 0.5
+ai_easy_elixir_reserve = 0.5
+ai_medium_elixir_reserve = 0.25
+ai_hard_elixir_reserve = 0.0
+unit_collision_radius = 12.0
+unit_separation_force = 50.0
+unit_max_speed = 100.0
+unit_acceleration = 200.0
+tower_threat_radius = 400.0
+aggro_range_multiplier = 1.2
+attack_cooldown_variance = 0.1
+health_bar_width = 60.0
+health_bar_height = 6.0
+health_bar_offset_y = -1.0
+unit_sprite_scale_multiplier = 3.0
+deployment_zone_margin = 100.0
+min_deployment_spacing = 32.0
+default_camera_zoom = Vector2(1, 1)
+camera_smoothing = 5.0
+max_projectiles = 100
+max_effects = 50
+particle_quality = 1.0

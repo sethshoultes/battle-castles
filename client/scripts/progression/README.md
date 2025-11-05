@@ -86,7 +86,7 @@ All progression data is saved locally in the `user://` directory:
 Run the test scene to verify all systems:
 ```gdscript
 # Load the test scene
-res://scenes/progression_test.tscn
+res://scenes/tests/progression_test.tscn
 ```
 
 The test script demonstrates:

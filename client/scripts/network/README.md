@@ -222,7 +222,7 @@ The system includes comprehensive error handling:
 
 Use the provided test scene to verify networking:
 
-1. Load `network_test_ui.tscn`
+1. Load `tests/network_test_ui.tscn`
 2. Ensure server is running on `localhost:3001`
 3. Click "Connect" to establish connection
 4. Use "Find Match" for matchmaking
