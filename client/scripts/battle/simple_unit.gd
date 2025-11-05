@@ -173,6 +173,8 @@ func _process(delta: float) -> void:
 func find_target() -> void:
 	var battlefield = get_parent().get_parent()
 	if not battlefield:
+		if Engine.get_process_frames() <= 120:
+			print("  [DEBUG] find_target - No battlefield! Parent:", get_parent())
 		return
 
 	var closest_tower: Node2D = null
@@ -215,6 +217,7 @@ func find_target() -> void:
 	# 2. Only target units if they're in melee range (blocking path or attacking)
 	# 3. If no buildings, then target units
 
+	var old_target = target
 	if closest_tower:
 		# Buildings are ALWAYS primary target
 		target = closest_tower
@@ -225,6 +228,14 @@ func find_target() -> void:
 	else:
 		# No buildings left - clean up units
 		target = closest_unit
+
+	# Debug output for first 2 seconds
+	if Engine.get_process_frames() <= 120 and (target != old_target or Engine.get_process_frames() % 30 == 0):
+		if target:
+			print("  [DEBUG] find_target - Found target:", target.name if target.has_method("get") else "unknown",
+				  " Distance:", closest_tower_distance if closest_tower else closest_unit_distance)
+		else:
+			print("  [DEBUG] find_target - No target found")
 
 func _on_navigation_ready() -> void:
 	# Wait for physics frames to allow NavigationServer2D to sync
