@@ -104,13 +104,13 @@ A cartoon-style wizard character sprite for a mobile game, viewed from a 45-degr
 
 ### 5. Baby Dragon
 
-#### Baby Dragon (Player - Purple) []
+#### Baby Dragon (Player - Purple) [x]
 ```
 A cartoon-style baby dragon creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, cute but fierce purple dragon with small wings, breathing small fire, large expressive eyes, flying pose with wings spread, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 45x60 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `baby_dragon_player.png`
 
-#### Baby Dragon (Enemy - Red) []
+#### Baby Dragon (Enemy - Red) [x]
 ```
 A cartoon-style baby dragon creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, cute but fierce red dragon with small wings, breathing small fire, glowing orange eyes, flying pose with wings spread, menacing appearance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 45x60 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -120,13 +120,13 @@ A cartoon-style baby dragon creature sprite for a mobile game, viewed from a 45-
 
 ### 6. Skeleton Army
 
-#### Skeleton (Player - White/Light) []
+#### Skeleton (Player - White/Light) [x]
 ```
 A cartoon-style skeleton warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, friendly skeleton with white bones wearing simple armor, holding small sword and shield, cartoonish not scary, energetic battle pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 26x42 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `skeleton_army_player.png`
 
-#### Skeleton (Enemy - Gray/Dark) []
+#### Skeleton (Enemy - Gray/Dark) [x]
 ```
 A cartoon-style skeleton warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, skeleton with gray bones wearing tattered dark armor, holding rusty sword and shield, cartoonish not scary, menacing battle pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 26x42 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
