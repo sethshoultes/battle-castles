@@ -197,9 +197,7 @@ func _animate_label_value(label: Label, target_value: int) -> void:
 	# Animate the count-up/down
 	var tween = create_tween()
 	tween.tween_method(
-		func(value: float):
-			label.text = str(int(value))
-		,
+		func(value: float): label.text = str(int(value)),
 		float(current_value),
 		float(target_value),
 		0.5

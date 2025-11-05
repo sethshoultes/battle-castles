@@ -911,6 +911,11 @@ func _on_castle_destroyed(team: int, tower_type: String) -> void:
 			GameManager.player_profile.record_battle_result(result, player_crowns, opponent_crowns)
 			GameManager.player_profile.add_experience(experience_gain)
 
+		# Capture trophy count before processing
+		var trophies_before = 0
+		if GameManager and GameManager.trophy_system:
+			trophies_before = GameManager.trophy_system.trophy_data.current_trophies
+
 		# Process trophy changes with ELO-based calculation
 		if GameManager:
 			var opponent_trophies = GameManager.trophy_system.trophy_data.current_trophies if GameManager.trophy_system else 1000
@@ -921,6 +926,11 @@ func _on_castle_destroyed(team: int, tower_type: String) -> void:
 			print("  Result: ", result.to_upper())
 			print("  Crowns: ", player_crowns, " - ", opponent_crowns)
 			print("  Experience: +", experience_gain)
+
+		# Calculate trophy change
+		var trophy_change = 0
+		if GameManager and GameManager.trophy_system:
+			trophy_change = GameManager.trophy_system.trophy_data.current_trophies - trophies_before
 
 		# Show game over message
 		var winner_text = "VICTORY!" if winner_team == TEAM_PLAYER else "DEFEAT!"
