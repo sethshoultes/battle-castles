@@ -654,7 +654,7 @@ var ai_elixir: float = 5.0  # Set from config on load
 var ai_max_elixir: float = 10.0  # Set from config on load
 var ai_elixir_rate: float = 0.357  # Set from config on load (1 per 2.8s = 0.357/s)
 var ai_difficulty: AILevel = AILevel.MEDIUM  # Default to medium difficulty
-var ai_elixir_reserve: float = 1.5  # Set from config based on difficulty
+var ai_elixir_reserve: float = 1.0  # Set from config based on difficulty (default fallback)
 
 func _load_ai_difficulty() -> void:
 	"""Load AI difficulty from GameManager and apply config values"""
