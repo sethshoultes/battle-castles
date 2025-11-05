@@ -902,21 +902,24 @@ func _on_castle_destroyed(team: int, tower_type: String) -> void:
 		var player_crowns = battle_manager.player_crowns if battle_manager else 0
 		var opponent_crowns = battle_manager.opponent_crowns if battle_manager else 0
 
-		# Determine battle result and rewards (castle destruction = 3 crowns)
+		# Determine battle result (castle destruction = 3 crowns)
 		var result = "loss" if team == TEAM_PLAYER else "win"
-		var trophy_change = -20 if team == TEAM_PLAYER else 30
 		var experience_gain = 5 if team == TEAM_PLAYER else 20
 
 		# Record battle result in player profile
 		if GameManager and GameManager.player_profile:
 			GameManager.player_profile.record_battle_result(result, player_crowns, opponent_crowns)
-			GameManager.player_profile.update_trophies(trophy_change)
 			GameManager.player_profile.add_experience(experience_gain)
+
+		# Process trophy changes with ELO-based calculation
+		if GameManager:
+			var opponent_trophies = GameManager.trophy_system.trophy_data.current_trophies if GameManager.trophy_system else 1000
+			opponent_trophies += randi_range(-200, 200)  # Add variance
+			GameManager.process_battle_result(result, opponent_trophies)
 
 			print("Battle stats recorded (Castle destroyed):")
 			print("  Result: ", result.to_upper())
 			print("  Crowns: ", player_crowns, " - ", opponent_crowns)
-			print("  Trophies: ", trophy_change, " (Total: ", GameManager.player_profile.player_data.trophies, ")")
 			print("  Experience: +", experience_gain)
 
 		# Show game over message
@@ -925,15 +928,10 @@ func _on_castle_destroyed(team: int, tower_type: String) -> void:
 		print("GAME OVER - ", winner_text)
 		print("===================")
 
-		# Create a simple game over label
-		var game_over_label = Label.new()
-		game_over_label.text = winner_text
-		game_over_label.position = Vector2(BATTLEFIELD_WIDTH / 2 - 100, BATTLEFIELD_HEIGHT / 2)
-		game_over_label.add_theme_font_size_override("font_size", 64)
-		game_over_label.add_theme_color_override("font_color", Color(1, 1, 0, 1) if winner_team == TEAM_PLAYER else Color(1, 0, 0, 1))
-		game_over_label.add_theme_color_override("font_outline_color", Color.BLACK)
-		game_over_label.add_theme_constant_override("outline_size", 8)
-		add_child(game_over_label)
+		# TODO: Show battle results screen after a brief delay
+		# This would display a detailed results UI with trophy changes, rewards, etc.
+		# await get_tree().create_timer(1.0).timeout
+		# _show_battle_results_screen(winner_team, player_crowns, opponent_crowns, experience_gain)
 
 func _on_battle_time_updated(time_remaining: float) -> void:
 	# Update UI with time remaining
@@ -959,35 +957,47 @@ func _on_battle_ended(winner: int) -> void:
 	var player_crowns = battle_manager.player_crowns if battle_manager else 0
 	var opponent_crowns = battle_manager.opponent_crowns if battle_manager else 0
 
-	# Determine battle result and rewards
+	# Determine battle result
 	var result = "draw"
-	var trophy_change = 0
 	var experience_gain = 0
 
 	if winner == TEAM_PLAYER:
 		result = "win"
-		trophy_change = 30
 		experience_gain = 20
 	elif winner == TEAM_OPPONENT:
 		result = "loss"
-		trophy_change = -20
 		experience_gain = 5
 	else:
 		result = "draw"
-		trophy_change = 0
 		experience_gain = 10
 
 	# Record battle result in player profile
 	if GameManager and GameManager.player_profile:
 		GameManager.player_profile.record_battle_result(result, player_crowns, opponent_crowns)
-		GameManager.player_profile.update_trophies(trophy_change)
 		GameManager.player_profile.add_experience(experience_gain)
+
+	# Capture trophy count before processing
+	var trophies_before = 0
+	if GameManager and GameManager.trophy_system:
+		trophies_before = GameManager.trophy_system.trophy_data.current_trophies
+
+	# Process battle results with trophy system (ELO-based calculation)
+	if GameManager:
+		# Simulate opponent trophies (in real game, this would come from matchmaking)
+		var opponent_trophies = GameManager.trophy_system.trophy_data.current_trophies if GameManager.trophy_system else 1000
+		opponent_trophies += randi_range(-200, 200)  # Add variance
+
+		GameManager.process_battle_result(result, opponent_trophies)
 
 		print("Battle stats recorded:")
 		print("  Result: ", result.to_upper())
 		print("  Crowns: ", player_crowns, " - ", opponent_crowns)
-		print("  Trophies: ", trophy_change, " (Total: ", GameManager.player_profile.player_data.trophies, ")")
 		print("  Experience: +", experience_gain)
+
+	# Calculate trophy change
+	var trophy_change = 0
+	if GameManager and GameManager.trophy_system:
+		trophy_change = GameManager.trophy_system.trophy_data.current_trophies - trophies_before
 
 	# Show game over message
 	var winner_text = "VICTORY!" if winner == TEAM_PLAYER else ("DEFEAT!" if winner == TEAM_OPPONENT else "DRAW!")

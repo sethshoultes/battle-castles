@@ -42,6 +42,8 @@ var targeting_system: TargetingSystem
 
 ## Progression systems
 var player_profile: PlayerProfile = null
+var trophy_system: TrophySystem = null
+var currency_manager: CurrencyManager = null
 
 ## Configuration resources (loaded from data files - NO HARDCODED VALUES)
 var battlefield_config: BattlefieldConfig = null
@@ -133,6 +135,19 @@ func _initialize_progression_systems() -> void:
 	# Create player profile
 	player_profile = PlayerProfile.new()
 	add_child(player_profile)
+
+	# Create trophy system
+	trophy_system = TrophySystem.new()
+	add_child(trophy_system)
+
+	# Create currency manager
+	currency_manager = CurrencyManager.new()
+	add_child(currency_manager)
+
+	# Connect trophy system signals
+	trophy_system.trophies_changed.connect(_on_trophies_changed)
+	trophy_system.arena_changed.connect(_on_arena_changed)
+	trophy_system.milestone_reached.connect(_on_trophy_milestone_reached)
 
 	print("Progression systems initialized")
 
@@ -458,3 +473,90 @@ func get_battlefield_config() -> BattlefieldConfig:
 ## Get game balance configuration (globally accessible)
 func get_balance_config() -> GameBalanceConfig:
 	return balance_config
+
+
+## Process battle results and award trophies
+func process_battle_result(result: String, opponent_trophies: int) -> void:
+	if not trophy_system:
+		push_error("Trophy system not initialized")
+		return
+
+	# Calculate and apply trophy change
+	var trophy_change = trophy_system.record_battle_result(result, opponent_trophies)
+
+	print("Battle result: %s | Trophy change: %+d | New total: %d" % [
+		result.to_upper(),
+		trophy_change,
+		trophy_system.trophy_data.current_trophies
+	])
+
+	# Award gold based on result and arena
+	if currency_manager:
+		var base_gold = 0
+		match result.to_lower():
+			"win":
+				base_gold = 100
+			"draw":
+				base_gold = 30
+			"loss":
+				base_gold = 10
+
+		# Apply arena multiplier
+		var arena_multiplier = trophy_system.get_arena_rewards_multiplier()
+		var final_gold = int(base_gold * arena_multiplier)
+
+		currency_manager.add_gold(
+			final_gold,
+			CurrencyManager.TransactionType.BATTLE_REWARD,
+			"Battle %s reward" % result
+		)
+
+		print("  Gold reward: %d (base: %d x %.1fx arena bonus)" % [
+			final_gold,
+			base_gold,
+			arena_multiplier
+		])
+
+
+## Trophy changed handler
+func _on_trophies_changed(new_count: int, change: int) -> void:
+	print("Trophies updated: %+d (Total: %d)" % [change, new_count])
+
+
+## Arena changed handler - show celebration/notification
+func _on_arena_changed(new_arena: int, arena_name: String) -> void:
+	print("=================================")
+	print("ARENA UNLOCKED: %s" % arena_name)
+	print("=================================")
+
+	# Check if we progressed or dropped
+	var current_arena = trophy_system.trophy_data.current_arena
+	if new_arena > current_arena:
+		print("Congratulations! You've advanced to a new arena!")
+	else:
+		print("You've dropped to a lower arena.")
+
+	# Award unlock bonus for progressing to new arena
+	if currency_manager and new_arena > current_arena:
+		var unlock_bonus = new_arena * 50  # 50 gold per arena level
+		currency_manager.add_gold(
+			unlock_bonus,
+			CurrencyManager.TransactionType.ACHIEVEMENT_REWARD,
+			"Unlocked %s" % arena_name
+		)
+		print("  Arena unlock bonus: %d gold" % unlock_bonus)
+
+
+## Trophy milestone reached handler
+func _on_trophy_milestone_reached(milestone: Dictionary) -> void:
+	print("=================================")
+	print("TROPHY MILESTONE REACHED!")
+	print("  Trophies: %d" % milestone.trophies)
+	print("  Gold reward: %d" % milestone.reward_gold)
+	print("  Gem reward: %d" % milestone.reward_gems)
+	print("=================================")
+
+	# Auto-claim milestone rewards
+	if currency_manager and trophy_system:
+		trophy_system.claim_milestone(milestone.trophies, currency_manager)
+		print("Milestone rewards claimed automatically!")
