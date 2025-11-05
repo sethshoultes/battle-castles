@@ -713,6 +713,8 @@ var ai_max_elixir: float = 10.0  # Set from config on load
 var ai_elixir_rate: float = 0.357  # Set from config on load (1 per 2.8s = 0.357/s)
 var ai_difficulty: AILevel = AILevel.MEDIUM  # Default to medium difficulty
 var ai_elixir_reserve: float = 1.0  # Set from config based on difficulty (default fallback)
+var ai_recent_cards: Array = []  # Track recently played cards for variety
+var ai_max_recent: int = 4  # Remember last 4 cards
 
 func _load_ai_difficulty() -> void:
 	"""Load AI difficulty from GameManager and apply config values"""
@@ -790,6 +792,11 @@ func _on_ai_timer_timeout() -> void:
 	# Deduct elixir cost
 	ai_elixir -= chosen_card.elixir_cost
 	ai_elixir = max(0, ai_elixir)
+
+	# Track this card for variety
+	ai_recent_cards.append(chosen_card.card_name)
+	if ai_recent_cards.size() > ai_max_recent:
+		ai_recent_cards.pop_front()
 
 	# Choose strategic spawn position
 	var spawn_pos = _choose_spawn_position(chosen_card, threat_data)
@@ -871,9 +878,10 @@ func _choose_ai_card_strategic(threat_data: Dictionary) -> CardData:
 	if affordable_cards.is_empty():
 		return null
 
-	# EASY AI: Random (simple behavior)
+	# EASY AI: Random with variety (avoid spamming same card)
 	if ai_difficulty == AILevel.EASY:
-		return affordable_cards[randi() % affordable_cards.size()]
+		var varied_cards = _prefer_variety(affordable_cards)
+		return varied_cards[randi() % varied_cards.size()] if not varied_cards.is_empty() else affordable_cards[randi() % affordable_cards.size()]
 
 	# MEDIUM+ AI: Strategic decisions
 
@@ -898,10 +906,42 @@ func _choose_ai_card_strategic(threat_data: Dictionary) -> CardData:
 			return card.unit_type in ["knight", "giant", "valkyrie", "barbarians"]
 		)
 		if not defensive_cards.is_empty():
+			# Prefer variety even in defense
+			var varied_defensive = _prefer_variety(defensive_cards)
+			if not varied_defensive.is_empty():
+				return varied_defensive[randi() % varied_defensive.size()]
 			return defensive_cards[randi() % defensive_cards.size()]
 
-	# Attack with any available card
+	# Attack with variety
+	var varied_cards = _prefer_variety(strategic_cards)
+	if not varied_cards.is_empty():
+		return varied_cards[randi() % varied_cards.size()]
+
+	# Fallback to any strategic card
 	return strategic_cards[randi() % strategic_cards.size()]
+
+func _prefer_variety(cards: Array) -> Array:
+	"""
+	Filter cards to prefer those not recently played
+	Returns cards that haven't been played in last ai_max_recent spawns
+	"""
+	var fresh_cards = []
+
+	for card in cards:
+		var card_name = card.card_name if card.has("card_name") else ""
+
+		# Check if this card was recently played
+		var recently_played = false
+		for recent in ai_recent_cards:
+			if recent == card_name:
+				recently_played = true
+				break
+
+		# If not recently played, it's a fresh option
+		if not recently_played:
+			fresh_cards.append(card)
+
+	return fresh_cards
 
 func _choose_spawn_position(card: CardData, threat_data: Dictionary) -> Vector2:
 	"""
