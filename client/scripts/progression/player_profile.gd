@@ -318,17 +318,24 @@ func _validate_profile_data(data: Dictionary) -> bool:
 			return false
 
 	# Validate data types and ranges
-	if not is_instance_of(data.level, TYPE_INT) or data.level < 1 or data.level > MAX_LEVEL:
+	# NOTE: JSON doesn't preserve int vs float, so we accept numeric values and convert them
+	var level = int(data.level) if typeof(data.level) in [TYPE_INT, TYPE_FLOAT] else -1
+	if level < 1 or level > MAX_LEVEL:
 		push_error("Invalid level: " + str(data.level))
 		return false
+	data.level = level  # Ensure it's an int
 
-	if not is_instance_of(data.experience, TYPE_INT) or data.experience < 0:
+	var experience = int(data.experience) if typeof(data.experience) in [TYPE_INT, TYPE_FLOAT] else -1
+	if experience < 0:
 		push_error("Invalid experience: " + str(data.experience))
 		return false
+	data.experience = experience  # Ensure it's an int
 
-	if not is_instance_of(data.trophies, TYPE_INT) or data.trophies < 0:
+	var trophies = int(data.trophies) if typeof(data.trophies) in [TYPE_INT, TYPE_FLOAT] else -1
+	if trophies < 0:
 		push_error("Invalid trophies: " + str(data.trophies))
 		return false
+	data.trophies = trophies  # Ensure it's an int
 
 	return true
 
