@@ -78,7 +78,10 @@ func _setup_navigation() -> void:
 	navigation_agent.avoidance_enabled = true
 	navigation_agent.debug_enabled = true  # Show paths in editor
 
-	# Wait for navigation to be ready
+	# IMPORTANT: Disable navigation initially - it needs time to sync with map
+	use_navigation = false
+
+	# Wait for navigation map to sync (needs physics frames)
 	call_deferred("_on_navigation_ready")
 
 func initialize(type: String, team_id: int, data: CardData) -> void:
@@ -200,8 +203,13 @@ func find_target() -> void:
 		target = closest_unit
 
 func _on_navigation_ready() -> void:
-	# Navigation is ready, can start pathfinding
-	pass
+	# Wait for physics frames to allow NavigationServer2D to sync
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	# Now navigation is synced and ready
+	use_navigation = true
+	print(unit_type, " [", team, "] navigation enabled at ", global_position)
 
 func move_toward_target(delta: float) -> void:
 	if not target:
@@ -215,16 +223,22 @@ func move_toward_target(delta: float) -> void:
 
 		# Get next position from navigation
 		var next_position = navigation_agent.get_next_path_position()
-		var direction = (next_position - global_position).normalized()
 
-		# Set velocity for avoidance
-		var desired_velocity = direction * move_speed
-		navigation_agent.set_velocity(desired_velocity)
-		velocity = desired_velocity
+		# Validate we got a valid next position
+		if next_position.distance_to(global_position) > 0.1:
+			var direction = (next_position - global_position).normalized()
+
+			# Set velocity for avoidance
+			var desired_velocity = direction * move_speed
+			navigation_agent.set_velocity(desired_velocity)
+			velocity = desired_velocity
+		else:
+			# No valid path yet, don't move
+			velocity = Vector2.ZERO
 	else:
-		# Direct movement (fallback)
-		var direction = (target.global_position - global_position).normalized()
-		velocity = direction * move_speed
+		# Navigation not ready yet - don't move (wait for it)
+		# DON'T use direct movement because it will hit river collisions
+		velocity = Vector2.ZERO
 
 	move_and_slide()
 
@@ -258,21 +272,22 @@ func move_forward(delta: float) -> void:
 
 		# Get next position from navigation
 		var next_position = navigation_agent.get_next_path_position()
-		var direction = (next_position - global_position).normalized()
 
-		# Set velocity for avoidance
-		var desired_velocity = direction * move_speed
-		navigation_agent.set_velocity(desired_velocity)
-		velocity = desired_velocity
+		# Validate we got a valid next position
+		if next_position.distance_to(global_position) > 0.1:
+			var direction = (next_position - global_position).normalized()
+
+			# Set velocity for avoidance
+			var desired_velocity = direction * move_speed
+			navigation_agent.set_velocity(desired_velocity)
+			velocity = desired_velocity
+		else:
+			# No valid path yet, don't move
+			velocity = Vector2.ZERO
 	else:
-		# Fallback: direct movement
-		var direction: Vector2
-		if team == 0:  # Player team - move up
-			direction = Vector2(0, -1)
-		else:  # Opponent team - move down
-			direction = Vector2(0, 1)
-
-		velocity = direction * move_speed
+		# Navigation not ready yet - don't move (wait for it)
+		# DON'T use direct movement because it will hit river collisions
+		velocity = Vector2.ZERO
 
 	move_and_slide()
 
