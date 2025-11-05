@@ -128,13 +128,15 @@ offset_top = 310.0
 offset_right = -70.0
 offset_bottom = 430.0
 
-[node name="TopRow" type="HBoxContainer" parent="ProfilePanel/PlayerInfo"]
+[node name="TopRow" type="VBoxContainer" parent="ProfilePanel/PlayerInfo"]
 layout_mode = 2
 theme_override_constants/separation = 15
+alignment = 1
 
 [node name="AvatarContainer" type="Control" parent="ProfilePanel/PlayerInfo/TopRow"]
-custom_minimum_size = Vector2(100, 100)
+custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="AvatarFrame" type="TextureRect" parent="ProfilePanel/PlayerInfo/TopRow/AvatarContainer"]
 layout_mode = 1
@@ -154,10 +156,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -70.0
+offset_top = -70.0
+offset_right = 70.0
+offset_bottom = 70.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("10_default_avatar")
@@ -166,14 +168,16 @@ stretch_mode = 5
 
 [node name="InfoColumn" type="VBoxContainer" parent="ProfilePanel/PlayerInfo/TopRow"]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 5
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+alignment = 1
 
 [node name="NameLabel" type="Label" parent="ProfilePanel/PlayerInfo/TopRow/InfoColumn"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Player"
+horizontal_alignment = 1
 
 [node name="LevelContainer" type="HBoxContainer" parent="ProfilePanel/PlayerInfo/TopRow/InfoColumn"]
 layout_mode = 2
