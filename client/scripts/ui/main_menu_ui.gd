@@ -113,18 +113,51 @@ func _animate_entrance() -> void:
 		profile_tween.tween_property(profile_panel, "modulate:a", 1.0, 0.5)
 
 func _load_player_data() -> void:
-	# Load from save or server
-	# Placeholder data for now
-	player_data = {
-		"name": "Player",
-		"level": 1,
-		"trophies": 0,
-		"gold": 100,
-		"gems": 10,
-		"arena": "Training Camp",
-		"arena_level": 0
-	}
+	# Load from PlayerProfile system
+	if GameManager and GameManager.player_profile:
+		var profile = GameManager.player_profile
+		var profile_data = profile.player_data
+
+		player_data = {
+			"name": profile_data.get("username", "Player"),
+			"level": profile_data.get("level", 1),
+			"trophies": profile_data.get("trophies", 0),
+			"gold": 100,  # TODO: Load from CurrencyManager when integrated
+			"gems": 10,   # TODO: Load from CurrencyManager when integrated
+			"arena": _get_arena_name(profile_data.get("current_arena", 0)),
+			"arena_level": profile_data.get("current_arena", 0)
+		}
+	else:
+		# Fallback to placeholder data
+		player_data = {
+			"name": "Player",
+			"level": 1,
+			"trophies": 0,
+			"gold": 100,
+			"gems": 10,
+			"arena": "Training Camp",
+			"arena_level": 0
+		}
+
 	_update_profile_display()
+
+func _get_arena_name(arena_index: int) -> String:
+	const ARENA_NAMES = [
+		"Training Camp",
+		"Goblin Stadium",
+		"Bone Pit",
+		"Barbarian Bowl",
+		"Spell Valley",
+		"Builder's Workshop",
+		"Royal Arena",
+		"Frozen Peak",
+		"Jungle Arena",
+		"Hog Mountain"
+	]
+
+	if arena_index >= 0 and arena_index < ARENA_NAMES.size():
+		return ARENA_NAMES[arena_index]
+	return "Training Camp"
 
 func _update_profile_display() -> void:
 	if not player_data.is_empty():
@@ -212,8 +245,21 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _on_profile_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print("Profile panel clicked - Loading profile screen...")
 		profile_pressed.emit()
+		_open_profile_screen()
+
+func _open_profile_screen() -> void:
+	# Animate panel press
+	if profile_panel:
+		var tween = create_tween()
+		tween.tween_property(profile_panel, "scale", Vector2(0.98, 0.98), 0.05)
+		tween.tween_property(profile_panel, "scale", Vector2.ONE, 0.05)
+
+	# Load profile screen
+	await get_tree().create_timer(0.15).timeout
+	get_tree().change_scene_to_file("res://scenes/ui/profile_screen.tscn")
 
 func _animate_button_press(button) -> void:
 	var tween = create_tween()

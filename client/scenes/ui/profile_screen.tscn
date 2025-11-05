@@ -1,0 +1,424 @@
+[gd_scene load_steps=11 format=3 uid="uid://dcq5w8h4rtmn6"]
+
+[ext_resource type="Script" path="res://scripts/ui/profile_screen_ui.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bmukfj6u6w8k4" path="res://assets/sprites/ui/avatar_frame.png" id="2_avatar_frame"]
+[ext_resource type="Texture2D" uid="uid://dh7oto8nmjnnj" path="res://assets/sprites/ui/default_avatar.png" id="3_default_avatar"]
+[ext_resource type="Texture2D" uid="uid://bipq1566q7qlc" path="res://assets/sprites/ui/icons/trophy_icon.png" id="4_trophy_icon"]
+[ext_resource type="Texture2D" uid="uid://d0wofe8hdbxr5" path="res://assets/sprites/ui/icons/gold_icon.png" id="5_gold_icon"]
+[ext_resource type="Texture2D" uid="uid://dyswya68pl5f2" path="res://assets/sprites/ui/icons/gem_icon.png" id="6_gem_icon"]
+[ext_resource type="Texture2D" uid="uid://2bn6bvu1grxd" path="res://assets/sprites/ui/level_badge.png" id="7_level_badge"]
+[ext_resource type="Texture2D" uid="uid://dypv3ojcxdc0h" path="res://assets/sprites/ui/training_camp.png" id="8_arena_icon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.1, 0.1, 0.15, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.4, 0.5, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_section"]
+bg_color = Color(0.15, 0.15, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ProfileScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.08, 1)
+
+[node name="MainContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="ContentContainer" type="VBoxContainer" parent="MainContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Header" type="HBoxContainer" parent="MainContainer/ContentContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BackButton" type="Button" parent="MainContainer/ContentContainer/Header"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "← Back"
+
+[node name="Title" type="Label" parent="MainContainer/ContentContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 36
+text = "Player Profile"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="MainContainer/ContentContainer/Header"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="MainContent" type="HBoxContainer" parent="MainContainer/ContentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="LeftColumn" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ProfileCard" type="PanelContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="AvatarContainer" type="Control" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AvatarFrame" type="TextureRect" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/AvatarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_avatar_frame")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Avatar" type="TextureRect" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/AvatarContainer/AvatarFrame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_default_avatar")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlayerNameLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Player Name"
+horizontal_alignment = 1
+
+[node name="PlayerIDLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "ID: PLAYER_123456"
+horizontal_alignment = 1
+
+[node name="LevelSection" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LevelRow" type="HBoxContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/LevelSection"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="LevelBadge" type="TextureRect" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/LevelSection/LevelRow"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("7_level_badge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LevelNumber" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/LevelSection/LevelRow/LevelBadge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/LevelSection/LevelRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Level 1"
+vertical_alignment = 1
+
+[node name="XPProgressBar" type="ProgressBar" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/LevelSection"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="XPLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ProfileCard/VBox/LevelSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+text = "0 / 100 XP"
+horizontal_alignment = 1
+
+[node name="ArenaSection" type="PanelContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_section")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ArenaTitle" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Current Arena"
+horizontal_alignment = 1
+
+[node name="ArenaInfo" type="HBoxContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="ArenaIcon" type="TextureRect" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/ArenaInfo"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("8_arena_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ArenaName" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/ArenaInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Training Camp"
+vertical_alignment = 1
+
+[node name="TrophyInfo" type="HBoxContainer" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="TrophyIcon" type="TextureRect" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/TrophyInfo"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("4_trophy_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CurrentTrophies" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/TrophyInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "0"
+vertical_alignment = 1
+
+[node name="Separator" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/TrophyInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
+theme_override_font_sizes/font_size = 20
+text = "/"
+
+[node name="HighestTrophies" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/TrophyInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 20
+text = "0"
+vertical_alignment = 1
+
+[node name="HighestLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "Personal Best"
+horizontal_alignment = 1
+
+[node name="RightColumn" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="BattleStatsCard" type="PanelContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SectionTitle" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Battle Statistics"
+horizontal_alignment = 1
+
+[node name="StatsGrid" type="GridContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 40
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="TotalBattlesLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Total Battles:"
+
+[node name="TotalBattlesValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 2
+
+[node name="WinsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Wins:"
+
+[node name="WinsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 1, 0.3, 1)
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 2
+
+[node name="LossesLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Losses:"
+
+[node name="LossesValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 2
+
+[node name="DrawsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Draws:"
+
+[node name="DrawsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.4, 1)
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 2
+
+[node name="WinRateLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Win Rate:"
+
+[node name="WinRateValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "0%"
+horizontal_alignment = 2
+
+[node name="ThreeCrownsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "3-Crown Wins:"
+
+[node name="ThreeCrownsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 2
+
+[node name="CollectionStatsCard" type="PanelContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_section")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="SectionTitle" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Collection"
+horizontal_alignment = 1
+
+[node name="StatsRow" type="HBoxContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="CardsContainer" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow/CardsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Cards Collected"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow/CardsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 1
+
+[node name="DonationsContainer" type="VBoxContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow/DonationsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Donations"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow/DonationsContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="MainContainer/ContentContainer/Header/BackButton" to="." method="_on_back_button_pressed"]

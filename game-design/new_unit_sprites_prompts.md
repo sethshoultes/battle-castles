@@ -142,7 +142,7 @@ A cartoon-style flying minion creature sprite for a mobile game, viewed from a 4
 ```
 **File:** `minions_player.png`
 
-#### Minion (Enemy - Dark Red) []
+#### Minion (Enemy - Dark Red) [x]
 ```
 A cartoon-style flying minion creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small imp-like creature with bat wings, dark red skin with orange highlights, menacing grin showing teeth, holding small spear, aggressive flying pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 28x44 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
@@ -152,13 +152,13 @@ A cartoon-style flying minion creature sprite for a mobile game, viewed from a 4
 
 ### 8. Valkyrie
 
-#### Valkyrie (Player - Orange) []
+#### Valkyrie (Player - Orange) [x]
 ```
 A cartoon-style valkyrie warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, fierce female warrior with horned helmet, red hair in braids, wearing orange-red armor with gold trim, holding large double-bladed axe, powerful battle-ready stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 38x54 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
 **File:** `valkyrie_player.png`
 
-#### Valkyrie (Enemy - Dark Red) []
+#### Valkyrie (Enemy - Dark Red) [x]
 ```
 A cartoon-style valkyrie warrior character sprite for a mobile game, viewed from a 45-degree top-down isometric angle, fierce female warrior with horned helmet, dark hair in braids, wearing dark red armor with black trim, holding large double-bladed axe, menacing battle-ready stance, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 38x54 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
