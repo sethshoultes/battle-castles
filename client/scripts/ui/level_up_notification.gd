@@ -26,9 +26,10 @@ class_name LevelUpNotification
 
 # Animation and effects
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var confetti_particles: GPUParticles2D = $ConfettiParticles
-@onready var sparkle_particles: GPUParticles2D = $NotificationPanel/SparkleParticles
-@onready var glow_particles: GPUParticles2D = $NotificationPanel/GlowParticles
+# Particle nodes are created programmatically in _setup_ui()
+var confetti_particles: GPUParticles2D = null
+var sparkle_particles: GPUParticles2D = null
+var glow_particles: GPUParticles2D = null
 
 # Audio
 @onready var level_up_sound: AudioStreamPlayer = $LevelUpSound
