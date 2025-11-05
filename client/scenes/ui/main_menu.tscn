@@ -134,7 +134,7 @@ theme_override_constants/separation = 5
 alignment = 1
 
 [node name="AvatarContainer" type="Control" parent="ProfilePanel/PlayerInfo/TopRow"]
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(240, 240)
 layout_mode = 2
 size_flags_horizontal = 4
 
