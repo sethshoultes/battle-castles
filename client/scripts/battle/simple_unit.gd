@@ -27,7 +27,9 @@ var is_attacking: bool = false
 
 # Navigation
 var navigation_agent: NavigationAgent2D = null
-var use_navigation: bool = true
+var use_navigation: bool = false  # Start with direct movement
+var navigation_init_timer: float = 0.0  # Track how long we've waited for nav
+var max_nav_wait_time: float = 0.5  # Max 0.5 seconds to wait for navigation
 
 # References
 var health_bar: ProgressBar = null
@@ -78,11 +80,12 @@ func _setup_navigation() -> void:
 	navigation_agent.avoidance_enabled = true
 	navigation_agent.debug_enabled = true  # Show paths in editor
 
-	# IMPORTANT: Disable navigation initially - it needs time to sync with map
+	# DISABLE NAVIGATION FOR NOW - causing units to freeze
+	# Will re-enable once properly debugged
 	use_navigation = false
 
-	# Wait for navigation map to sync (needs physics frames)
-	call_deferred("_on_navigation_ready")
+	# TODO: Fix navigation pathfinding
+	# call_deferred("_on_navigation_ready")
 
 func initialize(type: String, team_id: int, data: CardData) -> void:
 	unit_type = type
@@ -236,9 +239,9 @@ func move_toward_target(delta: float) -> void:
 			# No valid path yet, don't move
 			velocity = Vector2.ZERO
 	else:
-		# Navigation not ready yet - don't move (wait for it)
-		# DON'T use direct movement because it will hit river collisions
-		velocity = Vector2.ZERO
+		# Use direct movement (navigation disabled or not ready)
+		var direction = (target.global_position - global_position).normalized()
+		velocity = direction * move_speed
 
 	move_and_slide()
 
@@ -258,7 +261,7 @@ func move_toward_target(delta: float) -> void:
 				velocity = Vector2.ZERO
 
 func move_forward(delta: float) -> void:
-	# When no target, pathfind towards enemy side
+	# When no target, move towards enemy side
 	if use_navigation and navigation_agent:
 		# Set a target position far ahead in enemy territory
 		var target_pos: Vector2
@@ -285,9 +288,13 @@ func move_forward(delta: float) -> void:
 			# No valid path yet, don't move
 			velocity = Vector2.ZERO
 	else:
-		# Navigation not ready yet - don't move (wait for it)
-		# DON'T use direct movement because it will hit river collisions
-		velocity = Vector2.ZERO
+		# Use direct movement (navigation disabled or not ready)
+		var direction: Vector2
+		if team == 0:  # Player team - move up
+			direction = Vector2(0, -1)
+		else:  # Opponent team - move down
+			direction = Vector2(0, 1)
+		velocity = direction * move_speed
 
 	move_and_slide()
 

@@ -797,9 +797,13 @@ func _on_ai_timer_timeout() -> void:
 	ai_elixir = max(0, ai_elixir)
 
 	# Track this card for variety
-	ai_recent_cards.append(chosen_card.card_name)
+	var card_name_to_track = chosen_card.card_name if chosen_card else "unknown"
+	ai_recent_cards.append(card_name_to_track)
 	if ai_recent_cards.size() > ai_max_recent:
 		ai_recent_cards.pop_front()
+
+	# Debug: print recent cards
+	print("AI recent cards: ", ai_recent_cards)
 
 	# Choose strategic spawn position
 	var spawn_pos = _choose_spawn_position(chosen_card, threat_data)
@@ -944,7 +948,10 @@ func _prefer_variety(cards: Array) -> Array:
 		# If not recently played, it's a fresh option
 		if not recently_played:
 			fresh_cards.append(card)
+		else:
+			print("  Skipping ", card_name, " (recently played)")
 
+	print("  Fresh cards available: ", fresh_cards.size(), " out of ", cards.size())
 	return fresh_cards
 
 func _choose_spawn_position(card: CardData, threat_data: Dictionary) -> Vector2:
