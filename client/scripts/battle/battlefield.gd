@@ -898,6 +898,27 @@ func _on_castle_destroyed(team: int, tower_type: String) -> void:
 		if ai_timer:
 			ai_timer.stop()
 
+		# Get crown counts from battle manager
+		var player_crowns = battle_manager.player_crowns if battle_manager else 0
+		var opponent_crowns = battle_manager.opponent_crowns if battle_manager else 0
+
+		# Determine battle result and rewards (castle destruction = 3 crowns)
+		var result = "loss" if team == TEAM_PLAYER else "win"
+		var trophy_change = -20 if team == TEAM_PLAYER else 30
+		var experience_gain = 5 if team == TEAM_PLAYER else 20
+
+		# Record battle result in player profile
+		if GameManager and GameManager.player_profile:
+			GameManager.player_profile.record_battle_result(result, player_crowns, opponent_crowns)
+			GameManager.player_profile.update_trophies(trophy_change)
+			GameManager.player_profile.add_experience(experience_gain)
+
+			print("Battle stats recorded (Castle destroyed):")
+			print("  Result: ", result.to_upper())
+			print("  Crowns: ", player_crowns, " - ", opponent_crowns)
+			print("  Trophies: ", trophy_change, " (Total: ", GameManager.player_profile.player_data.trophies, ")")
+			print("  Experience: +", experience_gain)
+
 		# Show game over message
 		var winner_text = "VICTORY!" if winner_team == TEAM_PLAYER else "DEFEAT!"
 		print("===================")
@@ -933,6 +954,40 @@ func _on_battle_ended(winner: int) -> void:
 	# Stop AI spawning
 	if ai_timer:
 		ai_timer.stop()
+
+	# Get crown counts from battle manager
+	var player_crowns = battle_manager.player_crowns if battle_manager else 0
+	var opponent_crowns = battle_manager.opponent_crowns if battle_manager else 0
+
+	# Determine battle result and rewards
+	var result = "draw"
+	var trophy_change = 0
+	var experience_gain = 0
+
+	if winner == TEAM_PLAYER:
+		result = "win"
+		trophy_change = 30
+		experience_gain = 20
+	elif winner == TEAM_OPPONENT:
+		result = "loss"
+		trophy_change = -20
+		experience_gain = 5
+	else:
+		result = "draw"
+		trophy_change = 0
+		experience_gain = 10
+
+	# Record battle result in player profile
+	if GameManager and GameManager.player_profile:
+		GameManager.player_profile.record_battle_result(result, player_crowns, opponent_crowns)
+		GameManager.player_profile.update_trophies(trophy_change)
+		GameManager.player_profile.add_experience(experience_gain)
+
+		print("Battle stats recorded:")
+		print("  Result: ", result.to_upper())
+		print("  Crowns: ", player_crowns, " - ", opponent_crowns)
+		print("  Trophies: ", trophy_change, " (Total: ", GameManager.player_profile.player_data.trophies, ")")
+		print("  Experience: +", experience_gain)
 
 	# Show game over message
 	var winner_text = "VICTORY!" if winner == TEAM_PLAYER else ("DEFEAT!" if winner == TEAM_OPPONENT else "DRAW!")
