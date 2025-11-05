@@ -101,8 +101,8 @@ stretch_mode = 5
 
 [node name="ProfilePanel" type="Control" parent="."]
 anchors_preset = 0
-anchor_right = 0.25
-anchor_bottom = 0.35
+anchor_right = 0.35
+anchor_bottom = 0.55
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 20.0
