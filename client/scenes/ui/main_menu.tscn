@@ -124,9 +124,9 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 60.0
-offset_top = 80.0
+offset_top = 160.0
 offset_right = -60.0
-offset_bottom = 200.0
+offset_bottom = 280.0
 
 [node name="TopRow" type="HBoxContainer" parent="ProfilePanel/PlayerInfo"]
 layout_mode = 2
@@ -225,9 +225,9 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 60.0
-offset_top = 220.0
+offset_top = 300.0
 offset_right = -60.0
-offset_bottom = 270.0
+offset_bottom = 350.0
 grow_horizontal = 2
 theme_override_constants/separation = 15
 
@@ -276,9 +276,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 60.0
-offset_top = -110.0
+offset_top = -120.0
 offset_right = -60.0
-offset_bottom = -60.0
+offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 10
