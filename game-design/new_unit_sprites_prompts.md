@@ -136,7 +136,7 @@ A cartoon-style skeleton warrior character sprite for a mobile game, viewed from
 
 ### 7. Minions
 
-#### Minion (Player - Purple) []
+#### Minion (Player - Purple) [x]
 ```
 A cartoon-style flying minion creature sprite for a mobile game, viewed from a 45-degree top-down isometric angle, small imp-like creature with bat wings, purple-black skin with blue highlights, menacing grin showing teeth, holding small spear, flying pose, simple and clean design with bold outlines, vibrant colors, TRANSPARENT BACKGROUND, character should be 28x44 pixels scale, Clash Royale art style, full body visible, PNG with alpha channel
 ```
