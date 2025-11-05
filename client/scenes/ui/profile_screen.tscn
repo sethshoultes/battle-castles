@@ -290,78 +290,82 @@ theme_override_font_sizes/font_size = 28
 text = "Battle Statistics"
 horizontal_alignment = 1
 
-[node name="StatsGrid" type="GridContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox"]
+[node name="StatsMargin" type="MarginContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+
+[node name="StatsGrid" type="GridContainer" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin"]
 layout_mode = 2
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 20
 columns = 2
 
-[node name="TotalBattlesLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="TotalBattlesLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Total Battles:"
 
-[node name="TotalBattlesValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="TotalBattlesValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "0"
 horizontal_alignment = 2
 
-[node name="WinsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="WinsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Wins:"
 
-[node name="WinsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="WinsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.3, 1, 0.3, 1)
 theme_override_font_sizes/font_size = 24
 text = "0"
 horizontal_alignment = 2
 
-[node name="LossesLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="LossesLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Losses:"
 
-[node name="LossesValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="LossesValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
 theme_override_font_sizes/font_size = 24
 text = "0"
 horizontal_alignment = 2
 
-[node name="DrawsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="DrawsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Draws:"
 
-[node name="DrawsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="DrawsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.8, 0.4, 1)
 theme_override_font_sizes/font_size = 24
 text = "0"
 horizontal_alignment = 2
 
-[node name="WinRateLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="WinRateLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Win Rate:"
 
-[node name="WinRateValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="WinRateValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.843, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "0%"
 horizontal_alignment = 2
 
-[node name="ThreeCrownsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="ThreeCrownsLabel" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "3-Crown Wins:"
 
-[node name="ThreeCrownsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid"]
+[node name="ThreeCrownsValue" type="Label" parent="MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.5, 0, 1)
 theme_override_font_sizes/font_size = 24

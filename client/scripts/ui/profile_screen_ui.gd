@@ -17,12 +17,12 @@ signal back_pressed
 @onready var current_trophies: Label = $MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/TrophyInfo/CurrentTrophies
 @onready var highest_trophies: Label = $MainContainer/ContentContainer/MainContent/LeftColumn/ArenaSection/VBox/TrophyInfo/HighestTrophies
 
-@onready var total_battles_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid/TotalBattlesValue
-@onready var wins_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid/WinsValue
-@onready var losses_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid/LossesValue
-@onready var draws_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid/DrawsValue
-@onready var win_rate_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid/WinRateValue
-@onready var three_crowns_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsGrid/ThreeCrownsValue
+@onready var total_battles_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid/TotalBattlesValue
+@onready var wins_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid/WinsValue
+@onready var losses_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid/LossesValue
+@onready var draws_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid/DrawsValue
+@onready var win_rate_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid/WinRateValue
+@onready var three_crowns_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/BattleStatsCard/VBox/StatsMargin/StatsGrid/ThreeCrownsValue
 
 @onready var cards_collected_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow/CardsContainer/Value
 @onready var donations_value: Label = $MainContainer/ContentContainer/MainContent/RightColumn/CollectionStatsCard/VBox/StatsRow/DonationsContainer/Value
