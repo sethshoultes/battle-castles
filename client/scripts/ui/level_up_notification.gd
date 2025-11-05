@@ -172,7 +172,7 @@ func _get_chest_icon(chest_type: String) -> String:
 
 func _play_celebration_animation() -> void:
 	# Play sound
-	if level_up_sound:
+	if level_up_sound and level_up_sound.stream:
 		level_up_sound.play()
 
 	# Start confetti
@@ -255,7 +255,7 @@ func _animate_rewards() -> void:
 	tween.tween_property(rewards_container, "modulate:a", 1.0, 0.3)
 
 	# Play reward sound
-	if reward_sound:
+	if reward_sound and reward_sound.stream:
 		reward_sound.play()
 
 	# Animate each reward item with stagger
