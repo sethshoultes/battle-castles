@@ -176,7 +176,12 @@ static func _create_particles_from_config(config: Dictionary) -> GPUParticles2D:
 		material.emission_ring_height = config.get("emission_ring_height", 0.0)
 
 	# Direction and spread
-	material.direction = config.get("direction", Vector2(0, -1))
+	var direction = config.get("direction", Vector2(0, -1))
+	# Convert Vector2 to Vector3 for ParticleProcessMaterial
+	if direction is Vector2:
+		material.direction = Vector3(direction.x, direction.y, 0)
+	else:
+		material.direction = direction
 	material.spread = config.get("spread", 45.0)
 
 	# Velocity
@@ -197,7 +202,12 @@ static func _create_particles_from_config(config: Dictionary) -> GPUParticles2D:
 		material.orbit_velocity_max = config["orbit_velocity"]
 
 	# Forces
-	material.gravity = config.get("gravity", Vector2(0, 98))
+	var gravity = config.get("gravity", Vector2(0, 98))
+	# Convert Vector2 to Vector3 for ParticleProcessMaterial
+	if gravity is Vector2:
+		material.gravity = Vector3(gravity.x, gravity.y, 0)
+	else:
+		material.gravity = gravity
 
 	# Damping
 	if config.has("damping"):

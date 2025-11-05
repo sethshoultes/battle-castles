@@ -11,11 +11,11 @@ class_name MainMenuUI
 
 # Profile elements
 @onready var profile_panel: Control = $ProfilePanel
-@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/NameLabel
-@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/LevelContainer/LevelBadge/LevelLabel
+@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/NameRow/NameLabel
+@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/NameRow/LevelContainer/LevelBadge/LevelLabel
 @onready var trophy_count_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/TrophyContainer/TrophyCount
-@onready var gold_count_label: Label = $ProfilePanel/Resources/GoldContainer/GoldCount
-@onready var gem_count_label: Label = $ProfilePanel/Resources/GemContainer/GemCount
+@onready var gold_count_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/Resources/GoldContainer/GoldCount
+@onready var gem_count_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/Resources/GemContainer/GemCount
 @onready var avatar_texture: TextureRect = $ProfilePanel/PlayerInfo/TopRow/AvatarContainer/AvatarFrame/Avatar
 
 # Arena display
@@ -86,6 +86,13 @@ func _connect_signals() -> void:
 	if profile_panel:
 		profile_panel.gui_input.connect(_on_profile_input)
 
+	# Connect to PlayerProfile signals for live updates
+	if GameManager and GameManager.player_profile:
+		GameManager.player_profile.profile_updated.connect(_on_profile_updated)
+		GameManager.player_profile.stats_changed.connect(_on_stats_changed)
+		GameManager.player_profile.level_up.connect(_on_level_up)
+		print("Main Menu: Connected to PlayerProfile signals")
+
 func _animate_entrance() -> void:
 	# Animate title
 	if title_label:
@@ -113,33 +120,93 @@ func _animate_entrance() -> void:
 		profile_tween.tween_property(profile_panel, "modulate:a", 1.0, 0.5)
 
 func _load_player_data() -> void:
-	# Load from save or server
-	# Placeholder data for now
-	player_data = {
-		"name": "Player",
-		"level": 1,
-		"trophies": 0,
-		"gold": 100,
-		"gems": 10,
-		"arena": "Training Camp",
-		"arena_level": 0
-	}
+	# Load from PlayerProfile system
+	if GameManager and GameManager.player_profile:
+		var profile = GameManager.player_profile
+		var profile_data = profile.player_data
+
+		player_data = {
+			"name": profile_data.get("username", "Player"),
+			"level": profile_data.get("level", 1),
+			"trophies": profile_data.get("trophies", 0),
+			"gold": 100,  # TODO: Load from CurrencyManager when integrated
+			"gems": 10,   # TODO: Load from CurrencyManager when integrated
+			"arena": _get_arena_name(profile_data.get("current_arena", 0)),
+			"arena_level": profile_data.get("current_arena", 0)
+		}
+	else:
+		# Fallback to placeholder data
+		player_data = {
+			"name": "Player",
+			"level": 1,
+			"trophies": 0,
+			"gold": 100,
+			"gems": 10,
+			"arena": "Training Camp",
+			"arena_level": 0
+		}
+
 	_update_profile_display()
+
+func _get_arena_name(arena_index: int) -> String:
+	const ARENA_NAMES = [
+		"Training Camp",
+		"Goblin Stadium",
+		"Bone Pit",
+		"Barbarian Bowl",
+		"Spell Valley",
+		"Builder's Workshop",
+		"Royal Arena",
+		"Frozen Peak",
+		"Jungle Arena",
+		"Hog Mountain"
+	]
+
+	if arena_index >= 0 and arena_index < ARENA_NAMES.size():
+		return ARENA_NAMES[arena_index]
+	return "Training Camp"
 
 func _update_profile_display() -> void:
 	if not player_data.is_empty():
 		if player_name_label:
 			player_name_label.text = player_data.get("name", "Player")
 		if player_level_label:
-			player_level_label.text = str(player_data.get("level", 1))
+			_animate_label_value(player_level_label, player_data.get("level", 1))
 		if trophy_count_label:
-			trophy_count_label.text = str(player_data.get("trophies", 0))
+			_animate_label_value(trophy_count_label, player_data.get("trophies", 0))
 		if gold_count_label:
-			gold_count_label.text = str(player_data.get("gold", 0))
+			_animate_label_value(gold_count_label, player_data.get("gold", 0))
 		if gem_count_label:
-			gem_count_label.text = str(player_data.get("gems", 0))
+			_animate_label_value(gem_count_label, player_data.get("gems", 0))
 		if arena_name_label:
 			arena_name_label.text = player_data.get("arena", "Training Camp")
+
+func _animate_label_value(label: Label, target_value: int) -> void:
+	if not label:
+		return
+
+	# Get current value from label
+	var current_text = label.text
+	var current_value = int(current_text) if current_text.is_valid_int() else 0
+
+	# If values are the same, no animation needed
+	if current_value == target_value:
+		label.text = str(target_value)
+		return
+
+	# Animate the count-up/down
+	var tween = create_tween()
+	tween.tween_method(
+		func(value: float): label.text = str(int(value)),
+		float(current_value),
+		float(target_value),
+		0.5
+	).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+
+	# Add a pop animation to highlight the change
+	var original_scale = label.scale
+	tween.parallel().tween_property(label, "scale", original_scale * 1.2, 0.15)
+	tween.tween_property(label, "scale", original_scale, 0.15)
 
 func _setup_chest_slots() -> void:
 	# Create 4 chest slots
@@ -212,8 +279,21 @@ func _on_quit_pressed() -> void:
 	get_tree().quit()
 
 func _on_profile_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print("Profile panel clicked - Loading profile screen...")
 		profile_pressed.emit()
+		_open_profile_screen()
+
+func _open_profile_screen() -> void:
+	# Animate panel press
+	if profile_panel:
+		var tween = create_tween()
+		tween.tween_property(profile_panel, "scale", Vector2(0.98, 0.98), 0.05)
+		tween.tween_property(profile_panel, "scale", Vector2.ONE, 0.05)
+
+	# Load profile screen
+	await get_tree().create_timer(0.15).timeout
+	get_tree().change_scene_to_file("res://scenes/ui/profile_screen.tscn")
 
 func _animate_button_press(button) -> void:
 	var tween = create_tween()
@@ -256,6 +336,19 @@ func _process(delta: float) -> void:
 		matchmaking_timer += delta
 		var dots = "." . repeat(int(matchmaking_timer * 2) % 4)
 		matchmaking_label.text = "Searching for opponent" + dots
+
+func _on_profile_updated() -> void:
+	print("Main Menu: Profile updated signal received - refreshing display")
+	_load_player_data()
+
+func _on_stats_changed() -> void:
+	print("Main Menu: Stats changed signal received - refreshing display")
+	_load_player_data()
+
+func _on_level_up(new_level: int, rewards: Dictionary) -> void:
+	print("Main Menu: Level up! New level: " + str(new_level))
+	_load_player_data()
+	# TODO: Show level up celebration animation/popup
 
 func set_player_name(name: String) -> void:
 	player_data["name"] = name

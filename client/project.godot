@@ -25,6 +25,7 @@ InputManager="*res://scripts/core/input_manager.gd"
 SceneManager="*res://scripts/core/scene_manager.gd"
 DataValidator="*res://scripts/core/data_validator.gd"
 JuiceManager="*res://scripts/core/juice_manager.gd"
+NotificationManager="*res://scripts/ui/notification_manager.gd"
 
 [debug]
 

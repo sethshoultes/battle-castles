@@ -1,0 +1,225 @@
+[gd_scene load_steps=2 format=3 uid="uid://2i4tcbbjmh7e"]
+
+[ext_resource type="Script" path="res://scripts/ui/level_up_notification.gd" id="1_level_up"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_background"]
+bg_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.15, 0.15, 0.2, 0.95)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.8, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+bg_color = Color(1, 0.8, 0, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.2, 0.6, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.8, 0.3, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.3, 0.7, 0.3, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.9, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_pressed"]
+bg_color = Color(0.15, 0.5, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.7, 0.25, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="LevelUpNotification" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_level_up")
+
+[node name="BackgroundOverlay" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="NotificationPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -350.0
+offset_right = 300.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StyleBoxFlat" type="StyleBoxFlat" parent="NotificationPanel"]
+bg_color = Color(0.15, 0.15, 0.2, 0.95)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.8, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NotificationPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Spacer1" type="Control" parent="NotificationPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="LevelUpLabel" type="Label" parent="NotificationPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "LEVEL UP!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NewLevelContainer" type="HBoxContainer" parent="NotificationPanel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="LevelBadge" type="Panel" parent="NotificationPanel/VBoxContainer/NewLevelContainer"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+
+[node name="LevelNumber" type="Label" parent="NotificationPanel/VBoxContainer/NewLevelContainer/LevelBadge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RewardsContainer" type="VBoxContainer" parent="NotificationPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="RewardsTitle" type="Label" parent="NotificationPanel/VBoxContainer/RewardsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "REWARDS"
+horizontal_alignment = 1
+
+[node name="GoldReward" type="HBoxContainer" parent="NotificationPanel/VBoxContainer/RewardsContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="GoldIcon" type="Label" parent="NotificationPanel/VBoxContainer/RewardsContainer/GoldReward"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "💰"
+
+[node name="GoldAmount" type="Label" parent="NotificationPanel/VBoxContainer/RewardsContainer/GoldReward"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "+200 Gold"
+
+[node name="GemsReward" type="HBoxContainer" parent="NotificationPanel/VBoxContainer/RewardsContainer"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="GemsIcon" type="Label" parent="NotificationPanel/VBoxContainer/RewardsContainer/GemsReward"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "💎"
+
+[node name="GemsAmount" type="Label" parent="NotificationPanel/VBoxContainer/RewardsContainer/GemsReward"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "+10 Gems"
+
+[node name="ChestReward" type="HBoxContainer" parent="NotificationPanel/VBoxContainer/RewardsContainer"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="ChestIcon" type="Label" parent="NotificationPanel/VBoxContainer/RewardsContainer/ChestReward"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "📦✨"
+
+[node name="ChestLabel" type="Label" parent="NotificationPanel/VBoxContainer/RewardsContainer/ChestReward"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.6, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "Golden Chest"
+
+[node name="ContinueButton" type="Button" parent="NotificationPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "CONTINUE"
+
+[node name="Spacer2" type="Control" parent="NotificationPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="LevelUpSound" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
+
+[node name="RewardSound" type="AudioStreamPlayer" parent="."]
+volume_db = -8.0

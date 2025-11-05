@@ -1,0 +1,280 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqxm5vk3y7ygk"]
+
+[ext_resource type="Script" path="res://scripts/ui/battle_results_screen_ui.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bipq1566q7qlc" path="res://assets/sprites/ui/icons/trophy_icon.png" id="2_trophy_icon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.1, 0.15, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.5, 0.5, 0.6, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_section"]
+bg_color = Color(0.15, 0.15, 0.2, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Animation" id="Animation_fade_in"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[node name="BattleResultsScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.05, 0.08, 0.95)
+
+[node name="MainContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="ResultsPanel" type="PanelContainer" parent="MainContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="MainContainer/ResultsPanel"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="TopSpacer" type="Control" parent="MainContainer/ResultsPanel/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ResultMessage" type="Label" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 72
+text = "VICTORY!"
+horizontal_alignment = 1
+
+[node name="Divider1" type="HSeparator" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxFlat_section")
+
+[node name="CrownSection" type="VBoxContainer" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="CrownTitle" type="Label" parent="MainContainer/ResultsPanel/VBox/CrownSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Crowns"
+horizontal_alignment = 1
+
+[node name="CrownDisplay" type="HBoxContainer" parent="MainContainer/ResultsPanel/VBox/CrownSection"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="PlayerCrownContainer" type="VBoxContainer" parent="MainContainer/ResultsPanel/VBox/CrownSection/CrownDisplay"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayerLabel" type="Label" parent="MainContainer/ResultsPanel/VBox/CrownSection/CrownDisplay/PlayerCrownContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "You"
+horizontal_alignment = 1
+
+[node name="PlayerCrowns" type="Label" parent="MainContainer/ResultsPanel/VBox/CrownSection/CrownDisplay/PlayerCrownContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 1
+
+[node name="VSLabel" type="Label" parent="MainContainer/ResultsPanel/VBox/CrownSection/CrownDisplay"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_font_sizes/font_size = 32
+text = "VS"
+vertical_alignment = 1
+
+[node name="OpponentCrownContainer" type="VBoxContainer" parent="MainContainer/ResultsPanel/VBox/CrownSection/CrownDisplay"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="OpponentLabel" type="Label" parent="MainContainer/ResultsPanel/VBox/CrownSection/CrownDisplay/OpponentCrownContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Opponent"
+horizontal_alignment = 1
+
+[node name="OpponentCrowns" type="Label" parent="MainContainer/ResultsPanel/VBox/CrownSection/CrownDisplay/OpponentCrownContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 1
+
+[node name="Divider2" type="HSeparator" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxFlat_section")
+
+[node name="RewardsSection" type="VBoxContainer" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="RewardsTitle" type="Label" parent="MainContainer/ResultsPanel/VBox/RewardsSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Rewards"
+horizontal_alignment = 1
+
+[node name="TrophyRow" type="HBoxContainer" parent="MainContainer/ResultsPanel/VBox/RewardsSection"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TrophyIcon" type="TextureRect" parent="MainContainer/ResultsPanel/VBox/RewardsSection/TrophyRow"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("2_trophy_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TrophyLabel" type="Label" parent="MainContainer/ResultsPanel/VBox/RewardsSection/TrophyRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Trophies:"
+vertical_alignment = 1
+
+[node name="TrophyChange" type="Label" parent="MainContainer/ResultsPanel/VBox/RewardsSection/TrophyRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "+30"
+vertical_alignment = 1
+
+[node name="XPRow" type="HBoxContainer" parent="MainContainer/ResultsPanel/VBox/RewardsSection"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="XPLabel" type="Label" parent="MainContainer/ResultsPanel/VBox/RewardsSection/XPRow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Experience:"
+vertical_alignment = 1
+
+[node name="XPGained" type="Label" parent="MainContainer/ResultsPanel/VBox/RewardsSection/XPRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "+20 XP"
+vertical_alignment = 1
+
+[node name="Divider3" type="HSeparator" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxFlat_section")
+
+[node name="StatsSection" type="VBoxContainer" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="StatsTitle" type="Label" parent="MainContainer/ResultsPanel/VBox/StatsSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Battle Summary"
+horizontal_alignment = 1
+
+[node name="StatsGrid" type="GridContainer" parent="MainContainer/ResultsPanel/VBox/StatsSection"]
+layout_mode = 2
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="BattleTimeLabel" type="Label" parent="MainContainer/ResultsPanel/VBox/StatsSection/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "Battle Time:"
+
+[node name="BattleTimeValue" type="Label" parent="MainContainer/ResultsPanel/VBox/StatsSection/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 22
+text = "3:00"
+horizontal_alignment = 2
+
+[node name="UnitsDeployedLabel" type="Label" parent="MainContainer/ResultsPanel/VBox/StatsSection/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "Units Deployed:"
+
+[node name="UnitsDeployedValue" type="Label" parent="MainContainer/ResultsPanel/VBox/StatsSection/StatsGrid"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 2
+
+[node name="BottomSpacer" type="Control" parent="MainContainer/ResultsPanel/VBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="ButtonContainer" type="CenterContainer" parent="MainContainer/ResultsPanel/VBox"]
+layout_mode = 2
+
+[node name="ReturnButton" type="Button" parent="MainContainer/ResultsPanel/VBox/ButtonContainer"]
+custom_minimum_size = Vector2(300, 60)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "Return to Menu"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("Animation_fade_in")
+}
