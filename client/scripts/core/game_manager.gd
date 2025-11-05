@@ -40,6 +40,9 @@ var combat_system: CombatSystem
 var movement_system: MovementSystem
 var targeting_system: TargetingSystem
 
+## Progression systems
+var player_profile: PlayerProfile = null
+
 ## Configuration resources (loaded from data files - NO HARDCODED VALUES)
 var battlefield_config: BattlefieldConfig = null
 var balance_config: GameBalanceConfig = null
@@ -74,6 +77,7 @@ func _ready() -> void:
 	set_process(false)
 	_load_game_configs()
 	_initialize_systems()
+	_initialize_progression_systems()
 	_initialize_pools()
 
 
@@ -122,6 +126,15 @@ func _initialize_systems() -> void:
 	add_child(targeting_system)
 
 	print("Game systems initialized")
+
+
+## Initializes progression systems
+func _initialize_progression_systems() -> void:
+	# Create player profile
+	player_profile = PlayerProfile.new()
+	add_child(player_profile)
+
+	print("Progression systems initialized")
 
 
 ## Initializes object pools
