@@ -101,8 +101,8 @@ stretch_mode = 5
 
 [node name="ProfilePanel" type="Control" parent="."]
 anchors_preset = 0
-anchor_right = 0.35
-anchor_bottom = 0.55
+anchor_right = 0.30
+anchor_bottom = 0.50
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 20.0
@@ -123,10 +123,10 @@ stretch_mode = 5
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 60.0
-offset_top = 160.0
-offset_right = -60.0
-offset_bottom = 280.0
+offset_left = 70.0
+offset_top = 110.0
+offset_right = -70.0
+offset_bottom = 230.0
 
 [node name="TopRow" type="HBoxContainer" parent="ProfilePanel/PlayerInfo"]
 layout_mode = 2
@@ -224,10 +224,10 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 60.0
-offset_top = 300.0
-offset_right = -60.0
-offset_bottom = 350.0
+offset_left = 70.0
+offset_top = 250.0
+offset_right = -70.0
+offset_bottom = 300.0
 grow_horizontal = 2
 theme_override_constants/separation = 15
 
@@ -275,10 +275,10 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 60.0
-offset_top = -120.0
-offset_right = -60.0
-offset_bottom = -70.0
+offset_left = 70.0
+offset_top = -100.0
+offset_right = -70.0
+offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 10
