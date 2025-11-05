@@ -25,6 +25,10 @@ var target: Node2D = null
 var attack_timer: float = 0.0
 var is_attacking: bool = false
 
+# Navigation
+var navigation_agent: NavigationAgent2D = null
+var use_navigation: bool = true
+
 # References
 var health_bar: ProgressBar = null
 var sprite: Sprite2D = null
@@ -54,8 +58,28 @@ func _ready() -> void:
 		print("  Stats loaded - HP:", max_health, " Damage:", damage, " Speed:", move_speed)
 
 	update_health_bar()
+	_setup_navigation()
 
 	print("  Ready complete - Will move: ", move_speed > 0)
+
+func _setup_navigation() -> void:
+	# Create and configure navigation agent
+	navigation_agent = NavigationAgent2D.new()
+	add_child(navigation_agent)
+
+	# Configure navigation properties
+	navigation_agent.path_desired_distance = 4.0
+	navigation_agent.target_desired_distance = 4.0
+	navigation_agent.radius = 16.0
+	navigation_agent.neighbor_distance = 50.0
+	navigation_agent.max_neighbors = 10
+	navigation_agent.time_horizon = 0.5
+	navigation_agent.max_speed = move_speed
+	navigation_agent.avoidance_enabled = true
+	navigation_agent.debug_enabled = true  # Show paths in editor
+
+	# Wait for navigation to be ready
+	call_deferred("_on_navigation_ready")
 
 func initialize(type: String, team_id: int, data: CardData) -> void:
 	unit_type = type
@@ -175,15 +199,33 @@ func find_target() -> void:
 		# No buildings left - clean up units
 		target = closest_unit
 
+func _on_navigation_ready() -> void:
+	# Navigation is ready, can start pathfinding
+	pass
+
 func move_toward_target(delta: float) -> void:
 	if not target:
 		return
 
-	var direction = (target.global_position - global_position).normalized()
-	velocity = direction * move_speed
+	if use_navigation and navigation_agent:
+		# Use navigation pathfinding
+		if navigation_agent.is_navigation_finished():
+			# Set new target
+			navigation_agent.target_position = target.global_position
 
-	# Use up_direction for proper sliding
-	var previous_velocity = velocity
+		# Get next position from navigation
+		var next_position = navigation_agent.get_next_path_position()
+		var direction = (next_position - global_position).normalized()
+
+		# Set velocity for avoidance
+		var desired_velocity = direction * move_speed
+		navigation_agent.set_velocity(desired_velocity)
+		velocity = desired_velocity
+	else:
+		# Direct movement (fallback)
+		var direction = (target.global_position - global_position).normalized()
+		velocity = direction * move_speed
+
 	move_and_slide()
 
 	# Maintain speed when sliding along walls
@@ -202,14 +244,36 @@ func move_toward_target(delta: float) -> void:
 				velocity = Vector2.ZERO
 
 func move_forward(delta: float) -> void:
-	# Move up or down depending on team
-	var direction: Vector2
-	if team == 0:  # Player team - move up
-		direction = Vector2(0, -1)
-	else:  # Opponent team - move down
-		direction = Vector2(0, 1)
+	# When no target, pathfind towards enemy side
+	if use_navigation and navigation_agent:
+		# Set a target position far ahead in enemy territory
+		var target_pos: Vector2
+		if team == 0:  # Player team - move up
+			target_pos = Vector2(576, 200)  # Enemy castle area
+		else:  # Opponent team - move down
+			target_pos = Vector2(576, 1600)  # Player castle area
 
-	velocity = direction * move_speed
+		if navigation_agent.is_navigation_finished():
+			navigation_agent.target_position = target_pos
+
+		# Get next position from navigation
+		var next_position = navigation_agent.get_next_path_position()
+		var direction = (next_position - global_position).normalized()
+
+		# Set velocity for avoidance
+		var desired_velocity = direction * move_speed
+		navigation_agent.set_velocity(desired_velocity)
+		velocity = desired_velocity
+	else:
+		# Fallback: direct movement
+		var direction: Vector2
+		if team == 0:  # Player team - move up
+			direction = Vector2(0, -1)
+		else:  # Opponent team - move down
+			direction = Vector2(0, 1)
+
+		velocity = direction * move_speed
+
 	move_and_slide()
 
 	# Maintain speed when sliding along walls

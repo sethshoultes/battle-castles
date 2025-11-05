@@ -84,6 +84,7 @@ func _ready() -> void:
 	setup_deployment_zones()
 	setup_camera()
 	setup_towers()
+	setup_navigation()
 	draw_grid_visual()
 	connect_battle_ui()
 	_setup_battle_manager()
@@ -183,6 +184,63 @@ func setup_towers() -> void:
 		]
 		# Connect to castle destruction for game over
 		opponent_castle.tower_destroyed.connect(_on_castle_destroyed)
+
+func setup_navigation() -> void:
+	"""Setup navigation mesh for pathfinding around river and through bridges"""
+	# Create Navigation2D server if not exists
+	var nav_region = NavigationRegion2D.new()
+	nav_region.name = "NavigationRegion"
+	nav_region.z_index = -8
+	add_child(nav_region)
+
+	# Create navigation polygon
+	var nav_poly = NavigationPolygon.new()
+
+	# Define the overall battlefield area
+	var battlefield_outline = PackedVector2Array([
+		Vector2(0, 0),
+		Vector2(BATTLEFIELD_WIDTH, 0),
+		Vector2(BATTLEFIELD_WIDTH, BATTLEFIELD_HEIGHT),
+		Vector2(0, BATTLEFIELD_HEIGHT)
+	])
+	nav_poly.add_outline(battlefield_outline)
+
+	# Define river as obstacle (exclude from nav mesh)
+	# River is at y = 896 (RIVER_Y), height ~ 128 pixels
+	# Left section (before left bridge at x=288)
+	var river_left = PackedVector2Array([
+		Vector2(0, RIVER_Y - 64),
+		Vector2(220, RIVER_Y - 64),
+		Vector2(220, RIVER_Y + 64),
+		Vector2(0, RIVER_Y + 64)
+	])
+	nav_poly.add_outline(river_left)
+
+	# Center section (between bridges, x=356 to x=796)
+	var river_center = PackedVector2Array([
+		Vector2(356, RIVER_Y - 64),
+		Vector2(796, RIVER_Y - 64),
+		Vector2(796, RIVER_Y + 64),
+		Vector2(356, RIVER_Y + 64)
+	])
+	nav_poly.add_outline(river_center)
+
+	# Right section (after right bridge at x=864)
+	var river_right = PackedVector2Array([
+		Vector2(932, RIVER_Y - 64),
+		Vector2(BATTLEFIELD_WIDTH, RIVER_Y - 64),
+		Vector2(BATTLEFIELD_WIDTH, RIVER_Y + 64),
+		Vector2(932, RIVER_Y + 64)
+	])
+	nav_poly.add_outline(river_right)
+
+	# Make the navigation mesh
+	nav_poly.make_polygons_from_outlines()
+
+	# Assign to region
+	nav_region.navigation_polygon = nav_poly
+
+	print("Navigation mesh created with river obstacles and bridge passages")
 
 func _setup_battle_manager() -> void:
 	# Create and initialize battle manager
