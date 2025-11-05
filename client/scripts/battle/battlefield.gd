@@ -928,10 +928,9 @@ func _on_castle_destroyed(team: int, tower_type: String) -> void:
 		print("GAME OVER - ", winner_text)
 		print("===================")
 
-		# TODO: Show battle results screen after a brief delay
-		# This would display a detailed results UI with trophy changes, rewards, etc.
-		# await get_tree().create_timer(1.0).timeout
-		# _show_battle_results_screen(winner_team, player_crowns, opponent_crowns, experience_gain)
+		# Show battle results screen after a brief delay
+		await get_tree().create_timer(1.0).timeout
+		_show_battle_results_screen(winner_team, player_crowns, opponent_crowns, trophy_change, experience_gain)
 
 func _on_battle_time_updated(time_remaining: float) -> void:
 	# Update UI with time remaining
@@ -1005,20 +1004,59 @@ func _on_battle_ended(winner: int) -> void:
 	print("BATTLE ENDED - ", winner_text)
 	print("===================")
 
-	# Create a simple game over label
-	var game_over_label = Label.new()
-	game_over_label.text = winner_text
-	game_over_label.position = Vector2(BATTLEFIELD_WIDTH / 2 - 100, BATTLEFIELD_HEIGHT / 2)
-	game_over_label.add_theme_font_size_override("font_size", 64)
+	# Show battle results screen after a brief delay
+	await get_tree().create_timer(1.0).timeout
+	_show_battle_results_screen(winner, player_crowns, opponent_crowns, trophy_change, experience_gain)
 
-	# Color based on outcome
-	if winner == TEAM_PLAYER:
-		game_over_label.add_theme_color_override("font_color", Color(1, 1, 0, 1))  # Yellow for victory
-	elif winner == TEAM_OPPONENT:
-		game_over_label.add_theme_color_override("font_color", Color(1, 0, 0, 1))  # Red for defeat
+func _show_battle_results_screen(winner_team_id: int, player_crowns_count: int, opponent_crowns_count: int, trophy_delta: int, xp_gain: int) -> void:
+	"""Show the battle results screen with battle data"""
+	# Load the battle results screen
+	var results_scene = load("res://scenes/ui/battle_results_screen.tscn")
+	if not results_scene:
+		push_error("Failed to load battle results screen scene")
+		return
+
+	var results_screen = results_scene.instantiate()
+	if not results_screen:
+		push_error("Failed to instantiate battle results screen")
+		return
+
+	# Calculate battle time (from battle manager if available)
+	var battle_time_elapsed = 0.0
+	if battle_manager:
+		battle_time_elapsed = battle_manager.battle_duration - battle_manager.time_remaining
+
+	# Count units deployed by player
+	var units_deployed_count = 0
+	if battle_manager:
+		# This would need to be tracked in battle manager - for now use a placeholder
+		units_deployed_count = 0  # TODO: Track this in battle manager
+
+	# Prepare battle data dictionary
+	var battle_data = {
+		"winner_team": winner_team_id,
+		"player_crowns": player_crowns_count,
+		"opponent_crowns": opponent_crowns_count,
+		"trophy_change": trophy_delta,
+		"xp_gained": xp_gain,
+		"battle_time": battle_time_elapsed,
+		"units_deployed": units_deployed_count
+	}
+
+	# Add to scene tree
+	add_child(results_screen)
+
+	# Initialize with battle data
+	if results_screen.has_method("initialize"):
+		results_screen.initialize(battle_data)
 	else:
-		game_over_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1))  # Gray for draw
+		push_warning("Battle results screen does not have initialize method")
 
-	game_over_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	game_over_label.add_theme_constant_override("outline_size", 8)
-	add_child(game_over_label)
+	# Connect return to menu signal
+	if results_screen.has_signal("return_to_menu_pressed"):
+		results_screen.return_to_menu_pressed.connect(_on_return_to_menu_from_results)
+
+func _on_return_to_menu_from_results() -> void:
+	"""Handle return to menu from battle results screen"""
+	# The results screen will handle the scene change via SceneManager
+	print("Returning to main menu from battle results...")
