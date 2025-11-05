@@ -600,7 +600,7 @@ var ai_elixir: float = 5.0  # AI starts with 5 elixir like player
 var ai_max_elixir: float = 10.0
 var ai_elixir_rate: float = 1.0 / 2.8  # Same rate as player: 1 per 2.8 seconds
 var ai_difficulty: AILevel = AILevel.MEDIUM  # Default to medium difficulty
-var ai_elixir_reserve: float = 1.5  # AI keeps this much elixir in reserve for defense
+var ai_elixir_reserve: float = 0.5  # AI keeps this much elixir in reserve for defense
 
 func _load_ai_difficulty() -> void:
 	# Load AI difficulty from GameManager
