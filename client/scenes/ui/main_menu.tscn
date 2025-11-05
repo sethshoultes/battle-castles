@@ -127,9 +127,9 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 50.0
-offset_top = 50.0
+offset_top = 120.0
 offset_right = -50.0
-offset_bottom = 150.0
+offset_bottom = 220.0
 
 [node name="TopRow" type="HBoxContainer" parent="ProfilePanel/PlayerInfo"]
 layout_mode = 2
@@ -222,9 +222,9 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 50.0
-offset_top = 170.0
+offset_top = 240.0
 offset_right = -50.0
-offset_bottom = 210.0
+offset_bottom = 280.0
 theme_override_constants/separation = 15
 
 [node name="GoldContainer" type="HBoxContainer" parent="ProfilePanel/Resources"]
@@ -272,9 +272,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 50.0
-offset_top = -70.0
+offset_top = -100.0
 offset_right = -50.0
-offset_bottom = -50.0
+offset_bottom = -60.0
 theme_override_constants/separation = 10
 
 [node name="ArenaIcon" type="TextureRect" parent="ProfilePanel/ArenaInfo"]
