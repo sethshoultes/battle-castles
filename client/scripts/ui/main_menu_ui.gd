@@ -11,11 +11,11 @@ class_name MainMenuUI
 
 # Profile elements
 @onready var profile_panel: Control = $ProfilePanel
-@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/NameLabel
-@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/LevelContainer/LevelBadge/LevelLabel
+@onready var player_name_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/NameRow/NameLabel
+@onready var player_level_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/NameRow/LevelContainer/LevelBadge/LevelLabel
 @onready var trophy_count_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/TrophyContainer/TrophyCount
-@onready var gold_count_label: Label = $ProfilePanel/Resources/GoldContainer/GoldCount
-@onready var gem_count_label: Label = $ProfilePanel/Resources/GemContainer/GemCount
+@onready var gold_count_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/Resources/GoldContainer/GoldCount
+@onready var gem_count_label: Label = $ProfilePanel/PlayerInfo/TopRow/InfoColumn/Resources/GemContainer/GemCount
 @onready var avatar_texture: TextureRect = $ProfilePanel/PlayerInfo/TopRow/AvatarContainer/AvatarFrame/Avatar
 
 # Arena display
