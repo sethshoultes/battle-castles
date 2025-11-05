@@ -86,6 +86,13 @@ func _connect_signals() -> void:
 	if profile_panel:
 		profile_panel.gui_input.connect(_on_profile_input)
 
+	# Connect to PlayerProfile signals for live updates
+	if GameManager and GameManager.player_profile:
+		GameManager.player_profile.profile_updated.connect(_on_profile_updated)
+		GameManager.player_profile.stats_changed.connect(_on_stats_changed)
+		GameManager.player_profile.level_up.connect(_on_level_up)
+		print("Main Menu: Connected to PlayerProfile signals")
+
 func _animate_entrance() -> void:
 	# Animate title
 	if title_label:
@@ -164,15 +171,44 @@ func _update_profile_display() -> void:
 		if player_name_label:
 			player_name_label.text = player_data.get("name", "Player")
 		if player_level_label:
-			player_level_label.text = str(player_data.get("level", 1))
+			_animate_label_value(player_level_label, player_data.get("level", 1))
 		if trophy_count_label:
-			trophy_count_label.text = str(player_data.get("trophies", 0))
+			_animate_label_value(trophy_count_label, player_data.get("trophies", 0))
 		if gold_count_label:
-			gold_count_label.text = str(player_data.get("gold", 0))
+			_animate_label_value(gold_count_label, player_data.get("gold", 0))
 		if gem_count_label:
-			gem_count_label.text = str(player_data.get("gems", 0))
+			_animate_label_value(gem_count_label, player_data.get("gems", 0))
 		if arena_name_label:
 			arena_name_label.text = player_data.get("arena", "Training Camp")
+
+func _animate_label_value(label: Label, target_value: int) -> void:
+	if not label:
+		return
+
+	# Get current value from label
+	var current_text = label.text
+	var current_value = int(current_text) if current_text.is_valid_int() else 0
+
+	# If values are the same, no animation needed
+	if current_value == target_value:
+		label.text = str(target_value)
+		return
+
+	# Animate the count-up/down
+	var tween = create_tween()
+	tween.tween_method(
+		func(value: float):
+			label.text = str(int(value))
+		,
+		float(current_value),
+		float(target_value),
+		0.5
+	).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+
+	# Add a pop animation to highlight the change
+	var original_scale = label.scale
+	tween.parallel().tween_property(label, "scale", original_scale * 1.2, 0.15)
+	tween.tween_property(label, "scale", original_scale, 0.15)
 
 func _setup_chest_slots() -> void:
 	# Create 4 chest slots
@@ -302,6 +338,19 @@ func _process(delta: float) -> void:
 		matchmaking_timer += delta
 		var dots = "." . repeat(int(matchmaking_timer * 2) % 4)
 		matchmaking_label.text = "Searching for opponent" + dots
+
+func _on_profile_updated() -> void:
+	print("Main Menu: Profile updated signal received - refreshing display")
+	_load_player_data()
+
+func _on_stats_changed() -> void:
+	print("Main Menu: Stats changed signal received - refreshing display")
+	_load_player_data()
+
+func _on_level_up(new_level: int, rewards: Dictionary) -> void:
+	print("Main Menu: Level up! New level: " + str(new_level))
+	_load_player_data()
+	# TODO: Show level up celebration animation/popup
 
 func set_player_name(name: String) -> void:
 	player_data["name"] = name
