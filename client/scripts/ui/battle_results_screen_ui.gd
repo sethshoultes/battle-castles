@@ -227,6 +227,10 @@ func _on_return_button_pressed() -> void:
 	print("Return to Menu button pressed")
 	return_to_menu_pressed.emit()
 
+	# Unpause the game before changing scenes
+	get_tree().paused = false
+	print("Game unpaused before scene change")
+
 	# Return to main menu
 	if SceneManager:
 		print("Changing scene to main menu...")

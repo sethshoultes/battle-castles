@@ -1180,6 +1180,14 @@ func _show_battle_results_screen(winner_team_id: int, player_crowns_count: int, 
 		# This would need to be tracked in battle manager - for now use a placeholder
 		units_deployed_count = 0  # TODO: Track this in battle manager
 
+	# PAUSE THE BATTLE - Stop all processing
+	print("Pausing battlefield for results screen...")
+	get_tree().paused = true
+
+	# Hide battle UI to prevent interaction
+	if battle_ui:
+		battle_ui.visible = false
+
 	# Prepare battle data dictionary
 	var battle_data = {
 		"winner_team": winner_team_id,
@@ -1204,6 +1212,8 @@ func _show_battle_results_screen(winner_team_id: int, player_crowns_count: int, 
 	# Connect return to menu signal
 	if results_screen.has_signal("return_to_menu_pressed"):
 		results_screen.return_to_menu_pressed.connect(_on_return_to_menu_from_results)
+
+	print("Results screen shown - game paused")
 
 func _on_return_to_menu_from_results() -> void:
 	"""Handle return to menu from battle results screen"""
