@@ -1191,8 +1191,9 @@ func _show_battle_results_screen(winner_team_id: int, player_crowns_count: int, 
 		"units_deployed": units_deployed_count
 	}
 
-	# Add to scene tree
-	add_child(results_screen)
+	# Add to viewport root (not as child of battlefield) so anchors work properly
+	# Battlefield is Node2D, but Control nodes with anchors need to be in the viewport
+	get_tree().root.add_child(results_screen)
 
 	# Initialize with battle data
 	if results_screen.has_method("initialize"):
