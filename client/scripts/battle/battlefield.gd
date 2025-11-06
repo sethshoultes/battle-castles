@@ -151,10 +151,12 @@ func setup_towers() -> void:
 	if player_left_tower:
 		player_left_tower.position = grid_to_world(battlefield_config.player_left_tower_pos if battlefield_config else Vector2i(3, 20))
 		player_left_tower.team = TEAM_PLAYER
+		player_left_tower.tower_destroyed.connect(_on_tower_destroyed)
 
 	if player_right_tower:
 		player_right_tower.position = grid_to_world(battlefield_config.player_right_tower_pos if battlefield_config else Vector2i(14, 20))
 		player_right_tower.team = TEAM_PLAYER
+		player_right_tower.tower_destroyed.connect(_on_tower_destroyed)
 
 	if player_castle:
 		player_castle.position = grid_to_world(battlefield_config.player_castle_pos if battlefield_config else Vector2i(8, 23))
@@ -163,17 +165,18 @@ func setup_towers() -> void:
 			player_left_tower.get_path(),
 			player_right_tower.get_path()
 		]
-		# Connect to castle destruction for game over
-		player_castle.tower_destroyed.connect(_on_castle_destroyed)
+		player_castle.tower_destroyed.connect(_on_tower_destroyed)
 
 	# Position opponent towers (top of field)
 	if opponent_left_tower:
 		opponent_left_tower.position = grid_to_world(battlefield_config.opponent_left_tower_pos if battlefield_config else Vector2i(14, 4))
 		opponent_left_tower.team = TEAM_OPPONENT
+		opponent_left_tower.tower_destroyed.connect(_on_tower_destroyed)
 
 	if opponent_right_tower:
 		opponent_right_tower.position = grid_to_world(battlefield_config.opponent_right_tower_pos if battlefield_config else Vector2i(3, 4))
 		opponent_right_tower.team = TEAM_OPPONENT
+		opponent_right_tower.tower_destroyed.connect(_on_tower_destroyed)
 
 	if opponent_castle:
 		opponent_castle.position = grid_to_world(battlefield_config.opponent_castle_pos if battlefield_config else Vector2i(8, 3))
@@ -182,8 +185,7 @@ func setup_towers() -> void:
 			opponent_left_tower.get_path(),
 			opponent_right_tower.get_path()
 		]
-		# Connect to castle destruction for game over
-		opponent_castle.tower_destroyed.connect(_on_castle_destroyed)
+		opponent_castle.tower_destroyed.connect(_on_tower_destroyed)
 
 func setup_navigation() -> void:
 	"""Setup navigation mesh for pathfinding around river and through bridges"""
@@ -1068,59 +1070,15 @@ func _choose_spawn_position(card: CardData, threat_data: Dictionary) -> Vector2:
 
 	return Vector2(random_x, random_y)
 
-func _on_castle_destroyed(team: int, tower_type: String) -> void:
-	# A castle was destroyed - game over!
-	if tower_type == "castle":
-		game_over = true
-		winner_team = TEAM_OPPONENT if team == TEAM_PLAYER else TEAM_PLAYER
+func _on_tower_destroyed(team: int, tower_type: String) -> void:
+	"""Called when any tower (including castle) is destroyed"""
+	print("Tower destroyed: ", tower_type, " Team: ", team)
 
-		# Stop AI spawning
-		if ai_timer:
-			ai_timer.stop()
-
-		# Get crown counts from battle manager
-		var player_crowns = battle_manager.player_crowns if battle_manager else 0
-		var opponent_crowns = battle_manager.opponent_crowns if battle_manager else 0
-
-		# Determine battle result (castle destruction = 3 crowns)
-		var result = "loss" if team == TEAM_PLAYER else "win"
-		var experience_gain = 5 if team == TEAM_PLAYER else 20
-
-		# Record battle result in player profile
-		if GameManager and GameManager.player_profile:
-			GameManager.player_profile.record_battle_result(result, player_crowns, opponent_crowns)
-			GameManager.player_profile.add_experience(experience_gain)
-
-		# Capture trophy count before processing
-		var trophies_before = 0
-		if GameManager and GameManager.trophy_system:
-			trophies_before = GameManager.trophy_system.trophy_data.current_trophies
-
-		# Process trophy changes with ELO-based calculation
-		if GameManager:
-			var opponent_trophies = GameManager.trophy_system.trophy_data.current_trophies if GameManager.trophy_system else 1000
-			opponent_trophies += randi_range(-200, 200)  # Add variance
-			GameManager.process_battle_result(result, opponent_trophies)
-
-			print("Battle stats recorded (Castle destroyed):")
-			print("  Result: ", result.to_upper())
-			print("  Crowns: ", player_crowns, " - ", opponent_crowns)
-			print("  Experience: +", experience_gain)
-
-		# Calculate trophy change
-		var trophy_change = 0
-		if GameManager and GameManager.trophy_system:
-			trophy_change = GameManager.trophy_system.trophy_data.current_trophies - trophies_before
-
-		# Show game over message
-		var winner_text = "VICTORY!" if winner_team == TEAM_PLAYER else "DEFEAT!"
-		print("===================")
-		print("GAME OVER - ", winner_text)
-		print("===================")
-
-		# Show battle results screen after a brief delay
-		await get_tree().create_timer(1.0).timeout
-		_show_battle_results_screen(winner_team, player_crowns, opponent_crowns, trophy_change, experience_gain)
+	# Notify battle manager to update crowns and check victory conditions
+	if battle_manager:
+		battle_manager.tower_destroyed(team, tower_type)
+		# battle_manager will emit battle_ended signal if castle was destroyed
+		# which will trigger _on_battle_ended to show results screen
 
 func _on_battle_time_updated(time_remaining: float) -> void:
 	# Update UI with time remaining
