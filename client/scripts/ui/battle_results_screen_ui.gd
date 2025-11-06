@@ -224,10 +224,14 @@ func _update_xp_count(value: int) -> void:
 		xp_gained.text = "+" + str(value) + " XP"
 
 func _on_return_button_pressed() -> void:
+	print("Return to Menu button pressed")
 	return_to_menu_pressed.emit()
 
 	# Return to main menu
 	if SceneManager:
+		print("Changing scene to main menu...")
 		SceneManager.change_scene("res://scenes/ui/main_menu.tscn")
 	else:
-		push_error("SceneManager not found")
+		push_error("SceneManager not found - using fallback")
+		# Fallback: use get_tree().change_scene_to_file()
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")

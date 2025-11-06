@@ -236,8 +236,10 @@ text = "Battle Summary"
 horizontal_alignment = 1
 
 [node name="StatsGrid" type="GridContainer" parent="MainContainer/ResultsPanel/VBox/StatsSection"]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
-theme_override_constants/h_separation = 30
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 15
 columns = 2
 
