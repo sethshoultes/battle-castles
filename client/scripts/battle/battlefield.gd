@@ -245,6 +245,76 @@ func setup_navigation() -> void:
 
 	print("Navigation mesh created with river obstacles and bridge passages")
 
+	# Add PHYSICAL COLLISION for river sections so units can't walk through water
+	# These are StaticBody2D obstacles on layer 4 (value 8) that both teams collide with
+	_setup_river_collisions()
+
+func _setup_river_collisions() -> void:
+	"""
+	Create physical collision bodies for the river so units can't walk through water.
+	Units must use the bridges to cross.
+	"""
+	# Expand river collision vertically to better funnel units to bridges
+	var river_height = 200.0  # Taller than visual (was 128) to force bridge usage
+	var river_y_start = RIVER_Y - 100  # Start 100 pixels above river center
+	var river_y_end = RIVER_Y + 100    # End 100 pixels below river center
+
+	# Create container for river collision bodies
+	var river_collisions = Node2D.new()
+	river_collisions.name = "RiverCollisions"
+	river_collisions.z_index = -9  # Below navigation
+	add_child(river_collisions)
+
+	# LEFT RIVER SECTION (before left bridge)
+	# From x=0 to x=220
+	var left_river = StaticBody2D.new()
+	left_river.name = "LeftRiver"
+	var left_shape = CollisionShape2D.new()
+	var left_rect = RectangleShape2D.new()
+	left_rect.size = Vector2(220, river_height)  # Width: 220, Height: 200
+	left_shape.shape = left_rect
+	left_shape.position = Vector2(110, RIVER_Y)  # Center at x=110 (midpoint of 0-220)
+	left_river.add_child(left_shape)
+
+	# Set collision layers - layer 4 (value 8) so both teams collide with it
+	left_river.collision_layer = 8  # Layer 4
+	left_river.collision_mask = 0   # Doesn't need to detect anything
+	river_collisions.add_child(left_river)
+
+	# CENTER RIVER SECTION (between bridges)
+	# From x=356 to x=796
+	var center_river = StaticBody2D.new()
+	center_river.name = "CenterRiver"
+	var center_shape = CollisionShape2D.new()
+	var center_rect = RectangleShape2D.new()
+	center_rect.size = Vector2(440, river_height)  # Width: 440, Height: 200
+	center_shape.shape = center_rect
+	center_shape.position = Vector2(576, RIVER_Y)  # Center at x=576 (midpoint of 356-796)
+	center_river.add_child(center_shape)
+
+	center_river.collision_layer = 8  # Layer 4
+	center_river.collision_mask = 0
+	river_collisions.add_child(center_river)
+
+	# RIGHT RIVER SECTION (after right bridge)
+	# From x=932 to x=1152 (BATTLEFIELD_WIDTH)
+	var right_river = StaticBody2D.new()
+	right_river.name = "RightRiver"
+	var right_shape = CollisionShape2D.new()
+	var right_rect = RectangleShape2D.new()
+	right_rect.size = Vector2(220, river_height)  # Width: 220, Height: 200
+	right_shape.shape = right_rect
+	right_shape.position = Vector2(1042, RIVER_Y)  # Center at x=1042 (midpoint of 932-1152)
+	right_river.add_child(right_shape)
+
+	right_river.collision_layer = 8  # Layer 4
+	right_river.collision_mask = 0
+	river_collisions.add_child(right_river)
+
+	print("River collision bodies created - units must use bridges to cross")
+	print("  Left river: x=0-220, Center: x=356-796, Right: x=932-1152")
+	print("  River collision height: ", river_height, " at y=", RIVER_Y)
+
 func _setup_battle_manager() -> void:
 	# Create and initialize battle manager
 	if not battle_manager:
