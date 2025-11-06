@@ -1214,7 +1214,7 @@ func _show_battle_results_screen(winner_team_id: int, player_crowns_count: int, 
 	# Calculate battle time (from battle manager if available)
 	var battle_time_elapsed = 0.0
 	if battle_manager:
-		battle_time_elapsed = battle_manager.battle_duration - battle_manager.time_remaining
+		battle_time_elapsed = battle_manager.BATTLE_DURATION - battle_manager.get_time_remaining()
 
 	# Count units deployed by player
 	var units_deployed_count = 0

@@ -45,6 +45,11 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1"]
+_data = {
+"fade_in": SubResource("Animation_fade_in")
+}
+
 [node name="BattleResultsScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -276,5 +281,5 @@ text = "Return to Menu"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("Animation_fade_in")
+"": SubResource("AnimationLibrary_1")
 }
