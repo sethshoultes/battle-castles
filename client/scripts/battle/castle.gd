@@ -13,7 +13,7 @@ func _ready() -> void:
 	max_health = 4824.0  # King tower health
 	current_health = max_health
 	attack_damage = 139.0  # Higher damage
-	attack_speed = 1.0  # Slightly faster
+	attack_speed = 1.2  # Slightly faster than princess towers (1.2 attacks/sec)
 	attack_range = 6.5 * 64  # 6.5 tiles
 
 	# Initially inactive if requires activation

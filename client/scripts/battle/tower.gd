@@ -5,7 +5,7 @@ class_name Tower
 @export var max_health: float = 2534.0  # Princess tower health
 @export var current_health: float = max_health
 @export var attack_damage: float = 109.0
-@export var attack_speed: float = 0.8  # Attacks per second
+@export var attack_speed: float = 1.0  # Attacks per second (1 attack every 1 second)
 @export var attack_range: float = 6.0 * 64  # 6.0 tiles * 64 pixels
 @export var team: int = 0  # 0 = Player, 1 = Opponent
 @export var tower_type: String = "princess"  # "princess" or "castle"
@@ -34,9 +34,10 @@ func _ready() -> void:
 	setup_health_bar()
 	connect_signals()
 
-	# Set attack timer
+	# Set attack timer - make it auto-repeat for continuous attacks
 	if attack_timer:
 		attack_timer.wait_time = 1.0 / attack_speed
+		attack_timer.one_shot = false  # Auto-repeat
 		attack_timer.timeout.connect(_on_attack_timer_timeout)
 
 func setup_range() -> void:
@@ -82,8 +83,11 @@ func _process(delta: float) -> void:
 	# Update targeting
 	if current_target == null or not is_instance_valid(current_target):
 		acquire_target()
+		# Stop attacking if we lost our target
+		if current_target == null and not attack_timer.is_stopped():
+			attack_timer.stop()
 
-	# Attack if we have a target and timer is ready
+	# Start attacking when we acquire a target
 	if current_target and attack_timer.is_stopped():
 		attack_timer.start()
 
