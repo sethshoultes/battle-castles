@@ -209,31 +209,32 @@ func setup_navigation() -> void:
 	nav_poly.add_outline(battlefield_outline)
 
 	# Define river as obstacle holes (COUNTER-CLOCKWISE - holes)
-	# River is at y = 896 (RIVER_Y), height ~ 128 pixels
-	# Left section (before left bridge at x=288)
+	# River is at y = 896 (RIVER_Y), expanded to height 200 pixels (±100)
+	# This matches the physical collision bodies to force units through bridges
+	# Left section (before left bridge at x=220)
 	var river_left = PackedVector2Array([
-		Vector2(0, RIVER_Y - 64),
-		Vector2(0, RIVER_Y + 64),
-		Vector2(220, RIVER_Y + 64),
-		Vector2(220, RIVER_Y - 64)
+		Vector2(0, RIVER_Y - 100),
+		Vector2(0, RIVER_Y + 100),
+		Vector2(220, RIVER_Y + 100),
+		Vector2(220, RIVER_Y - 100)
 	])
 	nav_poly.add_outline(river_left)
 
 	# Center section (between bridges, x=356 to x=796)
 	var river_center = PackedVector2Array([
-		Vector2(356, RIVER_Y - 64),
-		Vector2(356, RIVER_Y + 64),
-		Vector2(796, RIVER_Y + 64),
-		Vector2(796, RIVER_Y - 64)
+		Vector2(356, RIVER_Y - 100),
+		Vector2(356, RIVER_Y + 100),
+		Vector2(796, RIVER_Y + 100),
+		Vector2(796, RIVER_Y - 100)
 	])
 	nav_poly.add_outline(river_center)
 
-	# Right section (after right bridge at x=864)
+	# Right section (after right bridge at x=932)
 	var river_right = PackedVector2Array([
-		Vector2(932, RIVER_Y - 64),
-		Vector2(932, RIVER_Y + 64),
-		Vector2(BATTLEFIELD_WIDTH, RIVER_Y + 64),
-		Vector2(BATTLEFIELD_WIDTH, RIVER_Y - 64)
+		Vector2(932, RIVER_Y - 100),
+		Vector2(932, RIVER_Y + 100),
+		Vector2(BATTLEFIELD_WIDTH, RIVER_Y + 100),
+		Vector2(BATTLEFIELD_WIDTH, RIVER_Y - 100)
 	])
 	nav_poly.add_outline(river_right)
 
